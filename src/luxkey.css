@@ -1,0 +1,357 @@
+/* ============================================================================
+   LUXKEY INTERNATIONAL — colors_and_type.css
+   The single source of truth for color + type tokens.
+   Import this first in any Luxkey artifact:
+     <link rel="stylesheet" href="colors_and_type.css">
+   ----------------------------------------------------------------------------
+   Brand in one line: an editorial, poster-grade color-block system.
+   Vermillion x Teal high-contrast, on white + silver, anchored in ink.
+   ============================================================================ */
+
+/* ---- Fonts (Google-hosted; see README "VISUAL FOUNDATIONS" to self-host) ---- */
+@import url('https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Hanken+Grotesk:wght@400;500;600;700;800&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400;1,6..96,500&family=Jost:wght@300;400;500&family=Allura&family=Space+Mono:wght@400;700&display=swap');
+
+:root {
+  /* ======================================================================
+     1. CORE PALETTE  — the five brand anchors, pulled from the reference.
+     ====================================================================== */
+  --vermillion:   #E2401D;   /* primary — the shout. CTAs, key marks, blocks. */
+  --teal:         #15808A;   /* secondary — the calm. cool fields, structure. */
+  --cyan:         #54B8C6;   /* accent — the lift. highlights, links, charts.  */
+  --white:        #FFFFFF;   /* paper — the breath. default light surface.     */
+  --silver:       #C9CED6;   /* cool neutral — hairlines, fills, structure.    */
+  --cream:        var(--silver); /* legacy alias → silver (was #EFE6D4)         */
+  --ink:          #14161A;   /* near-black — the ground. text, hard shadows.   */
+
+  /* ---- Vermillion scale ---- */
+  --vermillion-50:  #FBE9E2;
+  --vermillion-100: #F7CFC2;
+  --vermillion-200: #F0A88E;
+  --vermillion-300: #EC8163;
+  --vermillion-400: #E85E3C;
+  --vermillion-500: #E2401D;   /* = --vermillion */
+  --vermillion-600: #C23414;
+  --vermillion-700: #99290F;
+  --vermillion-800: #6E1E0C;
+  --vermillion-900: #451308;
+
+  /* ---- Teal scale ---- */
+  --teal-50:  #DDEFF0;
+  --teal-100: #B7DEE1;
+  --teal-200: #7FC3C9;
+  --teal-300: #45A4AC;
+  --teal-400: #228C95;
+  --teal-500: #15808A;   /* = --teal */
+  --teal-600: #116870;
+  --teal-700: #0D4F55;
+  --teal-800: #093539;
+  --teal-900: #052023;
+
+  /* ---- Cyan scale ---- */
+  --cyan-50:  #E6F6F8;
+  --cyan-100: #CBEDF1;
+  --cyan-200: #9CDCE4;
+  --cyan-300: #75CBD6;
+  --cyan-400: #54B8C6;   /* = --cyan */
+  --cyan-500: #38A0AF;
+  --cyan-600: #2A8492;
+  --cyan-700: #20656F;
+
+  /* ---- Silver / paper scale (cool neutrals) — was the warm cream scale ---- */
+  --paper:      #FFFFFF;   /* brightest surface, pure white        */
+  --silver-50:  #F7F8FA;
+  --silver-100: #EEF1F4;   /* soft page bg (whisper of silver)     */
+  --silver-200: #E1E5EA;   /* hairlines, muted fills               */
+  --silver-300: #CBD1D9;   /* borders, dividers                    */
+  --silver-400: #99A1AD;   /* muted text on light                  */
+  /* legacy cream-* aliases → silver scale (kits still reference these) */
+  --cream-50:   var(--silver-50);
+  --cream-100:  var(--silver-100);
+  --cream-200:  var(--silver-200);
+  --cream-300:  var(--silver-300);
+  --cream-400:  var(--silver-400);
+
+  /* ---- Ink scale (cool neutral greys toward near-black) ---- */
+  --ink-900: #14161A;   /* = --ink */
+  --ink-800: #1E2127;
+  --ink-700: #2C3038;
+  --ink-600: #454B55;
+  --ink-500: #646B77;
+  --ink-400: #8C93A0;
+  --ink-300: #B4BAC4;
+  --ink-200: #D7DBE1;
+  --ink-100: #E9ECF0;
+
+  /* ======================================================================
+     2. SEMANTIC COLOR ROLES  — reference these in product UI, not the raw
+        palette. Two surface modes share one token vocabulary.
+     ====================================================================== */
+
+  /* Surfaces (light mode — white + silver, the default) */
+  --bg:            var(--silver-50);   /* page background            */
+  --bg-raised:     var(--white);       /* cards, sheets sit "up"     */
+  --bg-sunken:     var(--silver-200);  /* wells, inputs sit "down"   */
+  --bg-inverse:    var(--ink-900);     /* ink panels in light mode   */
+
+  /* Foreground / text */
+  --fg1:  var(--ink-900);              /* primary text               */
+  --fg2:  var(--ink-600);              /* secondary text             */
+  --fg3:  var(--ink-500);              /* tertiary / captions        */
+  --fg-muted: var(--ink-400);          /* placeholder, disabled      */
+  --fg-on-color: var(--white);         /* text on vermillion/teal/ink*/
+
+  /* Lines */
+  --border:        var(--silver-300);  /* default hairline           */
+  --border-strong: var(--ink-900);     /* the signature ink keyline  */
+  --divider:       var(--silver-200);
+
+  /* Brand roles */
+  --accent:          var(--vermillion-500);
+  --accent-hover:    var(--vermillion-600);
+  --accent-press:    var(--vermillion-700);
+  --accent-quiet:    var(--vermillion-50);
+  --secondary:       var(--teal-500);
+  --secondary-hover: var(--teal-600);
+  --link:            var(--teal-600);
+  --link-hover:      var(--vermillion-600);
+  --focus-ring:      var(--cyan-400);
+
+  /* Semantic states — derived from the brand palette so they sit in the same
+     world: danger = deep vermillion, info = teal, success = teal-leaning green,
+     warning = a modern amber that shares vermillion's warm hue. */
+  --success:     #1E8A66;   /*青綠 — teal 的兄弟 */
+  --success-bg:  #DBEFE7;
+  --warning:     #D98A1E;   /* 琅珀 — 與朱紅同暖調 */
+  --warning-bg:  #FBEBCF;
+  --danger:      #C23414;   /* deep vermillion = error              */
+  --danger-bg:   #F7CFC2;
+  --info:        var(--teal-600);
+  --info-bg:     var(--teal-50);
+
+  /* ======================================================================
+     3. DARK / INK MODE  — set data-theme="ink" on a container.
+        Cream type on ink ground; vermillion stays the shout.
+     ====================================================================== */
+
+  /* ======================================================================
+     4. TYPE TOKENS
+     ====================================================================== */
+  /* Modern, formal system: Schibsted Grotesk display, Hanken UI, mono labels. */
+  --font-display: 'Schibsted Grotesk', 'Hanken Grotesk', system-ui, sans-serif;
+  --font-sans:    'Hanken Grotesk', system-ui, -apple-system, sans-serif;
+  --font-serif:   'Bodoni Moda', 'Didot', Georgia, 'Times New Roman', serif;
+  --font-mono:    'Space Mono', ui-monospace, 'SFMono-Regular', monospace;
+  /* Logo: thin wide-caps wordmark + script accent. Use ONLY for the LUXKEY mark. */
+  --font-logo:    'Jost', system-ui, sans-serif;
+  --font-script:  'Allura', cursive;
+
+  /* Fluid display sizes (poster scale) — clamp(min, vw, max) */
+  --text-display:  clamp(3rem, 7vw, 6.5rem);   /* hero shout         */
+  --text-h1:       clamp(2.25rem, 4.5vw, 3.75rem);
+  --text-h2:       clamp(1.75rem, 3vw, 2.5rem);
+  --text-h3:       clamp(1.375rem, 2vw, 1.75rem);
+  --text-h4:       1.25rem;
+  --text-lead:     1.25rem;   /* intro paragraphs   */
+  --text-body:     1rem;      /* 16px base          */
+  --text-sm:       0.875rem;
+  --text-xs:       0.75rem;
+  --text-kicker:   0.75rem;   /* mono eyebrow label */
+
+  --leading-tight: 1.02;      /* display headlines  */
+  --leading-snug:  1.18;
+  --leading-body:  1.6;
+  --tracking-kicker: 0.18em;  /* letterspacing for mono kickers */
+  --tracking-tight:  -0.02em;
+  --tracking-serif:  0.005em; /* serif accents breathe a touch */
+
+  /* ======================================================================
+     5. SPACING  — 4px base grid, 8px rhythm.
+     ====================================================================== */
+  --space-0: 0;
+  --space-1: 0.25rem;   /* 4  */
+  --space-2: 0.5rem;    /* 8  */
+  --space-3: 0.75rem;   /* 12 */
+  --space-4: 1rem;      /* 16 */
+  --space-5: 1.5rem;    /* 24 */
+  --space-6: 2rem;      /* 32 */
+  --space-7: 3rem;      /* 48 */
+  --space-8: 4rem;      /* 64 */
+  --space-9: 6rem;      /* 96 */
+  --space-10: 8rem;     /* 128 */
+
+  /* ======================================================================
+     6. RADIUS  — the brand is square. Corners stay crisp; pills only for
+        tags/avatars. Never soft-SaaS rounding.
+     ====================================================================== */
+  --radius-0: 0;
+  --radius-sm: 2px;
+  --radius-md: 4px;     /* default for inputs/cards            */
+  --radius-lg: 8px;     /* the most we ever round a panel      */
+  --radius-pill: 999px; /* tags, avatars, toggle tracks only   */
+
+  /* ======================================================================
+     7. ELEVATION & TEXTURE  — refined, soft, warm-tinted shadows (editorial,
+        gallery-grade). The old hard-offset "sticker" shadows are retired.
+        Texture comes from a fine paper grain, not heavy borders.
+     ====================================================================== */
+  --shadow-xs:   0 1px 2px rgba(20,22,26,0.06);
+  --shadow-sm:   0 2px 6px rgba(20,22,26,0.08), 0 1px 2px rgba(20,22,26,0.05);
+  --shadow-md:   0 8px 22px rgba(20,22,26,0.10), 0 2px 6px rgba(20,22,26,0.06);
+  --shadow-lg:   0 18px 44px rgba(20,22,26,0.13), 0 4px 12px rgba(20,22,26,0.07);
+  --shadow-pop:  0 28px 64px rgba(20,22,26,0.17), 0 8px 18px rgba(20,22,26,0.09);
+  --shadow-soft: var(--shadow-sm);   /* legacy alias */
+
+  /* Hairline rules — the new structural signature (thin, not chunky). */
+  --hairline:  1px solid var(--silver-300);
+  --keyline:   1px solid var(--ink-900);
+  --keyline-2: 1.5px solid var(--ink-900);
+
+  /* Fine paper grain for texture (質感). Apply via .lx-grain or as overlay. */
+  --grain-url: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");   /* @kind other */
+
+  /* ======================================================================
+     8. MISC
+     ====================================================================== */
+  --maxw-prose: 68ch;
+  --maxw-page:  1200px;
+  --ease-out:   cubic-bezier(0.2, 0.7, 0.2, 1);   /* @kind other */
+  --ease-snap:  cubic-bezier(0.3, 1.4, 0.5, 1);   /* @kind other */
+  --dur-fast:   120ms;   /* @kind other */
+  --dur:        200ms;   /* @kind other */
+  --dur-slow:   360ms;   /* @kind other */
+}
+
+/* ---- INK MODE overrides ---- */
+[data-theme="ink"] {
+  --bg:         var(--ink-900);
+  --bg-raised:  var(--ink-800);
+  --bg-sunken:  #0B0D10;
+  --bg-inverse: var(--white);
+
+  --fg1: var(--cream-50);
+  --fg2: var(--ink-200);
+  --fg3: var(--ink-300);
+  --fg-muted: var(--ink-500);
+  --fg-on-color: var(--white);
+
+  --border: var(--ink-700);
+  --border-strong: var(--cream-100);
+  --divider: var(--ink-800);
+
+  --link: var(--cyan-400);
+  --link-hover: var(--cyan-200);
+
+  --shadow-sm: 0 2px 6px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md: 0 10px 26px rgba(0,0,0,0.45), 0 3px 8px rgba(0,0,0,0.3);
+  --shadow-lg: 0 20px 50px rgba(0,0,0,0.5);
+  --hairline:  1px solid var(--ink-700);
+  --keyline:   1px solid var(--cream-100);
+}
+
+/* ============================================================================
+   SEMANTIC ELEMENT STYLES  — opt-in via class .lx-prose or by scoping.
+   These are conveniences; tokens above are the contract.
+   ============================================================================ */
+.lx-kicker {
+  font-family: var(--font-mono);
+  font-size: var(--text-kicker);
+  font-weight: 700;
+  letter-spacing: var(--tracking-kicker);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.lx-display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-display);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--fg1);
+}
+
+h1, .lx-h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-h1);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-tight);
+}
+h2, .lx-h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-h2);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-tight);
+}
+h3, .lx-h3 {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: var(--text-h3);
+  line-height: var(--leading-snug);
+  letter-spacing: -0.005em;
+}
+h4, .lx-h4 {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: var(--text-h4);
+  letter-spacing: 0;
+}
+
+.lx-serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+  letter-spacing: var(--tracking-serif);
+}
+
+.lx-lead {
+  font-family: var(--font-sans);
+  font-size: var(--text-lead);
+  line-height: var(--leading-body);
+  color: var(--fg2);
+}
+
+p, .lx-body {
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  color: var(--fg1);
+}
+
+code, .lx-mono {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+/* ---- THE LUXKEY WORDMARK ---- the only correct way to set the logo in text.
+   <span class="lx-logo">LUXKEY</span>  (uppercase content required) */
+.lx-logo {
+  font-family: var(--font-logo);
+  font-weight: 300;
+  letter-spacing: 0.42em;
+  text-indent: 0.42em;          /* optical centering for the tracked caps */
+  line-height: 1;
+  text-transform: uppercase;
+  display: inline-block;
+}
+.lx-logo--tight { letter-spacing: 0.26em; text-indent: 0.26em; }  /* small sizes */
+.lx-script {
+  font-family: var(--font-script);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* Fine paper grain overlay for texture (質感). Put on a positioned parent. */
+.lx-grain { position: relative; }
+.lx-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--grain-url);
+  background-size: 160px 160px;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  border-radius: inherit;
+}
