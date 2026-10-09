@@ -18,7 +18,7 @@ export type Lesson = {
   videoDuration?: string
 }
 
-export type CourseChapter = { title: string; start: number; end: number; image: string }
+export type CourseChapter = { title: string; start: number; end: number; image: string; goal?: string }
 
 export type Course = {
   slug: string
@@ -39,146 +39,115 @@ export type Course = {
   sourceUrl?: string
 }
 
-const demoCourses: Course[] = [
-  {
-    slug: 'ai-workflow',
-    number: '01',
-    category: 'AI 實作',
-    level: '入門',
-    title: '讓 AI 接手重複工作',
-    shortTitle: 'AI 工作流',
-    subtitle: '從一件每天都要做的事開始，把時間拿回來。',
-    description: '不是收集更多工具，而是找出真正值得交給 AI 的工作。用四個短單元，建立一套可以反覆使用、也知道何時需要人工把關的工作流。',
-    duration: '約 45 分鐘',
-    theme: 'teal',
-    coverWord: 'WORK / FLOW',
-    outcomes: ['畫出一個清楚的工作流程', '寫出可重用的任務簡報', '找出自動化與人工審核的分界'],
-    lessons: [
-      {
-        title: '先找出時間流向',
-        time: '8 分鐘導讀',
-        summary: '把一週的重複工作攤開，找到第一個值得改造的環節。',
-        sections: [
-          { heading: '從頻率與摩擦開始', body: '不要先問「哪個 AI 工具最強」。先記下你一週做過三次以上、每次都要重來的工作。標記它花費的時間、需要的資料，以及做錯時的代價。' },
-          { heading: '選一個小而明確的起點', body: '好的第一個任務有固定輸入、明確輸出，而且結果容易檢查。例如：把會議筆記整理成待辦清單，比「幫我處理整個專案」更容易做好。' },
-        ],
-        exercise: '寫下你這週最常重複的三件事，圈出其中一件能在 15 分鐘內檢查結果的工作。',
-      },
-      {
-        title: '寫一份能重用的任務簡報',
-        time: '10 分鐘導讀',
-        summary: '讓工具知道背景、輸入、輸出格式與品質標準。',
-        sections: [
-          { heading: '給背景，也給邊界', body: '把角色、目標、讀者、可使用的資料與不能自行推測的地方寫在同一份簡報裡。真正有用的指令，像一位同事收到的清楚工作交辦。' },
-          { heading: '指定可檢查的成果', body: '要求條列結論、原始依據與待確認事項。固定格式能讓下一次使用更快，也讓你更容易看出錯誤。' },
-        ],
-        exercise: '替上一單元選出的工作，寫下「背景、輸入、輸出、不可猜測」四個欄位。',
-      },
-      {
-        title: '把流程串起來',
-        time: '12 分鐘導讀',
-        summary: '拆開輸入、處理、檢查和交付，不急著一次全自動。',
-        sections: [
-          { heading: '先做半自動版本', body: '把任務分為資料收集、初稿產生、人工檢查和發送四段。先讓 AI 幫你完成其中一段，保留可追溯的原始資料。' },
-          { heading: '讓每一步都有交接標準', body: '描述進入下一步之前必須符合的條件：是否有來源、是否缺欄位、是否涉及敏感資訊。這些條件比一條很長的提示更可靠。' },
-        ],
-        exercise: '畫出四步流程，標註每一步的負責者與完成條件。',
-      },
-      {
-        title: '建立最後一道把關',
-        time: '9 分鐘導讀',
-        summary: '用簡單的檢查表，決定什麼可以交付。',
-        sections: [
-          { heading: '對高風險內容留人工確認', body: '涉及數字、承諾、法務、客戶資料和公開發布的內容，應回到原始資料檢查。速度提升的前提，是知道錯誤會在哪裡發生。' },
-          { heading: '每週微調一次', body: '記錄哪一步最常需要修改。下一週只改一個條件，觀察是否真的省下時間，而不是只讓流程看起來更複雜。' },
-        ],
-        exercise: '列出三項交付前必查的項目，並指定誰擁有最終確認權。',
-      },
-    ],
-  },
-  {
-    slug: 'market-validation',
-    number: '02',
-    category: '創業',
-    level: '入門',
-    title: '從想法到第一筆訂單',
-    shortTitle: '市場驗證',
-    subtitle: '不要先做完整產品。先找到真正願意付費的人。',
-    description: '用小規模訪談、明確的提案與一次真實銷售，驗證你以為存在的需求。把模糊的好點子，變成有證據的下一步。',
-    duration: '約 35 分鐘',
-    theme: 'vermilion',
-    coverWord: 'MAKE / IT REAL',
-    outcomes: ['界定第一群目標客戶', '設計不帶答案的訪談問題', '提出一個可測試的最小方案'],
-    lessons: [
-      { title: '找對第一群人', time: '8 分鐘導讀', summary: '從具體情境定義客戶，而不是從廣泛人口標籤開始。', sections: [{ heading: '縮小場景', body: '描述誰在什麼時候遇到什麼問題，以及現在用什麼方法勉強解決。場景愈具體，愈容易找到可以對話的人。' }], exercise: '寫下五位可能正在面對同一問題的人，聯絡其中兩位。' },
-      { title: '問出真實需求', time: '10 分鐘導讀', summary: '請對方說過去的行動，不問他會不會買。', sections: [{ heading: '看行為，不收好評', body: '問「上次遇到這件事是什麼時候？」「你怎麼處理？」「花了多少時間或錢？」。真實故事比對未來的客套承諾更可靠。' }], exercise: '準備三個關於過去行為的問題，完成至少一次訪談。' },
-      { title: '做一個能成交的提案', time: '12 分鐘導讀', summary: '把成果、交付方式、期限與價格說清楚。', sections: [{ heading: '讓對方能做決定', body: '不必先做完整系統。用一頁提案說明你解決的問題、會交付什麼、何時交付，以及試用或購買的條件。' }], exercise: '寫出 100 字以內的提案，向一位受訪者提出具體邀請。' },
-    ],
-  },
-  {
-    slug: 'brand-story',
-    number: '03',
-    category: '品牌',
-    level: '入門',
-    title: '說清楚，你為什麼值得被選',
-    shortTitle: '品牌敘事',
-    subtitle: '一句話讓對的人知道：這就是他要找的。',
-    description: '從客戶問題與實際證據出發，整理品牌主張、首頁訊息與可持續使用的語氣規則。讓品牌不只好看，也能清楚說話。',
-    duration: '約 40 分鐘',
-    theme: 'ink',
-    coverWord: 'SAY / IT CLEAR',
-    outcomes: ['寫出可理解的品牌主張', '用案例支持承諾', '建立一致的文案語氣'],
-    lessons: [
-      { title: '先說客戶正在面對什麼', time: '8 分鐘導讀', summary: '把「我們很厲害」換成客戶看得懂的問題。', sections: [{ heading: '從對方的語言寫起', body: '整理訪談、客服與銷售對話中反覆出現的句子。選出一個最迫切的問題，作為訊息的起點。' }], exercise: '從三段真實客戶對話中，摘出對方描述問題的原話。' },
-      { title: '把承諾寫成一句話', time: '10 分鐘導讀', summary: '說明對象、成果與方法，減少空泛形容詞。', sections: [{ heading: '用具體成果替代形容詞', body: '試著填空：「我們幫助＿，透過＿，做到＿。」如果每個競品都能說同一句話，就再把方法或成果寫得更具體。' }], exercise: '寫三版品牌主張，請一位不熟悉產品的人說出他的理解。' },
-      { title: '讓每個接觸點說同一種話', time: '12 分鐘導讀', summary: '把主張帶到首頁、課程介紹與電子郵件。', sections: [{ heading: '建立簡短語氣規則', body: '決定常用詞、避免的詞、句子長度與證據呈現方式。先修改最常被看到的三個接觸點，再擴展到其他內容。' }], exercise: '用同一語氣重寫一個首頁標題、一段課程摘要與一封歡迎信。' },
-    ],
-  },
-  {
-    slug: 'growth-experiments',
-    number: '04',
-    category: '行銷',
-    level: '進階',
-    title: '用小實驗找到有效增長',
-    shortTitle: '增長實驗',
-    subtitle: '少猜一點。讓下一個決定有數據可依。',
-    description: '建立能回答問題的實驗，而不是追逐漂亮數字。選一個瓶頸、定義假設與判斷標準，再用小規模測試推進。',
-    duration: '約 40 分鐘',
-    theme: 'silver',
-    coverWord: 'TEST / LEARN',
-    outcomes: ['找到漏斗中最重要的瓶頸', '寫出可驗證的假設', '判讀並記錄實驗結果'],
-    lessons: [
-      { title: '找到值得測試的瓶頸', time: '8 分鐘導讀', summary: '先看整體流程，再決定從哪一段開始。', sections: [{ heading: '選一個會改變決策的數字', body: '把訪客、註冊、開始學習與完成課程放進同一條路徑。找出最多人停下來的地方，確認這個數字是否真的反映使用者價值。' }], exercise: '畫出目前的轉換路徑，選出一個最值得改善的節點。' },
-      { title: '寫下可被推翻的假設', time: '10 分鐘導讀', summary: '預先定義要改什麼、期待什麼與如何判斷。', sections: [{ heading: '把想法變成測試', body: '使用「如果我們改變＿，因為＿，我們預期＿」的格式。設定主要指標與觀察期限，也寫下什麼結果會讓你放棄這個想法。' }], exercise: '替選出的瓶頸寫一項假設與一項停止條件。' },
-      { title: '記錄學到的事', time: '12 分鐘導讀', summary: '結果不理想時，也要留下可用的學習。', sections: [{ heading: '分開數據與解釋', body: '先記錄樣本、時間、指標與觀察值，再寫可能原因。避免把一個短期波動直接當成確定的結論。' }], exercise: '建立一頁實驗紀錄：假設、變更、結果、限制與下一步。' },
-    ],
-  },
-]
-
 export const ziweiCourse: Course = {
   slug: 'ziwei-foundations',
-  number: '05',
+  number: '01',
   category: '自我探索',
   level: '入門',
   title: '紫微斗數入門：從排盤到解讀',
   shortTitle: '紫微斗數入門',
-  subtitle: '20 堂課，從生日資料到大限流年，照著步驟讀懂命盤。',
-  description: '由紫微宇宙提供的完整入門課。先準備出生資料，再依序手排命宮、主星、四化與大限；最後練習解讀命盤，將結果用於自我探索與規劃。每堂課包含原站影片、課文與練習。',
-  duration: '約 10 小時',
+  subtitle: '20 堂課，分六個階段，循序讀懂自己的命盤。',
+  description: '紫微宇宙提供的完整入門課。從出生資料、命宮與主星開始，逐步完成手排命盤，再練習解讀與年度規劃。原站影片、課文和表格皆保留；每階段有清楚的學習成果。',
+  duration: '約 7–10 小時',
   theme: 'ink',
   coverWord: 'STAR / MAP',
-  outcomes: ['依照步驟手排一張基本命盤', '看懂十二宮、主星與四化的基本結構', '用大限與流年整理自己的規劃方向'],
+  outcomes: ['完成一張基本手排命盤', '依序辨識十二宮、主星、四化與大限', '寫出一份有保留空間的自我觀察與年度規劃'],
   provider: '紫微宇宙',
   sourceUrl: 'https://ziweiuniverse.com/knowledge/ziwei/course/',
   chapters: [
-    { title: '排盤前的準備', start: 0, end: 3, image: '/images/luxkey-ziwei.webp' },
-    { title: '一步一步手排命盤', start: 4, end: 14, image: '/images/luxkey-ziwei-chart.webp' },
-    { title: '讀懂你的命盤', start: 15, end: 17, image: '/images/luxkey-ziwei-read.webp' },
-    { title: '用命盤做人生規劃', start: 18, end: 19, image: '/images/luxkey-ziwei-plan.webp' },
+    { title: '準備資料與盤面', start: 0, end: 3, image: '/images/luxkey-ziwei.webp', goal: '整理出生資料，畫出可使用的空白命盤。' },
+    { title: '建立命盤骨架', start: 4, end: 6, image: '/images/luxkey-ziwei-chart.webp', goal: '標出命身宮、十二宮與五行局。' },
+    { title: '排出十四主星', start: 7, end: 9, image: '/images/luxkey-ziwei-chart.webp', goal: '依步驟把紫微與天府星系放進盤面。' },
+    { title: '補齊星曜與時間線', start: 10, end: 14, image: '/images/luxkey-ziwei-chart.webp', goal: '加入吉煞、四化與大限，完成第一次手排。' },
+    { title: '練習解讀', start: 15, end: 17, image: '/images/luxkey-ziwei-read.webp', goal: '按照固定順序閱讀，不急著下定論。' },
+    { title: '做自己的年度規劃', start: 18, end: 19, image: '/images/luxkey-ziwei-plan.webp', goal: '把觀察整理成可以回顧的計畫。' },
   ],
   lessons: ziweiLessons as Lesson[],
 }
 
-export const courses: Course[] = [...demoCourses, ziweiCourse]
+const previewCourses: Course[] = [
+  {
+    slug: 'tarot-practice',
+    number: '02',
+    category: '塔羅與諮詢',
+    level: '入門',
+    title: '塔羅諮詢：從練習到第一位預約者',
+    shortTitle: '塔羅諮詢',
+    subtitle: '把喜歡的牌卡練習，整理成清楚、負責任的服務。',
+    description: '先練提問與解讀，再設計諮詢流程、服務範圍及試行方案。這是課程企劃示範，現有內容為四個文字導讀與練習，正式講師影片尚未製作。',
+    duration: '約 45 分鐘',
+    theme: 'vermilion',
+    coverWord: 'TAROT / TALK',
+    outcomes: ['完成一份 30 分鐘諮詢流程', '寫出服務範圍、價格與預約說明', '用試行回饋改進第一次服務'],
+    lessons: [
+      { title: '先練會問，再練解牌', time: '10 分鐘導讀', summary: '從開放問題和傾聽開始，不替對方決定人生。', sections: [{ heading: '把問題問清楚', body: '先請對方描述眼前的情境與想探索的選項。用「這件事你最在意什麼？」代替要求牌卡給出絕對答案，並取得對方同意後再開始。' }, { heading: '保留解讀空間', body: '將牌意當作討論的提示，分清觀察、你的解釋與對方的感受；不要做醫療、法律或投資保證。' }], exercise: '寫下三個開放式提問，和朋友做一次 10 分鐘練習，記錄對方覺得有幫助的部分。' },
+      { title: '設計一次讓人安心的諮詢', time: '10 分鐘導讀', summary: '約定流程、隱私、時間與結束方式。', sections: [{ heading: '把 30 分鐘切成三段', body: '前 5 分鐘確認主題與界線；中間 20 分鐘共同探索牌意與選項；最後 5 分鐘由對方說出自己願意嘗試的一步。' }, { heading: '提前說清楚界線', body: '在預約頁寫明時長、費用、取消規則、保密方式與不提供的專業建議。讓第一次接觸的人知道會發生什麼事。' }], exercise: '完成一頁服務說明，包含適合對象、30 分鐘流程、價格、取消規則與服務界線。' },
+      { title: '用小規模試行找到真實需求', time: '12 分鐘導讀', summary: '收集具體回饋，避免只問「喜不喜歡」。', sections: [{ heading: '邀請合適的試行者', body: '向少量願意給具體意見的人說明試行條件。區分朋友支持與願意付費的需求，明確標註體驗價或正式價。' }, { heading: '問可改善的細節', body: '結束後問：哪一刻最清楚？哪裡太快或太模糊？如果再預約一次，你期待什麼不同？得到許可才可引用評語。' }], exercise: '設計五題試行回饋表，邀請一位合適對象實測。' },
+      { title: '把服務放上預約頁', time: '10 分鐘導讀', summary: '讓詢問、付款與確認步驟一眼看懂。', sections: [{ heading: '只保留必要資訊', body: '預約頁的順序可以是：服務成果、適合對象、時間與價格、可選時段、付款與取消規則、常見問題。先用一個方案測試，避免選項太多。' }, { heading: '對每個預約有一致回覆', body: '確認訊息應包括日期、時區、形式、準備事項與聯絡方式；結束後再寄一份簡短的回顧問題。' }], exercise: '寫一版 150 字服務介紹與一封預約確認訊息，請不熟悉服務的人找出他仍有的疑問。' },
+    ],
+  },
+  {
+    slug: 'booking-marketing',
+    number: '03',
+    category: '預約行銷',
+    level: '入門',
+    title: '讓詢問變成預約：服務業行銷',
+    shortTitle: '預約行銷',
+    subtitle: '從看見你，到放心點下預約。',
+    description: '適合諮詢、美業、教學與其他預約型服務。用明確方案、可信頁面與有溫度的跟進，把流量接到可衡量的預約流程。課程企劃示範，現有四個文字單元。',
+    duration: '約 45 分鐘',
+    theme: 'teal',
+    coverWord: 'BOOK / MORE',
+    outcomes: ['畫出從發現到預約的四步路徑', '完成一頁服務與預約文案', '設定可衡量的詢問與預約指標'],
+    lessons: [
+      { title: '先定義你要服務誰', time: '9 分鐘導讀', summary: '用情境與需求描述客戶，不用模糊的大眾標籤。', sections: [{ heading: '記下真實的預約動機', body: '查看過去詢問、評論與對話，找出反覆出現的問題、想得到的結果及常見疑慮。選一個最能服務好的情境，先為它設計訊息。' }], exercise: '整理三段真實詢問，寫出對方來找你的時刻、目標與疑慮。' },
+      { title: '把方案、價格與流程說清楚', time: '12 分鐘導讀', summary: '減少需要私訊猜測的細節。', sections: [{ heading: '一頁回答六個問題', body: '說明服務適合誰、會做什麼、時長、價格、地點或線上方式、取消與改期規則。客戶越容易比較，越能放心決定。' }], exercise: '寫一版服務頁：標題、成果、流程、時長與價格、預約按鈕、常見問題。' },
+      { title: '把內容導到預約，而非只追讚數', time: '10 分鐘導讀', summary: '每則內容只回答一個疑問，給一個下一步。', sections: [{ heading: '用三種內容建立信任', body: '分享服務過程、常見問題的解答、取得同意的客戶故事。每篇只放一個清楚動作，例如查看服務頁或選擇時段；避免誇大效果。' }], exercise: '規劃三篇內容，每篇各寫一個客戶疑問、一個證據與一個預約連結。' },
+      { title: '追蹤詢問、預約與到店', time: '10 分鐘導讀', summary: '先用簡單表格找出真正卡住的步驟。', sections: [{ heading: '分段看轉換', body: '每週記錄看見服務頁的人、提出詢問的人、完成預約的人與實際到場的人。若詢問多而預約少，先檢查價格、時段和回覆速度。' }], exercise: '建立四欄週報，設定下一週只改善一個預約障礙。' },
+    ],
+  },
+  {
+    slug: 'personal-brand',
+    number: '04',
+    category: '個人品牌',
+    level: '入門',
+    title: '個人品牌內容：被對的人看見',
+    shortTitle: '個人品牌',
+    subtitle: '把你的專長說清楚，讓內容帶來對話。',
+    description: '從客戶語言、可信證據與簡單的內容節奏出發，建立能長期維持的個人品牌。不是每天大量發文，而是讓適合的人知道你能幫什麼忙。課程企劃示範，現有四個文字單元。',
+    duration: '約 40 分鐘',
+    theme: 'ink',
+    coverWord: 'BE / SEEN',
+    outcomes: ['寫出清楚的個人服務定位', '規劃三種可持續內容欄目', '完成一週發文與回覆流程'],
+    lessons: [
+      { title: '說出你幫誰解決什麼事', time: '8 分鐘導讀', summary: '用具體客戶與成果取代空泛標籤。', sections: [{ heading: '一句話說明服務', body: '試著寫「我協助哪一類人，在什麼情境下，透過什麼服務，得到什麼具體改變」。向陌生人讀一次，確認他能說出你提供什麼。' }], exercise: '寫三版定位句，請一位不熟悉你的人說出他的理解。' },
+      { title: '用證據讓人信任', time: '10 分鐘導讀', summary: '展示做事方式與案例，不靠誇大的承諾。', sections: [{ heading: '收集可以公開的素材', body: '整理工作過程、方法示範、常見問題與取得同意的案例。用可核對的事實說明你的判斷，不使用未授權的客戶隱私。' }], exercise: '列出五件能展示專業的方法或素材，選一件做成簡短案例。' },
+      { title: '設計三個內容欄目', time: '10 分鐘導讀', summary: '建立可重複的節奏。', sections: [{ heading: '讓主題回答常見問題', body: '例如「第一次預約會發生什麼」「我如何做決定」「服務後如何練習」。每個欄目都有固定讀者問題與下一步，製作時較不容易卡住。' }], exercise: '為三個欄目各寫一個標題、重點與行動邀請。' },
+      { title: '從內容接到對話', time: '9 分鐘導讀', summary: '把回覆、私訊與預約串成自然流程。', sections: [{ heading: '設計一致的回覆方式', body: '先回答問題，再給合適資源；只有對方表達需求時才邀請預約。記下反覆出現的問題，反過來更新服務頁與內容。' }], exercise: '排出一週兩篇內容和每天 15 分鐘回覆的節奏，寫一則不施壓的預約邀請。' },
+    ],
+  },
+  {
+    slug: 'ai-solo-business',
+    number: '05',
+    category: 'AI 實作',
+    level: '入門',
+    title: '用 AI 打理一人事業的日常',
+    shortTitle: 'AI 一人事業',
+    subtitle: '省下重複整理的時間，把心力留給客戶。',
+    description: '選一件重複工作，建立可檢查的 AI 協作流程：整理詢問、準備內容、回覆草稿與每週回顧。涉及客戶資料時先去識別化。課程企劃示範，現有四個文字單元。',
+    duration: '約 40 分鐘',
+    theme: 'silver',
+    coverWord: 'MAKE / SPACE',
+    outcomes: ['找出最值得節省的一項工作', '寫出可重用的 AI 任務簡報', '建立人工確認與資料保護清單'],
+    lessons: [
+      { title: '找出最耗時的重複工作', time: '8 分鐘導讀', summary: '先看頻率、耗時與錯誤風險。', sections: [{ heading: '從一週的事務挑選', body: '記下詢問整理、內容初稿、行程確認與回顧等工作。第一個任務最好有固定輸入、明確輸出，而且你能快速檢查結果。' }], exercise: '列出三件每週重複的工作，選一件可以在 10 分鐘內核對結果的任務。' },
+      { title: '寫一份可重用的任務簡報', time: '10 分鐘導讀', summary: '把背景、語氣、輸入與不可猜測的地方寫清楚。', sections: [{ heading: '要求可檢查的輸出', body: '描述目標對象、原始資料、回覆格式與品質標準。要求 AI 標記缺少的資訊，不能自己補造價格、時段或服務承諾。' }], exercise: '為上一單元選的工作寫出「背景、輸入、輸出、待人工確認」四欄提示。' },
+      { title: '保護客戶資料並人工把關', time: '10 分鐘導讀', summary: '把個資和承諾留在可控範圍。', sections: [{ heading: '先去識別化', body: '不要把姓名、生日、電話、完整諮詢紀錄直接放進不適合處理個資的工具。檢查平台設定與使用條款，必要時只提供匿名摘要。' }, { heading: '公開前逐項確認', body: '對價格、預約時間、效果描述、法規與來源回到原始資料核對。AI 草稿可以加速，對客戶的承諾仍由你決定。' }], exercise: '做一張五項檢查表，拿一段匿名資料試跑，記下所有需修改的地方。' },
+      { title: '每週回顧是否真的省時', time: '9 分鐘導讀', summary: '看交付品質與時間，不只看產出量。', sections: [{ heading: '比較前後的工作量', body: '記下原本耗時、AI 協作後耗時、人工修改次數與客戶是否更容易理解。若修正時間變多，就縮小任務範圍或改善輸入。' }], exercise: '完成一張一週紀錄：節省時間、修改次數、錯誤與下一次只改的一件事。' },
+    ],
+  },
+]
 
-export const categories = ['全部', 'AI 實作', '創業', '品牌', '行銷', '自我探索']
+export const courses: Course[] = [ziweiCourse, ...previewCourses]
+
+export const categories = ['全部', '自我探索', '塔羅與諮詢', '預約行銷', '個人品牌', 'AI 實作']

@@ -74,6 +74,8 @@ svg { flex: none; }
 .course-card-body { padding: 26px; display: flex; flex-direction: column; flex: 1; }
 .card-meta { display: flex; justify-content: space-between; gap: 14px; color: var(--ink-500); font-size: 10px; }
 .course-card h3 { margin: 22px 0 8px; font-size: 24px; letter-spacing: -.02em; }
+.course-status { align-self: flex-start; margin-top: 17px; padding: 5px 8px; background: var(--teal-50); color: var(--teal-700); font-size: 11px; font-weight: 700; }
+.course-status + h3 { margin-top: 14px; }
 .course-card p { margin: 0 0 26px; color: var(--ink-600); font-size: 14px; line-height: 1.65; }
 .card-action { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 19px; border-top: 1px solid var(--silver-200); font-size: 13px; font-weight: 700; }
 .course-card:hover .card-action { color: var(--vermillion); }
@@ -314,24 +316,25 @@ svg { flex: none; }
 }
 
 /* Editorial landing experience */
-.hero-section { position: relative; min-height: 710px; display: flex; align-items: stretch; padding: 0; overflow: hidden; background: var(--ink) url('/images/luxkey-hero.webp') 61% center / cover no-repeat; color: var(--white); }
-.hero-section::before { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(10, 20, 22, .92) 0%, rgba(10, 20, 22, .75) 30%, rgba(10, 20, 22, .28) 68%, rgba(10, 20, 22, .08) 100%), linear-gradient(0deg, rgba(10, 20, 22, .32), transparent 42%); }
+.hero-section { position: relative; min-height: 710px; display: flex; align-items: stretch; padding: 0; overflow: hidden; background: var(--white) url('/images/luxkey-hero.webp') 61% center / cover no-repeat; color: var(--ink); }
+.hero-section::before { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(255,255,255,.96) 0%, rgba(255,255,255,.82) 30%, rgba(255,255,255,0) 68%); }
 .hero-grid { position: relative; z-index: 1; width: min(100% - 64px, 1200px); min-height: 710px; display: flex; flex-direction: column; align-items: stretch; justify-content: space-between; gap: 0; padding: 113px 0 34px; }
 .hero-copy { padding: 0; max-width: 670px; }
-.hero-copy .section-kicker { color: var(--cyan-200); }
-.hero-copy h1 { margin: 0 0 29px; font-size: clamp(66px, 6.8vw, 106px); line-height: 1.06; letter-spacing: -.06em; text-shadow: 0 2px 20px rgba(0,0,0,.12); }
-.hero-copy h1 span { color: var(--white); }
-.hero-intro { max-width: 480px; color: rgba(255,255,255,.88); font-size: 20px; }
-.hero-actions .text-link { color: var(--white); border-color: rgba(255,255,255,.7); }
-.hero-actions .text-link:hover { color: var(--cyan-200); border-color: var(--cyan-200); }
-.hero-bottom { color: rgba(255,255,255,.76); margin-top: 72px; }
-.hero-bottom .hairline { border-color: rgba(255,255,255,.48); }
-.hero-image-caption { width: 100%; display: flex; justify-content: space-between; gap: 20px; padding-top: 17px; border-top: 1px solid rgba(255,255,255,.35); color: rgba(255,255,255,.78); font: 700 10px var(--font-mono); letter-spacing: .16em; }
-.hero-image-caption span:last-child { color: var(--cyan-200); }
-.principles { background: var(--ink); border: 0; color: var(--white); }
+.hero-copy .section-kicker { color: var(--teal-700); }
+.hero-copy h1 { margin: 0 0 29px; font-size: clamp(66px, 6.8vw, 106px); line-height: 1.06; letter-spacing: -.06em; }
+.hero-copy h1 span { color: var(--vermillion); }
+.hero-intro { max-width: 480px; color: var(--ink-600); font-size: 20px; }
+.hero-actions .text-link { color: var(--ink); border-color: var(--ink); }
+.hero-actions .text-link:hover { color: var(--teal-700); border-color: var(--teal-700); }
+.hero-bottom { color: var(--ink-500); margin-top: 72px; }
+.hero-bottom .hairline { border-color: var(--silver-300); }
+.hero-image-caption { width: 100%; display: flex; justify-content: space-between; gap: 20px; padding-top: 17px; border-top: 1px solid var(--silver-300); color: var(--ink-500); font: 700 10px var(--font-mono); letter-spacing: .16em; }
+.hero-image-caption span:last-child { color: var(--teal-700); }
+.principles { background: var(--teal); border: 0; color: var(--white); }
 .principles-grid { min-height: 150px; }
 .principles-label, .principles-caption { color: rgba(255,255,255,.65); }
-.principles-grid em { color: var(--cyan); }
+.principles-grid p { color: var(--white); }
+.principles-grid em { color: var(--white); }
 .path-section { padding: 118px 0 126px; background: var(--white); scroll-margin-top: 84px; }
 .path-grid { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); align-items: start; gap: 9%; }
 .path-intro { position: sticky; top: 140px; padding-top: 21px; }
@@ -356,28 +359,28 @@ svg { flex: none; }
 .path-result a:hover { color: var(--white); border-color: var(--white); }
 .path-prompt { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 25px 28px; background: var(--ink); color: rgba(255,255,255,.8); font-size: 13px; }
 .path-prompt svg { color: var(--cyan); }
-.cover-ai-workflow { background: linear-gradient(90deg, rgba(6,31,32,.86), rgba(6,31,32,.22)), url('/images/luxkey-hero.webp') 60% center / cover no-repeat; color: var(--white); }
-.cover-brand-story { background: linear-gradient(90deg, rgba(15,20,22,.89), rgba(15,20,22,.18)), url('/images/luxkey-studio.webp') 58% center / cover no-repeat; color: var(--white); }
-.cover-market-validation { background: linear-gradient(90deg, rgba(18,26,27,.9), rgba(18,26,27,.1)), url('/images/luxkey-market.webp') 58% center / cover no-repeat; color: var(--white); }
-.cover-growth-experiments { background: linear-gradient(90deg, rgba(10,29,30,.89), rgba(10,29,30,.16)), url('/images/luxkey-growth.webp') 60% center / cover no-repeat; color: var(--white); }
-.cover-ziwei-foundations { background: linear-gradient(90deg, rgba(10,25,28,.9), rgba(10,25,28,.13)), url('/images/luxkey-ziwei.webp') 60% center / cover no-repeat; color: var(--white); }
-.course-card .cover-word { text-shadow: 0 2px 22px rgba(0,0,0,.12); }
-.cover-ai-workflow .cover-word span:last-child, .cover-brand-story .cover-word span:last-child, .cover-market-validation .cover-word span:last-child, .cover-growth-experiments .cover-word span:last-child, .cover-ziwei-foundations .cover-word span:last-child { opacity: .9; color: var(--cyan-200); }
-.cover-large.cover-ai-workflow { background-position: 59% center; }
-.cover-large.cover-brand-story { background-position: 58% center; }
+.cover-tarot-practice { background: linear-gradient(90deg, rgba(255,255,255,.97), rgba(255,255,255,.08) 79%), url('/images/luxkey-tarot.webp') 60% center / cover no-repeat; color: var(--ink); }
+.cover-booking-marketing { background: linear-gradient(90deg, rgba(255,255,255,.97), rgba(255,255,255,.08) 79%), url('/images/luxkey-booking.webp') 60% center / cover no-repeat; color: var(--ink); }
+.cover-personal-brand { background: linear-gradient(90deg, rgba(255,255,255,.97), rgba(255,255,255,.08) 79%), url('/images/luxkey-brand.webp') 60% center / cover no-repeat; color: var(--ink); }
+.cover-ai-solo-business { background: linear-gradient(90deg, rgba(255,255,255,.97), rgba(255,255,255,.08) 79%), url('/images/luxkey-ai.webp') 60% center / cover no-repeat; color: var(--ink); }
+.cover-ziwei-foundations { background: linear-gradient(90deg, rgba(255,255,255,.97), rgba(255,255,255,.08) 79%), url('/images/luxkey-ziwei.webp') 60% center / cover no-repeat; color: var(--ink); }
+.cover-tarot-practice .cover-word span:last-child, .cover-booking-marketing .cover-word span:last-child, .cover-personal-brand .cover-word span:last-child, .cover-ai-solo-business .cover-word span:last-child, .cover-ziwei-foundations .cover-word span:last-child { opacity: 1; color: var(--teal-700); }
+.cover-tarot-practice .cover-word span:last-child { color: var(--vermillion); }
 .spotlight-section { padding: 116px 0 122px; background: var(--silver-50); }
 .spotlight-grid { display: grid; grid-template-columns: minmax(0, 1.04fr) minmax(0, .96fr); align-items: center; gap: 9%; }
-.spotlight-image { min-height: 535px; display: flex; flex-direction: column; justify-content: space-between; padding: 31px; overflow: hidden; background: linear-gradient(90deg, rgba(9,22,24,.46), transparent 75%), url('/images/luxkey-ziwei.webp') 60% center / cover no-repeat; color: var(--white); box-shadow: var(--shadow-lg); transition: transform .25s, box-shadow .25s; }
+.spotlight-image { min-height: 535px; display: flex; flex-direction: column; justify-content: space-between; padding: 31px; overflow: hidden; background: linear-gradient(90deg, rgba(255,255,255,.94), rgba(255,255,255,.06) 80%), url('/images/luxkey-ziwei.webp') 60% center / cover no-repeat; color: var(--ink); box-shadow: var(--shadow-lg); transition: transform .25s, box-shadow .25s; }
 .spotlight-image:hover { transform: translateY(-4px); box-shadow: var(--shadow-xl); }
 .spotlight-image > span { font: 700 10px var(--font-mono); letter-spacing: .13em; }
 .spotlight-image > strong { align-self: flex-start; margin-top: 65px; font: 800 clamp(84px, 8.2vw, 123px)/.83 var(--font-display); letter-spacing: -.09em; }
-.spotlight-image > span:last-child { padding-top: 18px; border-top: 1px solid rgba(255,255,255,.55); }
+.spotlight-image > span:last-child { padding-top: 18px; border-top: 1px solid var(--silver-300); }
 .spotlight-copy h2 { margin: 0; font-size: clamp(43px, 4.2vw, 63px); line-height: 1.12; letter-spacing: -.05em; }
 .spotlight-copy h2 span { color: var(--teal); }
 .spotlight-copy > p { max-width: 430px; margin: 25px 0 29px; color: var(--ink-600); font-size: 17px; line-height: 1.8; }
 .spotlight-facts { display: flex; flex-wrap: wrap; gap: 10px 19px; padding: 18px 0 29px; margin-bottom: 24px; border-block: 1px solid var(--silver-300); color: var(--ink-600); font-size: 12px; font-weight: 700; }
 .spotlight-facts span::before { content: '•'; margin-right: 8px; color: var(--vermillion); }
 .detail-hero-featured .detail-copy h1 { font-size: clamp(45px, 4.65vw, 66px); }
+.detail-prep { max-width: 500px; padding: 14px 16px; margin: 0 0 24px; border-left: 3px solid var(--teal); background: var(--teal-50); color: var(--ink-700); font-size: 13px; line-height: 1.7; }
+.detail-prep strong { margin-right: 8px; color: var(--teal-700); }
 .detail-aside a, .lesson-source-note a { display: inline-flex; gap: 3px; align-items: center; color: var(--teal-700); font-weight: 700; }
 .detail-aside a:hover, .lesson-source-note a:hover { color: var(--vermillion); }
 .syllabus-chapter + .syllabus-chapter { margin-top: 42px; }
@@ -385,6 +388,7 @@ svg { flex: none; }
 .syllabus-chapter-title > span, .syllabus-chapter-title small { color: var(--teal); font: 700 10px var(--font-mono); letter-spacing: .09em; }
 .syllabus-chapter-title h3 { margin: 0 auto 0 0; font-size: 25px; letter-spacing: -.03em; }
 .syllabus-chapter-title small { color: var(--ink-500); }
+.chapter-goal { margin: 0; padding: 14px 0 16px; color: var(--teal-700); font-size: 13px; font-weight: 700; }
 .syllabus-chapter-title + .syllabus-list { border-top: 0; }
 .sidebar-chapter { flex: none; padding: 13px 0; border-top: 1px solid var(--silver-300); color: var(--teal-700); font-size: 12px; font-weight: 700; }
 .lesson-video-wrap { margin: 0 0 32px; background: var(--ink); }
@@ -413,8 +417,8 @@ svg { flex: none; }
   .spotlight-image { min-height: 440px; }
   .spotlight-copy h2 { font-size: clamp(42px, 8vw, 59px); }
   .detail-hero-featured .detail-copy h1 { font-size: clamp(42px, 8vw, 60px); }
-  .hero-section { min-height: 690px; background-position: 62% center; }
-  .hero-section::before { background: linear-gradient(90deg, rgba(10,20,22,.83), rgba(10,20,22,.38)), linear-gradient(0deg, rgba(10,20,22,.55), transparent 50%); }
+  .hero-section { min-height: 690px; background-position: 75% center; }
+  .hero-section::before { background: linear-gradient(90deg, rgba(255,255,255,.98), rgba(255,255,255,.75) 49%, rgba(255,255,255,.03) 100%); }
   .hero-grid { width: min(100% - 36px, 1200px); min-height: 690px; padding: 79px 0 23px; }
   .hero-copy h1 { font-size: clamp(58px, 10vw, 78px); }
   .hero-bottom { margin-top: 70px; }
@@ -433,8 +437,8 @@ svg { flex: none; }
   .syllabus-chapter-title h3 { font-size: 20px; }
   .lesson-video-caption { align-items: flex-start; flex-direction: column; }
   .hero-section, .hero-grid { min-height: 680px; }
-  .hero-section { background-position: 61% center; }
-  .hero-section::before { background: linear-gradient(90deg, rgba(10,20,22,.78), rgba(10,20,22,.52)), linear-gradient(0deg, rgba(10,20,22,.66), transparent 57%); }
+  .hero-section { background-position: 70% center; }
+  .hero-section::before { background: linear-gradient(90deg, rgba(255,255,255,.98), rgba(255,255,255,.82) 56%, rgba(255,255,255,.22) 100%); }
   .hero-grid { padding-top: 78px; }
   .hero-copy h1 { font-size: clamp(51px, 13.5vw, 68px); }
   .hero-intro { font-size: 17px; }

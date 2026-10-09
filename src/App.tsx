@@ -102,6 +102,7 @@ function CourseCard({ course, state }: { course: Course; state?: CourseState }) 
     <Cover course={course} />
     <div className="course-card-body">
       <div className="card-meta"><span>{course.category} / {course.level}</span><span>{course.duration}</span></div>
+      <div className="course-status">{course.provider ? '20 堂完整課程' : '課綱示範 · 文字練習'}</div>
       <h3>{course.title}</h3><p>{course.subtitle}</p>
       <div className="card-action"><span>{state?.started ? `${percent}% 已完成` : '查看課程'}</span><ArrowUpRight size={18} /></div>
     </div>
@@ -112,18 +113,18 @@ function Home({ learning }: { learning: LearningState }) {
   const [selectedGoal, setSelectedGoal] = useState<string | null>(null)
   const recommended = courses.find((course) => course.slug === selectedGoal)
   const goals = [
-    { slug: 'ai-workflow', label: '把時間從重複工作拿回來', tag: 'AI 實作' },
-    { slug: 'market-validation', label: '讓自己的想法被市場驗證', tag: '創業' },
-    { slug: 'brand-story', label: '說清楚品牌的獨特價值', tag: '品牌' },
-    { slug: 'growth-experiments', label: '找到真正有效的增長方式', tag: '行銷' },
     { slug: 'ziwei-foundations', label: '從命盤認識自己與人生節奏', tag: '自我探索' },
+    { slug: 'tarot-practice', label: '把塔羅練習變成可信任的諮詢', tag: '塔羅與諮詢' },
+    { slug: 'booking-marketing', label: '讓服務詢問變成真實預約', tag: '預約行銷' },
+    { slug: 'personal-brand', label: '讓對的人看見我的專長', tag: '個人品牌' },
+    { slug: 'ai-solo-business', label: '用 AI 騰出服務客戶的時間', tag: 'AI 實作' },
   ]
   return <main>
     <section className="hero-section"><div className="container hero-grid">
       <div className="hero-copy">
         <div className="section-kicker"><span className="kicker-line" /> LUXKEY ACADEMY · LEARN BY DOING</div>
         <h1>把下一步，<br /><span>學成真的。</span></h1>
-        <p className="hero-intro">從工作技能到自我探索，從想法到行動。每堂課都帶你做出一件看得見的事。</p>
+        <p className="hero-intro">從認識自己、設計服務，到讓客戶安心預約。找到你的方向，學會方法，做出看得見的下一步。</p>
         <div className="hero-actions"><button type="button" className="btn btn-primary" onClick={() => document.getElementById('find-path')?.scrollIntoView({ behavior: 'smooth' })}>找到適合我的課 <ArrowUpRight size={19} /></button><a className="text-link" href="#/explore">探索所有課程 <ArrowRight size={18} /></a></div>
         <div className="hero-bottom"><span>01 / 05</span><div className="hairline" /><span>LEARN BY DOING</span></div>
       </div>
@@ -137,8 +138,8 @@ function Home({ learning }: { learning: LearningState }) {
     </div></section>
 
     <section className="spotlight-section"><div className="container spotlight-grid">
-      <a className="spotlight-image" href={courseHref(ziweiCourse)} aria-label="查看紫微斗數入門課程"><span>NEW CLASS / 05</span><strong>STAR<br />MAP.</strong><span>20 LESSONS · ZIWEI UNIVERSE</span></a>
-      <div className="spotlight-copy"><div className="section-kicker">本月選讀 / 紫微宇宙</div><h2>從一張命盤，<br /><span>讀懂自己的節奏。</span></h2><p>20 堂紫微斗數入門課，從出生資料、手排命盤，一步步走到解讀與規劃。每堂都有原站影片、課文和實作練習。</p><div className="spotlight-facts"><span>20 堂完整課程</span><span>4 個學習階段</span><span>免費開始</span></div><a className="btn btn-primary" href={courseHref(ziweiCourse)}>查看紫微入門課 <ArrowUpRight size={19} /></a></div>
+      <a className="spotlight-image" href={courseHref(ziweiCourse)} aria-label="查看紫微斗數入門課程"><span>CLASS 01 / 05</span><strong>STAR<br />MAP.</strong><span>20 LESSONS · ZIWEI UNIVERSE</span></a>
+      <div className="spotlight-copy"><div className="section-kicker">第一門完整課 / 紫微宇宙</div><h2>從一張命盤，<br /><span>讀懂自己的節奏。</span></h2><p>20 堂紫微斗數入門課，分六個階段，從出生資料、手排命盤，一步步走到解讀與規劃。每堂都有原站影片、課文和實作練習。</p><div className="spotlight-facts"><span>20 堂完整課程</span><span>6 個學習階段</span><span>依自己的節奏開始</span></div><a className="btn btn-primary" href={courseHref(ziweiCourse)}>查看紫微入門課 <ArrowUpRight size={19} /></a></div>
     </div></section>
 
     <section className="path-section" id="find-path"><div className="container path-grid">
@@ -189,11 +190,11 @@ function CourseDetail({ course, state, onStart }: { course: Course; state?: Cour
   return <main>
     <section className="detail-top"><div className="container"><a className="back-link" href="#/explore"><ArrowLeft size={17} /> 返回所有課程</a></div></section>
     <section className={`detail-hero ${course.provider ? 'detail-hero-featured' : ''}`}><div className="container detail-grid">
-      <div className="detail-copy"><div className="section-kicker">{course.category} / {course.level} / CLASS {course.number}</div><h1>{course.title}</h1><p className="detail-subtitle">{course.subtitle}</p><div className="detail-meta"><span><BookOpen size={18} /> {course.lessons.length} {course.provider ? '堂課' : '個單元'}</span><span><Clock3 size={18} /> {course.duration}</span>{course.provider && <span><Play size={18} /> {course.lessons.length} 支影片</span>}</div><p className="detail-description">{course.description}</p><button type="button" className="btn btn-primary" onClick={() => onStart(course, resumeIndex < 0 ? 0 : resumeIndex)}>{state?.started ? '繼續學習' : '開始這堂課'} <ArrowUpRight size={20} /></button><span className="detail-aside">{course.provider ? <>內容來源：<a href={course.sourceUrl} target="_blank" rel="noopener noreferrer">{course.provider} <ArrowUpRight size={13} /></a></> : '示範課程 · 文字導讀與練習'}</span>{state?.started && <span className="detail-progress">已完成 {percent}%</span>}</div>
+      <div className="detail-copy"><div className="section-kicker">{course.category} / {course.level} / CLASS {course.number}</div><h1>{course.title}</h1><p className="detail-subtitle">{course.subtitle}</p><div className="detail-meta"><span><BookOpen size={18} /> {course.lessons.length} {course.provider ? '堂課' : '個單元'}</span><span><Clock3 size={18} /> {course.duration}</span>{course.provider && <span><Play size={18} /> {course.lessons.length} 支影片</span>}</div><p className="detail-description">{course.description}</p>{course.provider && <p className="detail-prep"><strong>課前準備</strong> 出生年月日與時辰、紙筆；每次安排 20–30 分鐘，完成一小步即可。</p>}<button type="button" className="btn btn-primary" onClick={() => onStart(course, resumeIndex < 0 ? 0 : resumeIndex)}>{state?.started ? '繼續學習' : '開始這堂課'} <ArrowUpRight size={20} /></button><span className="detail-aside">{course.provider ? <>內容來源：<a href={course.sourceUrl} target="_blank" rel="noopener noreferrer">{course.provider} <ArrowUpRight size={13} /></a></> : '課綱示範 · 目前提供文字導讀與練習，尚無講師影片'}</span>{state?.started && <span className="detail-progress">已完成 {percent}%</span>}</div>
       <Cover course={course} large />
     </div></section>
     <section className="section outcomes-section"><div className="container outcomes-grid"><div><div className="section-kicker">01 / WHAT YOU WILL DO</div><h2>學完後，<br />你能做到。</h2></div><ol>{course.outcomes.map((outcome, index) => <li key={outcome}><span>{String(index + 1).padStart(2, '0')}</span><p>{outcome}</p><Check size={19} /></li>)}</ol></div></section>
-    <section className="section syllabus-section"><div className="container"><div className="section-heading"><div><div className="section-kicker">02 / THE WORK</div><h2>課程單元</h2></div><span className="syllabus-count">{course.lessons.length} LESSONS / {course.duration}</span></div>{chapters.map((chapter, chapterIndex) => <div className="syllabus-chapter" key={chapter.title || 'all'}>{chapter.title && <div className="syllabus-chapter-title"><span>PART {String(chapterIndex + 1).padStart(2, '0')}</span><h3>{chapter.title}</h3><small>{String(chapter.end - chapter.start + 1).padStart(2, '0')} LESSONS</small></div>}<div className="syllabus-list">{course.lessons.slice(chapter.start, chapter.end + 1).map((lesson, offset) => { const index = chapter.start + offset; return <button type="button" key={lesson.title} onClick={() => onStart(course, index)}><span className="syllabus-number">{String(index + 1).padStart(2, '0')}</span><span className="syllabus-content"><strong>{lesson.title}</strong><small>{lesson.summary}</small></span><span className="syllabus-time">{lesson.time}</span><ArrowUpRight size={22} /></button> })}</div></div>)}</div></section>
+    <section className="section syllabus-section"><div className="container"><div className="section-heading"><div><div className="section-kicker">02 / THE WORK</div><h2>課程單元</h2></div><span className="syllabus-count">{course.lessons.length} LESSONS / {course.duration}</span></div>{chapters.map((chapter, chapterIndex) => <div className="syllabus-chapter" key={chapter.title || 'all'}>{chapter.title && <div className="syllabus-chapter-title"><span>PART {String(chapterIndex + 1).padStart(2, '0')}</span><h3>{chapter.title}</h3><small>{String(chapter.end - chapter.start + 1).padStart(2, '0')} LESSONS</small></div>}{chapter.goal && <p className="chapter-goal">這一階段完成：{chapter.goal}</p>}<div className="syllabus-list">{course.lessons.slice(chapter.start, chapter.end + 1).map((lesson, offset) => { const index = chapter.start + offset; return <button type="button" key={lesson.title} onClick={() => onStart(course, index)}><span className="syllabus-number">{String(index + 1).padStart(2, '0')}</span><span className="syllabus-content"><strong>{lesson.title}</strong><small>{lesson.summary}</small></span><span className="syllabus-time">{lesson.time}</span><ArrowUpRight size={22} /></button> })}</div></div>)}</div></section>
     <section className="detail-bottom"><div className="container"><div><span className="section-kicker">YOUR NEXT STEP</span><h2>學會一件事。<br />做出一件事。</h2></div><button type="button" className="btn btn-primary" onClick={() => onStart(course)}>開始學習 <ArrowUpRight size={19} /></button></div></section>
   </main>
 }
