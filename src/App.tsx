@@ -7,6 +7,7 @@ import {
   Check,
   CheckCircle2,
   ChevronLeft,
+  ChevronDown,
   ChevronRight,
   Clock3,
   Menu,
@@ -15,6 +16,7 @@ import {
   X,
 } from 'lucide-react'
 import { categories, courses, ziweiCourse, type Course, type LessonBlock } from './data'
+import { capstoneFields, chapterChecks, lessonActivities } from './ziwei-assessments'
 
 type Route =
   | { page: 'home' }
@@ -24,7 +26,16 @@ type Route =
   | { page: 'lesson'; slug: string; index: number }
   | { page: 'not-found' }
 
-type CourseState = { started: boolean; completed: number[]; notes: Record<number, string> }
+type CourseState = {
+  started: boolean
+  completed: number[]
+  notes: Record<number, string>
+  activities?: Record<number, string>
+  checkAnswers?: Record<number, number[]>
+  checkPassed?: number[]
+  capstone?: Record<string, string>
+  capstoneSubmitted?: boolean
+}
 type LearningState = Record<string, CourseState>
 
 function readRoute(): Route {
@@ -50,8 +61,23 @@ function readLearning(): LearningState {
 
 function courseHref(course: Course) { return `#/courses/${course.slug}` }
 function lessonHref(course: Course, index: number) { return `#/learn/${course.slug}/${index}` }
+function assetPath(path: string) { return `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}` }
 function progressFor(course: Course, state?: CourseState) {
-  return Math.round(((state?.completed.filter((index) => index >= 0 && index < course.lessons.length).length || 0) / course.lessons.length) * 100)
+  const completed = state?.completed.filter((index) => index >= 0 && index < course.lessons.length).length || 0
+  if (course.slug !== ziweiCourse.slug) return Math.round((completed / course.lessons.length) * 100)
+  const checks = ziweiCourse.chapters?.length || 0
+  const passed = state?.checkPassed?.filter((index) => chapterChecks[index]).length || 0
+  return Math.round(((completed + passed + (state?.capstoneSubmitted ? 1 : 0)) / (course.lessons.length + checks + 1)) * 100)
+}
+function resumeLessonIndex(course: Course, state?: CourseState) {
+  const nextLesson = course.lessons.findIndex((_, index) => !state?.completed.includes(index))
+  if (nextLesson >= 0) return nextLesson
+  if (course.slug === ziweiCourse.slug) {
+    const pendingCheck = Object.keys(chapterChecks).map(Number).find((index) => !state?.checkPassed?.includes(index))
+    if (pendingCheck !== undefined) return pendingCheck
+    if (!state?.capstoneSubmitted) return course.lessons.length - 1
+  }
+  return 0
 }
 
 function Header({ route }: { route: Route }) {
@@ -138,8 +164,8 @@ function Home({ learning }: { learning: LearningState }) {
     </div></section>
 
     <section className="spotlight-section"><div className="container spotlight-grid">
-      <a className="spotlight-image" href={courseHref(ziweiCourse)} aria-label="查看紫微斗數入門課程"><span>CLASS 01 / 05</span><strong>STAR<br />MAP.</strong><span>20 LESSONS · ZIWEI UNIVERSE</span></a>
-      <div className="spotlight-copy"><div className="section-kicker">第一門完整課 / 紫微宇宙</div><h2>從一張命盤，<br /><span>讀懂自己的節奏。</span></h2><p>20 堂紫微斗數入門課，分六個階段，從出生資料、手排命盤，一步步走到解讀與規劃。每堂都有原站影片、課文和實作練習。</p><div className="spotlight-facts"><span>20 堂完整課程</span><span>6 個學習階段</span><span>依自己的節奏開始</span></div><a className="btn btn-primary" href={courseHref(ziweiCourse)}>查看紫微入門課 <ArrowUpRight size={19} /></a></div>
+      <a className="spotlight-image" href={courseHref(ziweiCourse)} aria-label="查看紫微斗數入門課程"><span>第一門完整課程 / 紫微宇宙</span><strong>紫微斗數<br />入門</strong><span>20 堂課 · 6 個學習階段</span></a>
+      <div className="spotlight-copy"><div className="section-kicker">第一門完整課 / 紫微宇宙</div><h2>從一張命盤，<br /><span>讀懂自己的節奏。</span></h2><p>20 堂紫微斗數入門課，分六個階段，從出生資料、手排命盤，一步步走到解讀與規劃。影片、課文、作業和檢核都在這裡。</p><div className="spotlight-facts"><span>20 堂完整課程</span><span>6 個學習階段</span><span>依自己的節奏開始</span></div><a className="btn btn-primary" href={courseHref(ziweiCourse)}>查看紫微入門課 <ArrowUpRight size={19} /></a></div>
     </div></section>
 
     <section className="path-section" id="find-path"><div className="container path-grid">
@@ -185,16 +211,18 @@ function Explore({ learning }: { learning: LearningState }) {
 
 function CourseDetail({ course, state, onStart }: { course: Course; state?: CourseState; onStart: (course: Course, index?: number) => void }) {
   const percent = progressFor(course, state)
-  const resumeIndex = course.lessons.findIndex((_, index) => !state?.completed.includes(index))
+  const resumeIndex = resumeLessonIndex(course, state)
   const chapters = course.chapters || [{ title: '', start: 0, end: course.lessons.length - 1, image: '' }]
+  const [openChapter, setOpenChapter] = useState(0)
+  useEffect(() => setOpenChapter(0), [course.slug])
   return <main>
     <section className="detail-top"><div className="container"><a className="back-link" href="#/explore"><ArrowLeft size={17} /> 返回所有課程</a></div></section>
     <section className={`detail-hero ${course.provider ? 'detail-hero-featured' : ''}`}><div className="container detail-grid">
-      <div className="detail-copy"><div className="section-kicker">{course.category} / {course.level} / CLASS {course.number}</div><h1>{course.title}</h1><p className="detail-subtitle">{course.subtitle}</p><div className="detail-meta"><span><BookOpen size={18} /> {course.lessons.length} {course.provider ? '堂課' : '個單元'}</span><span><Clock3 size={18} /> {course.duration}</span>{course.provider && <span><Play size={18} /> {course.lessons.length} 支影片</span>}</div><p className="detail-description">{course.description}</p>{course.provider && <p className="detail-prep"><strong>課前準備</strong> 出生年月日與時辰、紙筆；每次安排 20–30 分鐘，完成一小步即可。</p>}<button type="button" className="btn btn-primary" onClick={() => onStart(course, resumeIndex < 0 ? 0 : resumeIndex)}>{state?.started ? '繼續學習' : '開始這堂課'} <ArrowUpRight size={20} /></button><span className="detail-aside">{course.provider ? <>內容來源：<a href={course.sourceUrl} target="_blank" rel="noopener noreferrer">{course.provider} <ArrowUpRight size={13} /></a></> : '課綱示範 · 目前提供文字導讀與練習，尚無講師影片'}</span>{state?.started && <span className="detail-progress">已完成 {percent}%</span>}</div>
+      <div className="detail-copy"><div className="section-kicker">{course.category} / {course.level} / CLASS {course.number}</div><h1>{course.title}</h1><p className="detail-subtitle">{course.subtitle}</p><div className="detail-meta"><span><BookOpen size={18} /> {course.lessons.length} {course.provider ? '堂課' : '個單元'}</span><span><Clock3 size={18} /> {course.duration}</span>{course.provider && <span><Play size={18} /> {course.lessons.length} 支影片</span>}</div><p className="detail-description">{course.description}</p>{course.provider && <p className="detail-prep"><strong>課前準備</strong> 出生年月日與時辰、紙筆；每次安排 20–30 分鐘，完成一小步即可。</p>}<button type="button" className="btn btn-primary" onClick={() => onStart(course, resumeIndex)}>{state?.started ? '繼續學習' : '開始這堂課'} <ArrowUpRight size={20} /></button><span className="detail-aside">{course.provider ? `課程內容提供：${course.provider}` : '課綱示範 · 目前提供文字導讀與練習，尚無講師影片'}</span>{state?.started && <span className="detail-progress">已完成 {percent}%</span>}</div>
       <Cover course={course} large />
     </div></section>
     <section className="section outcomes-section"><div className="container outcomes-grid"><div><div className="section-kicker">01 / WHAT YOU WILL DO</div><h2>學完後，<br />你能做到。</h2></div><ol>{course.outcomes.map((outcome, index) => <li key={outcome}><span>{String(index + 1).padStart(2, '0')}</span><p>{outcome}</p><Check size={19} /></li>)}</ol></div></section>
-    <section className="section syllabus-section"><div className="container"><div className="section-heading"><div><div className="section-kicker">02 / THE WORK</div><h2>課程單元</h2></div><span className="syllabus-count">{course.lessons.length} LESSONS / {course.duration}</span></div>{chapters.map((chapter, chapterIndex) => <div className="syllabus-chapter" key={chapter.title || 'all'}>{chapter.title && <div className="syllabus-chapter-title"><span>PART {String(chapterIndex + 1).padStart(2, '0')}</span><h3>{chapter.title}</h3><small>{String(chapter.end - chapter.start + 1).padStart(2, '0')} LESSONS</small></div>}{chapter.goal && <p className="chapter-goal">這一階段完成：{chapter.goal}</p>}<div className="syllabus-list">{course.lessons.slice(chapter.start, chapter.end + 1).map((lesson, offset) => { const index = chapter.start + offset; return <button type="button" key={lesson.title} onClick={() => onStart(course, index)}><span className="syllabus-number">{String(index + 1).padStart(2, '0')}</span><span className="syllabus-content"><strong>{lesson.title}</strong><small>{lesson.summary}</small></span><span className="syllabus-time">{lesson.time}</span><ArrowUpRight size={22} /></button> })}</div></div>)}</div></section>
+    <section className="section syllabus-section" id="lesson-plan"><div className="container"><div className="section-heading"><div><div className="section-kicker">02 / LEARNING PATH</div><h2>課程路線</h2></div><span className="syllabus-count">{course.lessons.length} 堂課 / {course.duration}</span></div>{course.chapters && <div className="module-grid" aria-label="六個學習階段">{chapters.map((chapter, chapterIndex) => <button className="module-card" type="button" key={chapter.title} onClick={() => { setOpenChapter(chapterIndex); document.getElementById('full-plan')?.scrollIntoView({ behavior: 'smooth' }) }}><span className="module-image" style={{ backgroundImage: `url("${assetPath(chapter.image)}")` }} /><span className="module-meta">階段 {String(chapterIndex + 1).padStart(2, '0')} · {chapter.end - chapter.start + 1} 堂課</span><strong>{chapter.title}</strong><small>{chapter.goal}</small></button>)}</div>}<div className="lesson-plan-head" id="full-plan"><div><span className="section-kicker">完整課表</span><h3>依自己的節奏，逐堂完成。</h3></div><span>{course.chapters ? '選一個階段，查看課次' : '點選課次開始'}</span></div>{chapters.map((chapter, chapterIndex) => <div className="syllabus-chapter" key={chapter.title || 'all'}>{chapter.title && <button className="syllabus-chapter-title" type="button" aria-expanded={openChapter === chapterIndex} onClick={() => setOpenChapter(openChapter === chapterIndex ? -1 : chapterIndex)}><span>PART {String(chapterIndex + 1).padStart(2, '0')}</span><h3>{chapter.title}</h3><small>{String(chapter.end - chapter.start + 1).padStart(2, '0')} LESSONS</small><ChevronDown size={20} /></button>}{(!course.chapters || openChapter === chapterIndex) && <>{chapter.goal && <p className="chapter-goal">這一階段完成：{chapter.goal}</p>}<div className="syllabus-list">{course.lessons.slice(chapter.start, chapter.end + 1).map((lesson, offset) => { const index = chapter.start + offset; return <button type="button" key={lesson.title} onClick={() => onStart(course, index)}>{course.provider ? <span className="syllabus-thumb" style={{ backgroundImage: `url("${assetPath(chapter.image)}")` }}><span>{String(index + 1).padStart(2, '0')}</span></span> : <span className="syllabus-number">{String(index + 1).padStart(2, '0')}</span>}<span className="syllabus-content"><strong>{lesson.title}</strong>{!course.provider && <small>{lesson.summary}</small>}</span><span className="syllabus-time">{lesson.videoUrl ? `${videoTime(lesson.videoDuration)} 影片` : lesson.time}</span><Play size={18} /></button> })}</div></>}</div>)}</div></section>
     <section className="detail-bottom"><div className="container"><div><span className="section-kicker">YOUR NEXT STEP</span><h2>學會一件事。<br />做出一件事。</h2></div><button type="button" className="btn btn-primary" onClick={() => onStart(course)}>開始學習 <ArrowUpRight size={19} /></button></div></section>
   </main>
 }
@@ -221,12 +249,51 @@ function LessonBlockContent({ block }: { block: LessonBlock }) {
   return <p>{block.text}</p>
 }
 
-function Learning({ course, index, state, onComplete, onNote, onStart }: { course: Course; index: number; state?: CourseState; onComplete: (slug: string, index: number) => void; onNote: (slug: string, index: number, text: string) => void; onStart: (course: Course, index?: number) => void }) {
+const ziweiSteps = ['lunar', 'lunar', 'lunar', 'grid', 'life', 'stems', 'five', 'ziwei', 'ziweiGroup', 'tianfuGroup', 'lucky', 'tough', 'mutagen', 'decades', 'full', 'read', 'empty', 'topics', 'decadeNow', 'yearly']
+
+function ZiweiChecker({ index }: { index: number }) {
+  const boxRef = useRef<HTMLDivElement>(null)
+  const [error, setError] = useState(false)
+  useEffect(() => {
+    let active = true
+    setError(false)
+    import('./ziwei/check.js').then((module) => {
+      if (active && boxRef.current) module.mount(boxRef.current)
+    }).catch(() => { if (active) setError(true) })
+    return () => { active = false }
+  }, [index])
+  return <section className="ziwei-check-section"><div className="section-kicker">CHECK YOUR CHART / 本站工具</div><h2>核對這一步的命盤</h2><p>輸入出生資料，本站會顯示排到這一課的盤面與步驟。資料只在這台裝置計算。</p><div className="zw-check" ref={boxRef} data-step={ziweiSteps[index]} data-engine={assetPath('/ziwei/core/zw-engine.js')} />{error && <p role="alert">排盤工具暫時無法載入，請重新整理後再試。</p>}</section>
+}
+
+function StageCheck({ index, state, onAnswer, onPass }: { index: number; state?: CourseState; onAnswer: (index: number, question: number, answer: number) => void; onPass: (index: number) => void }) {
+  const check = chapterChecks[index]
+  const answers = state?.checkAnswers?.[index] || []
+  const passed = state?.checkPassed?.includes(index) || false
+  const [submitted, setSubmitted] = useState(false)
+  useEffect(() => setSubmitted(false), [index])
+  if (!check) return null
+  const score = check.questions.reduce((total, question, questionIndex) => total + (answers[questionIndex] === question.answer ? 1 : 0), 0)
+  const needed = Math.ceil(check.questions.length * .66)
+  return <section className="stage-check"><div className="section-kicker">CHECKPOINT / 學習檢核</div><h2>{check.title}</h2><p>看完這一階段，先回答問題，確認自己能說出方法。答錯可以重做。</p><div className="check-questions">{check.questions.map((question, questionIndex) => <fieldset key={question.prompt}><legend><span>{String(questionIndex + 1).padStart(2, '0')}</span>{question.prompt}</legend><div className="check-options">{question.options.map((option, optionIndex) => <label key={option}><input type="radio" name={`check-${index}-${questionIndex}`} checked={answers[questionIndex] === optionIndex} disabled={passed} onChange={() => { onAnswer(index, questionIndex, optionIndex); setSubmitted(false) }} /><span>{option}</span></label>)}</div>{submitted && answers[questionIndex] !== question.answer && <p className="check-explanation">{question.explanation}</p>}</fieldset>)}</div>{!passed && <button type="button" className="btn btn-ink" disabled={!check.questions.every((_, questionIndex) => Number.isInteger(answers[questionIndex]))} onClick={() => { setSubmitted(true); if (score >= needed) onPass(index) }}>送出測驗 <ArrowRight size={17} /></button>}{(submitted || passed) && <p className={score >= needed || passed ? 'check-result is-passed' : 'check-result'} role="status">{score >= needed || passed ? `已通過 · ${score} / ${check.questions.length} 題正確` : `答對 ${score} / ${check.questions.length} 題；至少需答對 ${needed} 題，請依提示再試一次。`}</p>}</section>
+}
+
+function Capstone({ state, onChange, onSubmit }: { state?: CourseState; onChange: (field: string, value: string) => void; onSubmit: () => void }) {
+  const fields = state?.capstone || {}
+  const ready = capstoneFields.every((field) => (fields[field.key] || '').trim().length >= 30)
+  return <section className="capstone-section"><div className="section-kicker">FINAL PROJECT / 結業作品</div><h2>做一份可展示的解盤服務草稿</h2><p>把所學用在一個完整案例：先解讀，再設計諮詢流程和服務界線。請使用虛構或匿名資料，保護真實個案隱私。</p>{capstoneFields.map((field) => <label className="capstone-field" key={field.key}><strong>{field.label}</strong><span>{field.prompt}</span><textarea value={fields[field.key] || ''} onChange={(event) => onChange(field.key, event.target.value)} rows={5} placeholder="寫下你的作品內容，至少 30 字" /></label>)}<button type="button" className="btn btn-primary" disabled={!ready || !state?.checkPassed?.includes(19)} onClick={onSubmit}>{state?.capstoneSubmitted ? '已儲存作品草稿' : '儲存結業作品草稿'} <Check size={18} /></button><p className="capstone-note">{!state?.checkPassed?.includes(19) && '請先通過上方結業測驗。'}目前作品只保存在此瀏覽器，尚未經講師評閱，也不構成營業資格認證。</p></section>
+}
+
+function Learning({ course, index, state, onComplete, onNote, onActivity, onCheckAnswer, onCheckPass, onCapstoneChange, onCapstoneSubmit, onStart }: { course: Course; index: number; state?: CourseState; onComplete: (slug: string, index: number) => void; onNote: (slug: string, index: number, text: string) => void; onActivity: (index: number, text: string) => void; onCheckAnswer: (index: number, question: number, answer: number) => void; onCheckPass: (index: number) => void; onCapstoneChange: (field: string, value: string) => void; onCapstoneSubmit: () => void; onStart: (course: Course, index?: number) => void }) {
   const lesson = course.lessons[index]
   const percent = progressFor(course, state)
   const done = state?.completed.includes(index) || false
   const chapter = course.chapters?.find((item) => index >= item.start && index <= item.end)
   const lessonNavRef = useRef<HTMLElement>(null)
+  const [videoStarted, setVideoStarted] = useState(false)
+  useEffect(() => setVideoStarted(false), [course.slug, index])
+  const isZiwei = course.slug === ziweiCourse.slug
+  const activity = state?.activities?.[index] || ''
+  const canComplete = !isZiwei || activity.trim().length >= 12
   useEffect(() => {
     if (window.innerWidth > 760) return
     const revealActive = () => {
@@ -256,13 +323,16 @@ function Learning({ course, index, state, onComplete, onNote, onStart }: { cours
       <div className="lesson-article">
         <div className="section-kicker">THE LESSON / {course.number}.{String(index + 1).padStart(2, '0')}</div>
         <h1>{lesson.title}</h1><p className="lesson-lead">{lesson.summary}</p>
-        {lesson.videoUrl && <div className="lesson-video-wrap"><video key={`${course.slug}-${index}`} controls playsInline preload="metadata" poster={chapter?.image || '/images/luxkey-ziwei.webp'} src={lesson.videoUrl}>你的瀏覽器不支援影片播放。<a href={lesson.videoUrl}>開啟影片</a></video><div className="lesson-video-caption"><span><Play size={16} /> 紫微宇宙課程影片 · {videoTime(lesson.videoDuration)}</span><a href={lesson.videoUrl} target="_blank" rel="noopener noreferrer">影片無法播放？開啟原始檔 <ArrowUpRight size={15} /></a></div></div>}
-        <div className="reader-notice"><BookOpen size={22} /><div><strong>{lesson.videoUrl ? '看影片、讀課文，然後動手排盤。' : '先讀，再動手。'}</strong><span>{lesson.videoUrl ? '課文來自紫微宇宙。每堂的對答案工具可在原課頁使用。' : '這是示範版課堂。閱讀重點後，完成下面的小練習。'}</span></div></div>
+        {lesson.videoUrl && <div className="lesson-video-wrap">{videoStarted ? <video key={`${course.slug}-${index}`} controls autoPlay playsInline preload="metadata" poster={assetPath(chapter?.image || '/images/luxkey-ziwei.webp')} src={lesson.videoUrl}>你的瀏覽器不支援影片播放。</video> : <button className="lesson-video-poster" type="button" style={{ backgroundImage: `linear-gradient(90deg, rgba(255,255,255,.96), rgba(255,255,255,.12) 80%), url("${assetPath(chapter?.image || '/images/luxkey-ziwei.webp')}")` }} onClick={() => setVideoStarted(true)} aria-label={`播放第 ${index + 1} 課影片：${lesson.title}`}><span className="video-poster-top">紫微斗數入門 · 第 {String(index + 1).padStart(2, '0')} 課</span><strong>{lesson.title}</strong><span className="video-poster-play"><Play size={23} fill="currentColor" /> 播放影片 · {videoTime(lesson.videoDuration)}</span></button>}<div className="lesson-video-caption"><span><Play size={16} /> 紫微宇宙課程影片 · {videoTime(lesson.videoDuration)}</span><span>影片、課文、練習都在本站完成</span></div></div>}
+        <div className="reader-notice"><BookOpen size={22} /><div><strong>{lesson.videoUrl ? '看影片、讀課文，然後動手排盤。' : '先讀，再動手。'}</strong><span>{lesson.videoUrl ? '完成下方實作、核對命盤，並在階段結尾參加測驗。' : '這是示範版課堂。閱讀重點後，完成下面的小練習。'}</span></div></div>
         {lesson.sections.map((section, sectionIndex) => <section className="lesson-section" key={section.heading}><div className="section-kicker">{String(sectionIndex + 1).padStart(2, '0')} / KEY IDEA</div><h2>{section.heading}</h2>{section.blocks ? section.blocks.map((block, blockIndex) => <LessonBlockContent key={blockIndex} block={block} />) : <p>{section.body}</p>}</section>)}
-        <section className="exercise-box"><div className="section-kicker">DO THE WORK</div><h2>現在，換你試試。</h2><p>{lesson.exercise}</p>{lesson.sourceUrl && <a href={lesson.sourceUrl} target="_blank" rel="noopener noreferrer">開啟原課頁與對答案工具 <ArrowUpRight size={18} /></a>}</section>
-        {lesson.sourceUrl && <p className="lesson-source-note">內容來源：<a href={lesson.sourceUrl} target="_blank" rel="noopener noreferrer">紫微宇宙第 {index + 1} 課 <ArrowUpRight size={14} /></a>。紫微斗數是傳統自我探索工具；健康、法律或財務問題請諮詢相應專業人士。</p>}
+        <section className="exercise-box"><div className="section-kicker">GUIDED PRACTICE / 本課作業</div><h2>現在，換你試試。</h2><p>{isZiwei ? lessonActivities[index] : lesson.exercise}</p>{isZiwei && <label className="activity-field">你的作業內容<textarea value={activity} onChange={(event) => onActivity(index, event.target.value)} rows={5} placeholder="把你的計算過程、觀察或仍不確定的地方寫在這裡…" /><small>至少 12 字；自動儲存在此瀏覽器。命盤計算可用下方工具核對，文字作業尚無人工批改。</small></label>}</section>
+        {isZiwei && <ZiweiChecker index={index} />}
+        {isZiwei && chapterChecks[index] && <StageCheck index={index} state={state} onAnswer={onCheckAnswer} onPass={onCheckPass} />}
+        {isZiwei && index === course.lessons.length - 1 && <Capstone state={state} onChange={onCapstoneChange} onSubmit={onCapstoneSubmit} />}
+        {isZiwei && <p className="lesson-source-note">課程內容提供：紫微宇宙。紫微斗數可作自我探索；健康、法律或財務問題請諮詢相應專業人士。</p>}
         <section className="notes-block"><label htmlFor="lesson-notes">你的課堂筆記 <span>自動儲存在此瀏覽器</span></label><textarea id="lesson-notes" value={state?.notes[index] || ''} onChange={(event) => onNote(course.slug, index, event.target.value)} placeholder="寫下你的想法、問題或練習成果…" rows={6} /></section>
-        <div className="lesson-actions"><button className={`btn ${done ? 'btn-complete' : 'btn-primary'}`} type="button" onClick={() => onComplete(course.slug, index)}>{done ? <CheckCircle2 size={19} /> : <Check size={19} />}{done ? '已完成本單元' : '標記為已完成'}</button>{index < course.lessons.length - 1 ? <a className="text-link" href={lessonHref(course, index + 1)} onClick={() => onStart(course, index + 1)}>下一單元 <ArrowRight size={19} /></a> : <a className="text-link" href="#/my-learning">回到我的學習 <ArrowRight size={19} /></a>}</div>
+        <div className="lesson-actions"><button className={`btn ${done ? 'btn-complete' : 'btn-primary'}`} type="button" disabled={!canComplete} onClick={() => onComplete(course.slug, index)}>{done ? <CheckCircle2 size={19} /> : <Check size={19} />}{done ? '已完成本單元' : '完成本課練習'}</button>{index < course.lessons.length - 1 ? <a className="text-link" href={lessonHref(course, index + 1)} onClick={() => onStart(course, index + 1)}>下一單元 <ArrowRight size={19} /></a> : <a className="text-link" href="#/my-learning">回到我的學習 <ArrowRight size={19} /></a>}</div>
       </div>
       <div className="lesson-pager">{index > 0 ? <a href={lessonHref(course, index - 1)} onClick={() => onStart(course, index - 1)}><ChevronLeft size={19} /> 上一單元</a> : <span />}{index < course.lessons.length - 1 ? <a href={lessonHref(course, index + 1)} onClick={() => onStart(course, index + 1)}>下一單元 <ChevronRight size={19} /></a> : <span />}</div>
     </article>
@@ -271,7 +341,7 @@ function Learning({ course, index, state, onComplete, onNote, onStart }: { cours
 
 function MyLearning({ learning, onStart }: { learning: LearningState; onStart: (course: Course, index?: number) => void }) {
   const started = courses.filter((course) => learning[course.slug]?.started)
-  return <main><section className="page-hero library-hero"><div className="container"><div className="section-kicker">MY LEARNING / YOUR PACE</div><h1>繼續往前，<br /><span>一步一步。</span></h1><p>你開始的課，都在這裡。</p></div></section><section className="section library-section"><div className="container"><div className="section-heading"><div><div className="section-kicker">學習記錄</div><h2>正在學習</h2></div><span>{String(started.length).padStart(2, '0')} 門課程</span></div>{started.length ? <div className="library-grid">{started.map((course) => { const state = learning[course.slug]; const next = course.lessons.findIndex((_, index) => !state.completed.includes(index)); const percent = progressFor(course, state); return <div className="library-card" key={course.slug}><Cover course={course} /><div className="library-card-content"><div className="card-meta">{course.category} / {course.lessons.length} 個單元</div><h3>{course.title}</h3><div className="progress-block"><div><span>已完成</span><strong>{percent}%</strong></div><div className="progress-track" role="progressbar" aria-label={`${course.title} 完成進度`} aria-valuenow={percent} aria-valuemin={0} aria-valuemax={100}><span style={{ width: `${percent}%` }} /></div></div><button type="button" className="text-link" onClick={() => onStart(course, next < 0 ? 0 : next)}>{percent === 100 ? '重新閱讀' : '繼續學習'} <ArrowRight size={18} /></button></div></div> })}</div> : <div className="empty-state"><BookOpen size={34} strokeWidth={1.5} /><h2>你的下一步，從這裡開始。</h2><p>選一門現在最用得上的課，學習記錄就會出現在這裡。</p><a className="btn btn-primary" href="#/explore">探索課程 <ArrowUpRight size={18} /></a></div>}</div></section></main>
+  return <main><section className="page-hero library-hero"><div className="container"><div className="section-kicker">MY LEARNING / YOUR PACE</div><h1>繼續往前，<br /><span>一步一步。</span></h1><p>你開始的課，都在這裡。</p></div></section><section className="section library-section"><div className="container"><div className="section-heading"><div><div className="section-kicker">學習記錄</div><h2>正在學習</h2></div><span>{String(started.length).padStart(2, '0')} 門課程</span></div>{started.length ? <div className="library-grid">{started.map((course) => { const state = learning[course.slug]; const next = resumeLessonIndex(course, state); const percent = progressFor(course, state); return <div className="library-card" key={course.slug}><Cover course={course} /><div className="library-card-content"><div className="card-meta">{course.category} / {course.lessons.length} 個單元</div><h3>{course.title}</h3><div className="progress-block"><div><span>已完成</span><strong>{percent}%</strong></div><div className="progress-track" role="progressbar" aria-label={`${course.title} 完成進度`} aria-valuenow={percent} aria-valuemin={0} aria-valuemax={100}><span style={{ width: `${percent}%` }} /></div></div><button type="button" className="text-link" onClick={() => onStart(course, next)}>{percent === 100 ? '重新閱讀' : '繼續學習'} <ArrowRight size={18} /></button></div></div> })}</div> : <div className="empty-state"><BookOpen size={34} strokeWidth={1.5} /><h2>你的下一步，從這裡開始。</h2><p>選一門現在最用得上的課，學習記錄就會出現在這裡。</p><a className="btn btn-primary" href="#/explore">探索課程 <ArrowUpRight size={18} /></a></div>}</div></section></main>
 }
 
 export default function App() {
@@ -284,18 +354,25 @@ export default function App() {
   }, [])
   useEffect(() => { localStorage.setItem('luxkey-learning-v1', JSON.stringify(learning)) }, [learning])
 
+  const updateCourse = (slug: string, update: (state: CourseState) => CourseState) => setLearning((current) => {
+    const previous = current[slug] || { started: true, completed: [], notes: {} }
+    return { ...current, [slug]: update(previous) }
+  })
   const onStart = (course: Course, index = 0) => {
-    setLearning((current) => ({ ...current, [course.slug]: { started: true, completed: current[course.slug]?.completed || [], notes: current[course.slug]?.notes || {} } }))
+    updateCourse(course.slug, (state) => ({ ...state, started: true }))
     window.location.hash = `/learn/${course.slug}/${index}`
   }
-  const onComplete = (slug: string, index: number) => setLearning((current) => {
-    const old = current[slug] || { started: true, completed: [], notes: {} }
-    return { ...current, [slug]: { ...old, completed: old.completed.includes(index) ? old.completed : [...old.completed, index] } }
+  const onComplete = (slug: string, index: number) => updateCourse(slug, (state) => ({ ...state, completed: state.completed.includes(index) ? state.completed : [...state.completed, index] }))
+  const onNote = (slug: string, index: number, value: string) => updateCourse(slug, (state) => ({ ...state, notes: { ...state.notes, [index]: value } }))
+  const onActivity = (index: number, value: string) => updateCourse(ziweiCourse.slug, (state) => ({ ...state, activities: { ...state.activities, [index]: value } }))
+  const onCheckAnswer = (index: number, question: number, answer: number) => updateCourse(ziweiCourse.slug, (state) => {
+    const answers = [...(state.checkAnswers?.[index] || [])]
+    answers[question] = answer
+    return { ...state, checkAnswers: { ...state.checkAnswers, [index]: answers } }
   })
-  const onNote = (slug: string, index: number, text: string) => setLearning((current) => {
-    const old = current[slug] || { started: true, completed: [], notes: {} }
-    return { ...current, [slug]: { ...old, notes: { ...old.notes, [index]: text } } }
-  })
+  const onCheckPass = (index: number) => updateCourse(ziweiCourse.slug, (state) => ({ ...state, checkPassed: state.checkPassed?.includes(index) ? state.checkPassed : [...(state.checkPassed || []), index] }))
+  const onCapstoneChange = (field: string, value: string) => updateCourse(ziweiCourse.slug, (state) => ({ ...state, capstone: { ...state.capstone, [field]: value }, capstoneSubmitted: false }))
+  const onCapstoneSubmit = () => updateCourse(ziweiCourse.slug, (state) => ({ ...state, capstoneSubmitted: true }))
 
   const routeCourse = 'slug' in route ? courses.find((course) => course.slug === route.slug) : undefined
   const validLesson = route.page === 'lesson' && routeCourse && Number.isInteger(route.index) && route.index >= 0 && route.index < routeCourse.lessons.length
@@ -304,7 +381,7 @@ export default function App() {
   else if (route.page === 'explore') content = <Explore learning={learning} />
   else if (route.page === 'library') content = <MyLearning learning={learning} onStart={onStart} />
   else if (route.page === 'course' && routeCourse) content = <CourseDetail course={routeCourse} state={learning[routeCourse.slug]} onStart={onStart} />
-  else if (route.page === 'lesson' && routeCourse && validLesson) content = <Learning course={routeCourse} index={route.index} state={learning[routeCourse.slug]} onComplete={onComplete} onNote={onNote} onStart={onStart} />
+  else if (route.page === 'lesson' && routeCourse && validLesson) content = <Learning course={routeCourse} index={route.index} state={learning[routeCourse.slug]} onComplete={onComplete} onNote={onNote} onActivity={onActivity} onCheckAnswer={onCheckAnswer} onCheckPass={onCheckPass} onCapstoneChange={onCapstoneChange} onCapstoneSubmit={onCapstoneSubmit} onStart={onStart} />
   else content = <main className="not-found container"><div className="section-kicker">404 / PAGE NOT FOUND</div><h1>這一頁，還沒寫好。</h1><a className="btn btn-primary" href="#/">回到首頁 <ArrowRight size={18} /></a></main>
 
   return <><Header route={route} />{content}<Footer /></>
