@@ -223,6 +223,7 @@ svg { flex: none; }
   .library-card .course-cover { min-height: 220px; }
 }
 @media (max-width: 760px) {
+  .detail-grid .cover-large { order: -1; }
   .container { width: min(100% - 36px, 1200px); }
   .topline { padding-inline: 18px; }
   .topline span:last-child { display: none; }
@@ -281,6 +282,8 @@ svg { flex: none; }
   .lesson-pager { padding: 26px 22px; }
 }
 @media (max-width: 520px) {
+  .detail-grid .cover-large { min-height: 350px; }
+  .detail-hero-featured .detail-copy h1 { font-size: 40px; }
   .hero-copy h1 { font-size: clamp(52px, 14vw, 70px); }
   .section-heading { align-items: flex-start; flex-direction: column; gap: 22px; }
   .section-heading h2, .method-intro h2, .outcomes-grid h2 { font-size: 42px; }
@@ -311,7 +314,7 @@ svg { flex: none; }
 }
 
 /* Editorial landing experience */
-.hero-section { position: relative; min-height: 710px; display: flex; align-items: stretch; padding: 0; overflow: hidden; background: var(--ink) url('/images/luxkey-hero.png') 61% center / cover no-repeat; color: var(--white); }
+.hero-section { position: relative; min-height: 710px; display: flex; align-items: stretch; padding: 0; overflow: hidden; background: var(--ink) url('/images/luxkey-hero.webp') 61% center / cover no-repeat; color: var(--white); }
 .hero-section::before { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(10, 20, 22, .92) 0%, rgba(10, 20, 22, .75) 30%, rgba(10, 20, 22, .28) 68%, rgba(10, 20, 22, .08) 100%), linear-gradient(0deg, rgba(10, 20, 22, .32), transparent 42%); }
 .hero-grid { position: relative; z-index: 1; width: min(100% - 64px, 1200px); min-height: 710px; display: flex; flex-direction: column; align-items: stretch; justify-content: space-between; gap: 0; padding: 113px 0 34px; }
 .hero-copy { padding: 0; max-width: 670px; }
@@ -353,13 +356,63 @@ svg { flex: none; }
 .path-result a:hover { color: var(--white); border-color: var(--white); }
 .path-prompt { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 25px 28px; background: var(--ink); color: rgba(255,255,255,.8); font-size: 13px; }
 .path-prompt svg { color: var(--cyan); }
-.cover-ai-workflow { background: linear-gradient(90deg, rgba(6,31,32,.86), rgba(6,31,32,.22)), url('/images/luxkey-hero.png') 60% center / cover no-repeat; color: var(--white); }
-.cover-brand-story { background: linear-gradient(90deg, rgba(15,20,22,.89), rgba(15,20,22,.18)), url('/images/luxkey-studio.png') 58% center / cover no-repeat; color: var(--white); }
+.cover-ai-workflow { background: linear-gradient(90deg, rgba(6,31,32,.86), rgba(6,31,32,.22)), url('/images/luxkey-hero.webp') 60% center / cover no-repeat; color: var(--white); }
+.cover-brand-story { background: linear-gradient(90deg, rgba(15,20,22,.89), rgba(15,20,22,.18)), url('/images/luxkey-studio.webp') 58% center / cover no-repeat; color: var(--white); }
+.cover-market-validation { background: linear-gradient(90deg, rgba(18,26,27,.9), rgba(18,26,27,.1)), url('/images/luxkey-market.webp') 58% center / cover no-repeat; color: var(--white); }
+.cover-growth-experiments { background: linear-gradient(90deg, rgba(10,29,30,.89), rgba(10,29,30,.16)), url('/images/luxkey-growth.webp') 60% center / cover no-repeat; color: var(--white); }
+.cover-ziwei-foundations { background: linear-gradient(90deg, rgba(10,25,28,.9), rgba(10,25,28,.13)), url('/images/luxkey-ziwei.webp') 60% center / cover no-repeat; color: var(--white); }
 .course-card .cover-word { text-shadow: 0 2px 22px rgba(0,0,0,.12); }
-.cover-ai-workflow .cover-word span:last-child, .cover-brand-story .cover-word span:last-child { opacity: .88; color: var(--cyan-200); }
+.cover-ai-workflow .cover-word span:last-child, .cover-brand-story .cover-word span:last-child, .cover-market-validation .cover-word span:last-child, .cover-growth-experiments .cover-word span:last-child, .cover-ziwei-foundations .cover-word span:last-child { opacity: .9; color: var(--cyan-200); }
 .cover-large.cover-ai-workflow { background-position: 59% center; }
 .cover-large.cover-brand-story { background-position: 58% center; }
+.spotlight-section { padding: 116px 0 122px; background: var(--silver-50); }
+.spotlight-grid { display: grid; grid-template-columns: minmax(0, 1.04fr) minmax(0, .96fr); align-items: center; gap: 9%; }
+.spotlight-image { min-height: 535px; display: flex; flex-direction: column; justify-content: space-between; padding: 31px; overflow: hidden; background: linear-gradient(90deg, rgba(9,22,24,.46), transparent 75%), url('/images/luxkey-ziwei.webp') 60% center / cover no-repeat; color: var(--white); box-shadow: var(--shadow-lg); transition: transform .25s, box-shadow .25s; }
+.spotlight-image:hover { transform: translateY(-4px); box-shadow: var(--shadow-xl); }
+.spotlight-image > span { font: 700 10px var(--font-mono); letter-spacing: .13em; }
+.spotlight-image > strong { align-self: flex-start; margin-top: 65px; font: 800 clamp(84px, 8.2vw, 123px)/.83 var(--font-display); letter-spacing: -.09em; }
+.spotlight-image > span:last-child { padding-top: 18px; border-top: 1px solid rgba(255,255,255,.55); }
+.spotlight-copy h2 { margin: 0; font-size: clamp(43px, 4.2vw, 63px); line-height: 1.12; letter-spacing: -.05em; }
+.spotlight-copy h2 span { color: var(--teal); }
+.spotlight-copy > p { max-width: 430px; margin: 25px 0 29px; color: var(--ink-600); font-size: 17px; line-height: 1.8; }
+.spotlight-facts { display: flex; flex-wrap: wrap; gap: 10px 19px; padding: 18px 0 29px; margin-bottom: 24px; border-block: 1px solid var(--silver-300); color: var(--ink-600); font-size: 12px; font-weight: 700; }
+.spotlight-facts span::before { content: '•'; margin-right: 8px; color: var(--vermillion); }
+.detail-hero-featured .detail-copy h1 { font-size: clamp(45px, 4.65vw, 66px); }
+.detail-aside a, .lesson-source-note a { display: inline-flex; gap: 3px; align-items: center; color: var(--teal-700); font-weight: 700; }
+.detail-aside a:hover, .lesson-source-note a:hover { color: var(--vermillion); }
+.syllabus-chapter + .syllabus-chapter { margin-top: 42px; }
+.syllabus-chapter-title { display: flex; align-items: baseline; gap: 22px; padding: 16px 0 21px; border-bottom: 1px solid var(--silver-300); }
+.syllabus-chapter-title > span, .syllabus-chapter-title small { color: var(--teal); font: 700 10px var(--font-mono); letter-spacing: .09em; }
+.syllabus-chapter-title h3 { margin: 0 auto 0 0; font-size: 25px; letter-spacing: -.03em; }
+.syllabus-chapter-title small { color: var(--ink-500); }
+.syllabus-chapter-title + .syllabus-list { border-top: 0; }
+.sidebar-chapter { flex: none; padding: 13px 0; border-top: 1px solid var(--silver-300); color: var(--teal-700); font-size: 12px; font-weight: 700; }
+.lesson-video-wrap { margin: 0 0 32px; background: var(--ink); }
+.lesson-video-wrap video { width: 100%; max-height: 500px; display: block; aspect-ratio: 16 / 9; background: var(--ink); object-fit: contain; }
+.lesson-video-caption { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding: 15px 18px; color: rgba(255,255,255,.82); font-size: 12px; }
+.lesson-video-caption > span, .lesson-video-caption a { display: inline-flex; align-items: center; gap: 7px; }
+.lesson-video-caption a:hover { color: var(--cyan); }
+.lesson-section p { margin: 15px 0; }
+.reader-subheading { margin: 30px 0 10px; font-size: 22px; letter-spacing: -.02em; }
+.reader-list-item { position: relative; padding-left: 22px; }
+.reader-list-item::before { content: '•'; position: absolute; left: 0; color: var(--vermillion); }
+.reader-table-scroll { overflow-x: auto; margin: 28px 0; border: 1px solid var(--silver-300); }
+.reader-table { width: 100%; min-width: 480px; border-collapse: collapse; font-size: 14px; line-height: 1.55; }
+.reader-table caption { padding: 14px 18px; background: var(--teal-50); color: var(--teal-800); text-align: left; font-size: 13px; font-weight: 700; }
+.reader-table th, .reader-table td { padding: 12px 15px; border-right: 1px solid var(--silver-300); border-bottom: 1px solid var(--silver-300); text-align: left; vertical-align: top; }
+.reader-table th:last-child, .reader-table td:last-child { border-right: 0; }
+.reader-table tr:last-child th, .reader-table tr:last-child td { border-bottom: 0; }
+.reader-table thead th { background: var(--silver-100); color: var(--ink); }
+.reader-table tbody th { color: var(--teal-800); font-weight: 700; }
+.exercise-box a { display: inline-flex; align-items: center; gap: 7px; margin-top: 24px; padding-bottom: 4px; border-bottom: 1px solid var(--cyan); color: var(--cyan); font-size: 14px; font-weight: 700; }
+.exercise-box a:hover { color: var(--white); border-color: var(--white); }
+.lesson-source-note { margin: 28px 0 0; color: var(--ink-500); font-size: 12px; line-height: 1.7; }
 @media (max-width: 760px) {
+  .spotlight-section { padding: 80px 0; }
+  .spotlight-grid { grid-template-columns: 1fr; gap: 43px; }
+  .spotlight-image { min-height: 440px; }
+  .spotlight-copy h2 { font-size: clamp(42px, 8vw, 59px); }
+  .detail-hero-featured .detail-copy h1 { font-size: clamp(42px, 8vw, 60px); }
   .hero-section { min-height: 690px; background-position: 62% center; }
   .hero-section::before { background: linear-gradient(90deg, rgba(10,20,22,.83), rgba(10,20,22,.38)), linear-gradient(0deg, rgba(10,20,22,.55), transparent 50%); }
   .hero-grid { width: min(100% - 36px, 1200px); min-height: 690px; padding: 79px 0 23px; }
@@ -372,6 +425,13 @@ svg { flex: none; }
   .path-intro p { margin: 20px 0 25px; }
 }
 @media (max-width: 520px) {
+  .spotlight-image { min-height: 360px; padding: 23px; }
+  .spotlight-image > strong { font-size: 84px; }
+  .spotlight-copy h2 { font-size: 42px; }
+  .spotlight-copy > p { font-size: 16px; }
+  .syllabus-chapter-title { gap: 10px; }
+  .syllabus-chapter-title h3 { font-size: 20px; }
+  .lesson-video-caption { align-items: flex-start; flex-direction: column; }
   .hero-section, .hero-grid { min-height: 680px; }
   .hero-section { background-position: 61% center; }
   .hero-section::before { background: linear-gradient(90deg, rgba(10,20,22,.78), rgba(10,20,22,.52)), linear-gradient(0deg, rgba(10,20,22,.66), transparent 57%); }

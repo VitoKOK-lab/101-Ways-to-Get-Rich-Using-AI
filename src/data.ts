@@ -1,10 +1,24 @@
+import ziweiLessons from './ziwei-lessons.json'
+
+export type LessonBlock = {
+  type: string
+  text?: string
+  caption?: string
+  rows?: string[][]
+}
+
 export type Lesson = {
   title: string
   time: string
   summary: string
-  sections: { heading: string; body: string }[]
+  sections: { heading: string; body: string; blocks?: LessonBlock[] }[]
   exercise: string
+  sourceUrl?: string
+  videoUrl?: string
+  videoDuration?: string
 }
+
+export type CourseChapter = { title: string; start: number; end: number; image: string }
 
 export type Course = {
   slug: string
@@ -20,9 +34,12 @@ export type Course = {
   coverWord: string
   outcomes: string[]
   lessons: Lesson[]
+  chapters?: CourseChapter[]
+  provider?: string
+  sourceUrl?: string
 }
 
-export const courses: Course[] = [
+const demoCourses: Course[] = [
   {
     slug: 'ai-workflow',
     number: '01',
@@ -138,4 +155,30 @@ export const courses: Course[] = [
   },
 ]
 
-export const categories = ['全部', 'AI 實作', '創業', '品牌', '行銷']
+export const ziweiCourse: Course = {
+  slug: 'ziwei-foundations',
+  number: '05',
+  category: '自我探索',
+  level: '入門',
+  title: '紫微斗數入門：從排盤到解讀',
+  shortTitle: '紫微斗數入門',
+  subtitle: '20 堂課，從生日資料到大限流年，照著步驟讀懂命盤。',
+  description: '由紫微宇宙提供的完整入門課。先準備出生資料，再依序手排命宮、主星、四化與大限；最後練習解讀命盤，將結果用於自我探索與規劃。每堂課包含原站影片、課文與練習。',
+  duration: '約 10 小時',
+  theme: 'ink',
+  coverWord: 'STAR / MAP',
+  outcomes: ['依照步驟手排一張基本命盤', '看懂十二宮、主星與四化的基本結構', '用大限與流年整理自己的規劃方向'],
+  provider: '紫微宇宙',
+  sourceUrl: 'https://ziweiuniverse.com/knowledge/ziwei/course/',
+  chapters: [
+    { title: '排盤前的準備', start: 0, end: 3, image: '/images/luxkey-ziwei.webp' },
+    { title: '一步一步手排命盤', start: 4, end: 14, image: '/images/luxkey-ziwei-chart.webp' },
+    { title: '讀懂你的命盤', start: 15, end: 17, image: '/images/luxkey-ziwei-read.webp' },
+    { title: '用命盤做人生規劃', start: 18, end: 19, image: '/images/luxkey-ziwei-plan.webp' },
+  ],
+  lessons: ziweiLessons as Lesson[],
+}
+
+export const courses: Course[] = [...demoCourses, ziweiCourse]
+
+export const categories = ['全部', 'AI 實作', '創業', '品牌', '行銷', '自我探索']
