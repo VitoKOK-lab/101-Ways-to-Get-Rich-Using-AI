@@ -25,7 +25,7 @@ export const lessonActivities = [
   '選一個空宮，指出它的對宮主星、原宮輔星，寫下兩者如何一起閱讀。',
   '分別找出夫妻、官祿和財帛宮，選一宮寫下本宮與三方四正的觀察。',
   '找出現在的大限命宮，寫下這十年的主題、一項機會與一項需要照顧的地方。',
-  '找出今年的流年命宮與四化，把一年目標拆成四個季度可回顧的小行動。',
+  '找出今年的流年命宮與四化，把一年目標拆成四個季度可回顧的小行動；可請 AI 整理匿名筆記，再逐項人工核對。',
 ]
 
 export const chapterChecks: Record<number, { title: string; questions: CheckQuestion[] }> = {
@@ -83,6 +83,6 @@ export const chapterChecks: Record<number, { title: string; questions: CheckQues
 
 export const capstoneFields = [
   { key: 'reading', label: '匿名範例解盤', prompt: '選一張匿名或虛構命盤，依命宮、三方四正、四化寫一段有依據的解讀。' },
-  { key: 'consultation', label: '諮詢流程', prompt: '寫下你會如何確認出生資料、說明方法、傾聽問題、收束成可行動的下一步。' },
+  { key: 'consultation', label: '諮詢流程', prompt: '寫下如何確認出生資料、說明方法、傾聽問題與收束下一步；若用 AI 整理匿名摘要，註明人工核對方式。' },
   { key: 'boundaries', label: '服務界線與預約說明', prompt: '寫出隱私處理、時長、費用、取消方式，以及不作保證的事項。' },
 ] as const

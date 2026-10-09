@@ -315,6 +315,37 @@ svg { flex: none; }
   .footer-note { grid-column: auto; }
 }
 
+/* AI RICH 101 identity, course offers, and illustrated catalog */
+.brand-name { display: inline-flex; align-items: center; gap: 8px; color: var(--ink); font-family: Jost, var(--font-sans); font-size: 26px; font-weight: 700; letter-spacing: .08em; line-height: 1; white-space: nowrap; }
+.brand-name em { padding: 7px 6px 6px; background: var(--vermillion); color: var(--white); font: 700 14px var(--font-mono); letter-spacing: -.06em; }
+.brand-sub { letter-spacing: .16em; }
+.footer-logo { font-size: 27px; }
+.cover-panel .cover-word { max-width: 80%; font-size: clamp(43px, 4.4vw, 61px); }
+.cover-panel { color: var(--ink); }
+.cover-panel .cover-word span:last-child { opacity: 1; color: var(--teal-700); }
+.cover-panel.cover-vermilion .cover-word span:last-child { color: var(--vermillion); }
+.cover-panel.cover-large .cover-word { max-width: 85%; font-size: clamp(63px, 7vw, 93px); }
+.course-offer { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin: -3px 0 22px; padding: 15px 0; border-top: 1px solid var(--silver-200); color: var(--ink-500); }
+.course-offer > span { font-size: 11px; font-weight: 700; }
+.course-offer strong { color: var(--vermillion-700); font-family: var(--font-display); font-size: 21px; white-space: nowrap; }
+.course-offer strong small { color: var(--ink-500); font: 500 11px var(--font-sans); }
+.catalog-disclaimer { margin: -8px 0 29px; color: var(--ink-500); font-size: 12px; line-height: 1.6; }
+.course-price-note { margin: 24px 0 0; color: var(--ink-500); font-size: 12px; line-height: 1.6; }
+.detail-offer { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 18px; margin: -5px 0 19px; padding: 16px 18px; background: var(--white); border-left: 3px solid var(--vermillion); }
+.detail-offer > span { color: var(--ink-600); font-size: 12px; font-weight: 700; }
+.detail-offer strong { color: var(--vermillion-700); font-size: 29px; }
+.detail-offer strong small { color: var(--ink-600); font-size: 13px; font-weight: 500; }
+.detail-offer p { flex-basis: 100%; margin: 0; color: var(--ink-500); font-size: 11px; line-height: 1.5; }
+.detail-ai { margin: 0 0 24px; color: var(--ink-600); font-size: 13px; line-height: 1.7; }
+.detail-ai strong { display: block; margin-bottom: 4px; color: var(--teal-700); }
+@media (max-width: 520px) {
+  .brand-name { font-size: 22px; }
+  .brand-name em { font-size: 12px; }
+  .cover-panel .cover-word { font-size: 49px; }
+  .cover-panel.cover-large .cover-word { max-width: 75%; font-size: 54px; }
+  .course-offer strong { font-size: 19px; }
+}
+
 /* Editorial landing experience */
 .hero-section { position: relative; min-height: 710px; display: flex; align-items: stretch; padding: 0; overflow: hidden; background: var(--white) url('/images/luxkey-hero.webp') 61% center / cover no-repeat; color: var(--ink); }
 .hero-section::before { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(255,255,255,.96) 0%, rgba(255,255,255,.82) 30%, rgba(255,255,255,0) 68%); }

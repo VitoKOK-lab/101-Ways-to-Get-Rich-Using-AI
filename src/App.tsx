@@ -85,11 +85,11 @@ function Header({ route }: { route: Route }) {
   useEffect(() => setOpen(false), [route])
   return (
     <>
-      <div className="topline"><span>LEARN. APPLY. MOVE.</span><span>學會，然後真的去做。</span></div>
+      <div className="topline"><span>AI RICH 101 · LEARN TO EARN</span><span>100 種用 AI 賺錢的方法</span></div>
       <header className="site-header">
         <div className="container header-inner">
-          <a className="brand" href="#/" aria-label="LUXKEY 首頁">
-            <span className="lx-logo">LUXKEY</span><span className="brand-sub">ACADEMY</span>
+          <a className="brand" href="#/" aria-label="AI RICH 101 首頁">
+            <span className="brand-name">AI RICH <em>101</em></span><span className="brand-sub">100 WAYS TO EARN WITH AI</span>
           </a>
           <nav className={`main-nav ${open ? 'is-open' : ''}`} aria-label="主選單">
             <a href="#/explore" className={route.page === 'explore' ? 'active' : ''}>探索課程</a>
@@ -107,15 +107,37 @@ function Header({ route }: { route: Route }) {
 
 function Footer() {
   return <footer className="site-footer"><div className="container footer-grid">
-    <div><span className="lx-logo footer-logo">LUXKEY</span><p>把下一步，學成真的。</p></div>
+    <div><span className="brand-name footer-logo">AI RICH <em>101</em></span><p>100 種用 AI 賺錢的方法，從第一個可交付的作品開始。</p></div>
     <div className="footer-links"><a href="#/explore">探索課程</a><a href="#/my-learning">我的學習</a><a href="#/">回到首頁</a></div>
-    <span className="footer-note">LUXKEY ACADEMY · 示範平台</span>
+    <span className="footer-note">AI RICH 101 · 課程平台示範版</span>
   </div></footer>
 }
 
+const originalCoverImages: Record<string, string> = {
+  'ziwei-foundations': '/images/luxkey-ziwei.webp',
+  'tarot-practice': '/images/luxkey-tarot.webp',
+  'booking-marketing': '/images/luxkey-booking.webp',
+  'personal-brand': '/images/luxkey-brand.webp',
+  'ai-solo-business': '/images/luxkey-ai.webp',
+}
+
+function courseCoverStyle(course: Course) {
+  const gradient = 'linear-gradient(90deg, rgba(255,255,255,.97), rgba(255,255,255,.08) 79%)'
+  if (course.imagePanel) {
+    const { sheet, col, row } = course.imagePanel
+    return {
+      backgroundImage: `${gradient}, url("${assetPath(`/images/ai-rich-course-sheet-${sheet}.png`)}")`,
+      backgroundSize: '100% 100%, 300% 200%',
+      backgroundPosition: `center, ${col * 50}% ${row * 100}%`,
+      backgroundRepeat: 'no-repeat',
+    }
+  }
+  return { backgroundImage: `${gradient}, url("${assetPath(originalCoverImages[course.slug])}")` }
+}
+
 function Cover({ course, large = false }: { course: Course; large?: boolean }) {
-  return <div className={`course-cover cover-${course.theme} cover-${course.slug} ${large ? 'cover-large' : ''}`} aria-hidden="true">
-    <span className="cover-top">LUXKEY / FIELD CLASS <span>{course.number}</span></span>
+  return <div className={`course-cover cover-${course.theme} cover-${course.slug} ${course.imagePanel ? 'cover-panel' : ''} ${large ? 'cover-large' : ''}`} style={courseCoverStyle(course)} aria-hidden="true">
+    <span className="cover-top">AI RICH 101 / CLASS <span>{course.number}</span></span>
     <div className="cover-rule" />
     <span className="cover-word">{course.coverWord.split(' / ').map((part, index) => <span key={part}>{part}{index === 0 && <br />}</span>)}</span>
     <div className="cover-bottom"><span>{course.category.toUpperCase()}</span><ArrowUpRight size={large ? 29 : 22} strokeWidth={1.7} /></div>
@@ -130,6 +152,7 @@ function CourseCard({ course, state }: { course: Course; state?: CourseState }) 
       <div className="card-meta"><span>{course.category} / {course.level}</span><span>{course.duration}</span></div>
       <div className="course-status">{course.provider ? '20 堂完整課程' : '課綱示範 · 文字練習'}</div>
       <h3>{course.title}</h3><p>{course.subtitle}</p>
+      {course.offer && <div className="course-offer"><span>{course.offer.label}</span><strong>{course.offer.amount}<small>{course.offer.unit}</small></strong></div>}
       <div className="card-action"><span>{state?.started ? `${percent}% 已完成` : '查看課程'}</span><ArrowUpRight size={18} /></div>
     </div>
   </a>
@@ -139,20 +162,20 @@ function Home({ learning }: { learning: LearningState }) {
   const [selectedGoal, setSelectedGoal] = useState<string | null>(null)
   const recommended = courses.find((course) => course.slug === selectedGoal)
   const goals = [
-    { slug: 'ziwei-foundations', label: '從命盤認識自己與人生節奏', tag: '自我探索' },
-    { slug: 'tarot-practice', label: '把塔羅練習變成可信任的諮詢', tag: '塔羅與諮詢' },
-    { slug: 'booking-marketing', label: '讓服務詢問變成真實預約', tag: '預約行銷' },
-    { slug: 'personal-brand', label: '讓對的人看見我的專長', tag: '個人品牌' },
-    { slug: 'ai-solo-business', label: '用 AI 騰出服務客戶的時間', tag: 'AI 實作' },
+    { slug: 'ziwei-foundations', label: '成為線上紫微命理師', tag: '線上諮詢' },
+    { slug: 'tarot-practice', label: '把塔羅練習變成諮詢服務', tag: '線上諮詢' },
+    { slug: 'ai-social-studio', label: '幫品牌經營社群內容', tag: '內容接案' },
+    { slug: 'ai-template-shop', label: '做一份能上架的數位商品', tag: '數位商品' },
+    { slug: 'ai-chatbot-service', label: '幫商家建立 AI 客服流程', tag: '自動化服務' },
   ]
   return <main>
-    <section className="hero-section"><div className="container hero-grid">
+    <section className="hero-section" style={{ backgroundImage: `url("${assetPath('/images/luxkey-hero.webp')}")` }}><div className="container hero-grid">
       <div className="hero-copy">
-        <div className="section-kicker"><span className="kicker-line" /> LUXKEY ACADEMY · LEARN BY DOING</div>
-        <h1>把下一步，<br /><span>學成真的。</span></h1>
-        <p className="hero-intro">從認識自己、設計服務，到讓客戶安心預約。找到你的方向，學會方法，做出看得見的下一步。</p>
+        <div className="section-kicker"><span className="kicker-line" /> AI RICH 101 · LEARN TO EARN</div>
+        <h1>學 AI，<br /><span>做出收入可能。</span></h1>
+        <p className="hero-intro">100 種用 AI 賺錢的方法，先從一門可實作的課開始。首波 16 門，從線上諮詢、內容接案到商家自動化，學會製作可展示的服務與商品。</p>
         <div className="hero-actions"><button type="button" className="btn btn-primary" onClick={() => document.getElementById('find-path')?.scrollIntoView({ behavior: 'smooth' })}>找到適合我的課 <ArrowUpRight size={19} /></button><a className="text-link" href="#/explore">探索所有課程 <ArrowRight size={18} /></a></div>
-        <div className="hero-bottom"><span>01 / 05</span><div className="hairline" /><span>LEARN BY DOING</span></div>
+        <div className="hero-bottom"><span>01 / 16</span><div className="hairline" /><span>MAKE IT REAL</span></div>
       </div>
       <div className="hero-image-caption"><span>THE NEXT CHAPTER / 2026</span><span>IDEA → ACTION</span></div>
     </div></section>
@@ -160,11 +183,11 @@ function Home({ learning }: { learning: LearningState }) {
     <section className="principles"><div className="container principles-grid">
       <span className="principles-label">為什麼在這裡學？</span>
       <p>知識，<em>要能用。</em></p>
-      <span className="principles-caption">短課節奏 · 實作練習 · 自己掌握進度</span>
+      <span className="principles-caption">16 門首波課程 · 有作品的練習 · 參考服務定價</span>
     </div></section>
 
     <section className="spotlight-section"><div className="container spotlight-grid">
-      <a className="spotlight-image" href={courseHref(ziweiCourse)} aria-label="查看紫微斗數入門課程"><span>第一門完整課程 / 紫微宇宙</span><strong>紫微斗數<br />入門</strong><span>20 堂課 · 6 個學習階段</span></a>
+      <a className="spotlight-image" style={{ backgroundImage: `linear-gradient(90deg, rgba(255,255,255,.94), rgba(255,255,255,.06) 80%), url("${assetPath('/images/luxkey-ziwei.webp')}")` }} href={courseHref(ziweiCourse)} aria-label="查看紫微斗數入門課程"><span>第一門完整課程 / 紫微宇宙</span><strong>紫微斗數<br />入門</strong><span>20 堂課 · 6 個學習階段</span></a>
       <div className="spotlight-copy"><div className="section-kicker">第一門完整課 / 紫微宇宙</div><h2>從一張命盤，<br /><span>讀懂自己的節奏。</span></h2><p>20 堂紫微斗數入門課，分六個階段，從出生資料、手排命盤，一步步走到解讀與規劃。影片、課文、作業和檢核都在這裡。</p><div className="spotlight-facts"><span>20 堂完整課程</span><span>6 個學習階段</span><span>依自己的節奏開始</span></div><a className="btn btn-primary" href={courseHref(ziweiCourse)}>查看紫微入門課 <ArrowUpRight size={19} /></a></div>
     </div></section>
 
@@ -174,8 +197,8 @@ function Home({ learning }: { learning: LearningState }) {
     </div></section>
 
     <section className="section courses-section"><div className="container">
-      <div className="section-heading"><div><div className="section-kicker">01 / 精選課程</div><h2>從一門課，<br />打開下一步。</h2></div><a href="#/explore" className="text-link">探索全部課程 <ArrowUpRight size={18} /></a></div>
-      <div className="course-grid">{courses.slice(0, 3).map((course) => <CourseCard key={course.slug} course={course} state={learning[course.slug]} />)}</div>
+      <div className="section-heading"><div><div className="section-kicker">01 / 精選課程</div><h2>從一門課，<br />做出第一個服務。</h2></div><a href="#/explore" className="text-link">探索全部課程 <ArrowUpRight size={18} /></a></div>
+      <div className="course-grid">{courses.slice(0, 6).map((course) => <CourseCard key={course.slug} course={course} state={learning[course.slug]} />)}</div><p className="course-price-note">頁面金額為服務或商品示例定價，非學完保證收入；正式接單前請以作品和試案驗證能力。</p>
     </div></section>
 
     <section className="method-section" id="how"><div className="container method-grid">
@@ -200,10 +223,10 @@ function Explore({ learning }: { learning: LearningState }) {
     return matchesCategory && text.includes(query.trim().toLowerCase())
   }), [category, query])
   return <main>
-    <section className="page-hero explore-hero"><div className="container"><div className="section-kicker">THE COURSE LIBRARY / 01—05</div><h1>找到你的<br /><span>下一步。</span></h1><p>不需要一次學完所有事。先選一個現在用得上的問題。</p></div></section>
+    <section className="page-hero explore-hero"><div className="container"><div className="section-kicker">THE COURSE LIBRARY / 01—16</div><h1>找到你的<br /><span>下一步。</span></h1><p>首波 16 門課，選一個想做的服務，先練出可展示的成果。</p></div></section>
     <section className="section catalog-section"><div className="container">
       <div className="catalog-tools"><div className="category-list" aria-label="課程分類">{categories.map((item) => <button type="button" key={item} className={category === item ? 'selected' : ''} onClick={() => setCategory(item)}>{item}</button>)}</div><label className="search-box"><Search size={20} strokeWidth={2} /><span className="sr-only">搜尋課程</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="搜尋你想學的主題" /></label></div>
-      <div className="results-line"><span>{String(results.length).padStart(2, '0')} 門課程</span><span>依主題探索</span></div>
+      <div className="results-line"><span>{String(results.length).padStart(2, '0')} 門課程</span><span>依主題探索</span></div><p className="catalog-disclaimer">價格為服務或商品的示例定價，並非學完保證收入。紫微課已提供 20 堂完整內容；其他課程目前為文字實作版。</p>
       {results.length ? <div className="course-grid catalog-grid">{results.map((course) => <CourseCard key={course.slug} course={course} state={learning[course.slug]} />)}</div> : <div className="empty-state"><h2>還沒有符合的課程。</h2><p>試試別的關鍵字，或查看全部主題。</p><button type="button" className="btn btn-ink" onClick={() => { setCategory('全部'); setQuery('') }}>顯示全部課程 <ArrowRight size={18} /></button></div>}
     </div></section>
   </main>
@@ -218,7 +241,7 @@ function CourseDetail({ course, state, onStart }: { course: Course; state?: Cour
   return <main>
     <section className="detail-top"><div className="container"><a className="back-link" href="#/explore"><ArrowLeft size={17} /> 返回所有課程</a></div></section>
     <section className={`detail-hero ${course.provider ? 'detail-hero-featured' : ''}`}><div className="container detail-grid">
-      <div className="detail-copy"><div className="section-kicker">{course.category} / {course.level} / CLASS {course.number}</div><h1>{course.title}</h1><p className="detail-subtitle">{course.subtitle}</p><div className="detail-meta"><span><BookOpen size={18} /> {course.lessons.length} {course.provider ? '堂課' : '個單元'}</span><span><Clock3 size={18} /> {course.duration}</span>{course.provider && <span><Play size={18} /> {course.lessons.length} 支影片</span>}</div><p className="detail-description">{course.description}</p>{course.provider && <p className="detail-prep"><strong>課前準備</strong> 出生年月日與時辰、紙筆；每次安排 20–30 分鐘，完成一小步即可。</p>}<button type="button" className="btn btn-primary" onClick={() => onStart(course, resumeIndex)}>{state?.started ? '繼續學習' : '開始這堂課'} <ArrowUpRight size={20} /></button><span className="detail-aside">{course.provider ? `課程內容提供：${course.provider}` : '課綱示範 · 目前提供文字導讀與練習，尚無講師影片'}</span>{state?.started && <span className="detail-progress">已完成 {percent}%</span>}</div>
+      <div className="detail-copy"><div className="section-kicker">{course.category} / {course.level} / CLASS {course.number}</div><h1>{course.title}</h1><p className="detail-subtitle">{course.subtitle}</p><div className="detail-meta"><span><BookOpen size={18} /> {course.lessons.length} {course.provider ? '堂課' : '個單元'}</span><span><Clock3 size={18} /> {course.duration}</span>{course.provider && <span><Play size={18} /> {course.lessons.length} 支影片</span>}</div><p className="detail-description">{course.description}</p>{course.offer && <div className="detail-offer"><span>{course.offer.label}</span><strong>{course.offer.amount}<small>{course.offer.unit}</small></strong><p>參考定價，非收入保證；接單與收入取決於作品、需求及實際服務能力。</p></div>}{course.aiUse && <p className="detail-ai"><strong>AI 在這門課怎麼用</strong>{course.aiUse}</p>}{course.provider && <p className="detail-prep"><strong>課前準備</strong> 出生年月日與時辰、紙筆；每次安排 20–30 分鐘，完成一小步即可。</p>}<button type="button" className="btn btn-primary" onClick={() => onStart(course, resumeIndex)}>{state?.started ? '繼續學習' : '開始這堂課'} <ArrowUpRight size={20} /></button><span className="detail-aside">{course.provider ? `課程內容提供：${course.provider}` : '課綱示範 · 目前提供文字導讀與練習，尚無講師影片'}</span>{state?.started && <span className="detail-progress">已完成 {percent}%</span>}</div>
       <Cover course={course} large />
     </div></section>
     <section className="section outcomes-section"><div className="container outcomes-grid"><div><div className="section-kicker">01 / WHAT YOU WILL DO</div><h2>學完後，<br />你能做到。</h2></div><ol>{course.outcomes.map((outcome, index) => <li key={outcome}><span>{String(index + 1).padStart(2, '0')}</span><p>{outcome}</p><Check size={19} /></li>)}</ol></div></section>
@@ -316,7 +339,7 @@ function Learning({ course, index, state, onComplete, onNote, onActivity, onChec
       <div className="progress-block"><div><span>學習進度</span><strong>{percent}%</strong></div><div className="progress-track" role="progressbar" aria-label="課程完成進度" aria-valuenow={percent} aria-valuemin={0} aria-valuemax={100}><span style={{ width: `${percent}%` }} /></div></div>
       {chapter && <div className="sidebar-chapter">目前階段 / {chapter.title}</div>}
       <nav className="lesson-list" aria-label="課程單元" ref={lessonNavRef}>{course.lessons.map((item, itemIndex) => <a href={lessonHref(course, itemIndex)} key={item.title} className={itemIndex === index ? 'current' : ''} aria-current={itemIndex === index ? 'page' : undefined} onClick={() => onStart(course, itemIndex)}><span className="lesson-index">{state?.completed.includes(itemIndex) ? <Check size={16} /> : String(itemIndex + 1).padStart(2, '0')}</span><span>{item.title}<small>{item.videoUrl ? `${videoTime(item.videoDuration)} 影片 · ${item.time}` : item.time}</small></span></a>)}</nav>
-      <div className="sidebar-foot">LUXKEY / LEARN BY DOING</div>
+      <div className="sidebar-foot">AI RICH 101 / MAKE IT REAL</div>
     </aside>
     <article className="lesson-content">
       <div className="lesson-topline"><span>單元 {String(index + 1).padStart(2, '0')} / {String(course.lessons.length).padStart(2, '0')}</span><span>{chapter ? chapter.title : '文字導讀'} · {lesson.time}</span></div>
