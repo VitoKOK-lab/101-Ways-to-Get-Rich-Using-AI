@@ -15,7 +15,7 @@ npm run dev
 
 ## 線上預覽
 
-`main` 分支上的 GitHub Actions 會建立並部署靜態網站至 [GitHub Pages](https://vitokok-lab.github.io/101-Ways-to-Get-Rich-Using-AI/)。首次部署前，儲存庫管理員需在 **Settings → Pages → Build and deployment** 選擇 **GitHub Actions** 作為來源。部署時使用儲存庫路徑作為 Vite `base`；本機開發仍從 `/` 開啟。網站可以公開瀏覽，但原始碼儲存庫目前是私有的。
+`main` 分支上的 GitHub Actions 會建立並部署靜態網站至 [GitHub Pages](https://vitokok-lab.github.io/101-Ways-to-Get-Rich-Using-AI/)。儲存庫的 **Settings → Pages → Build and deployment** 來源為 **GitHub Actions**。部署時使用儲存庫路徑作為 Vite `base`；本機開發仍從 `/` 開啟。網站與原始碼儲存庫均公開。
 
 ## 原型範圍
 
