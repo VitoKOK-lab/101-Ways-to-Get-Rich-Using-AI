@@ -306,11 +306,11 @@ svg { flex: none; }
   .footer-note { grid-column: auto; }
 }
 
-/* Free & Wealthy identity, separate tuition and external service rates */
+/* GlowUp AI Lab identity, separate tuition and external service rates */
 .brand-name { display: inline-flex; align-items: center; gap: .24em; color: var(--ink); font-family: Jost, var(--font-sans); font-size: 29px; font-weight: 700; letter-spacing: -.045em; line-height: 1; white-space: nowrap; }
 .brand-name > span { color: var(--vermillion); }
 .brand-sub { display: inline-flex; align-items: baseline; gap: 8px; line-height: 1.15; white-space: nowrap; }
-.brand-sub strong { color: var(--ink); font-size: 19px; font-weight: 800; letter-spacing: .08em; }
+.brand-sub strong { color: var(--ink); font-size: 16px; font-weight: 800; letter-spacing: .02em; }
 .brand-sub span { color: var(--teal-700); font-size: 12px; font-weight: 800; letter-spacing: .04em; }
 .footer-logo { font-size: 27px; }
 .footer-brand { display: inline-flex; flex-direction: column; align-items: flex-start; gap: 5px; }
@@ -355,7 +355,7 @@ svg { flex: none; }
 .detail-ai strong { display: block; margin-bottom: 4px; color: var(--teal-700); }
 @media (max-width: 520px) {
   .brand-name { font-size: 25px; }
-  .brand-sub strong { font-size: 17px; }
+  .brand-sub strong { font-size: 14px; }
   .brand-sub span { font-size: 11px; }
   .course-tuition strong { font-size: 19px; }
   .detail-pricing { grid-template-columns: 1fr; }

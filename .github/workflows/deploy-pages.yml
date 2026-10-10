@@ -1,4 +1,4 @@
-name: "Deploy Free & Wealthy to GitHub Pages"
+name: "Deploy GlowUp AI Lab to GitHub Pages"
 
 on:
   push:

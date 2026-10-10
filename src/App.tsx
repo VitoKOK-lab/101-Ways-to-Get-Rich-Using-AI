@@ -89,8 +89,8 @@ function Header({ route }: { route: Route }) {
     <>
       <header className="site-header">
         <div className="container header-inner">
-          <a className="brand" href="#/" aria-label="Free & Wealthy 自由至富 AI技能學院首頁">
-            <span className="brand-name">Free <span>&amp;</span> Wealthy</span><span className="brand-sub"><strong>自由至富</strong> <span>AI技能學院</span></span>
+          <a className="brand" href="#/" aria-label="GlowUp AI Lab GlowUp AI 變現實驗室首頁">
+            <span className="brand-name">GlowUp <span>AI</span> Lab</span><span className="brand-sub"><strong>GlowUp AI 變現實驗室</strong></span>
           </a>
           <nav className={`main-nav ${open ? 'is-open' : ''}`} aria-label="主選單">
             <a href="#/explore" className={route.page === 'explore' ? 'active' : ''}>探索課程</a>
@@ -107,9 +107,9 @@ function Header({ route }: { route: Route }) {
 
 function Footer() {
   return <footer className="site-footer"><div className="container footer-grid">
-    <div><div className="footer-brand"><span className="brand-name footer-logo">Free <span>&amp;</span> Wealthy</span><span className="brand-sub"><strong>自由至富</strong> <span>AI技能學院</span></span></div><p>用 AI 槓桿一人公司，通往時間與財富的極致自由。</p></div>
+    <div><div className="footer-brand"><span className="brand-name footer-logo">GlowUp <span>AI</span> Lab</span><span className="brand-sub"><strong>GlowUp AI 變現實驗室</strong></span></div><p>用 AI 槓桿一人公司，通往時間與財富的極致自由。</p></div>
     <div className="footer-right"><div className="footer-links"><a href="#/explore">探索課程</a><a href="#/my-learning">我的學習</a><a href="#/">回到首頁</a></div><address className="footer-contact"><span>金曜石國際股份有限公司</span><a href="mailto:luxkey.tw@gmail.com">luxkey.tw@gmail.com</a></address></div>
-    <span className="footer-note">Free & Wealthy · 自由至富 AI技能學院</span>
+    <span className="footer-note">GlowUp AI Lab · GlowUp AI 變現實驗室</span>
   </div></footer>
 }
 
@@ -163,7 +163,7 @@ function Home({ prices }: { prices: CoursePrices }) {
   return <main>
     <section className="hero-section" style={{ backgroundImage: `url("${assetPath('/images/ai-rich-learning-hero.webp')}")` }}><div className="container hero-grid">
       <div className="hero-copy">
-        <div className="section-kicker"><span className="kicker-line" /> 自由至富 AI技能學院</div>
+        <div className="section-kicker"><span className="kicker-line" /> GlowUp AI 變現實驗室</div>
         <h1 className="hero-headline">建立你的一人公司，<br /><span>不能賺錢的我們沒有教</span></h1>
         <p className="hero-promise">用 AI 槓桿一人公司，通往時間與財富的極致自由。</p>
         <div className="hero-actions"><button type="button" className="btn btn-primary" onClick={() => document.getElementById('find-path')?.scrollIntoView({ behavior: 'smooth' })}>找到適合我的課 <ArrowUpRight size={19} /></button></div>

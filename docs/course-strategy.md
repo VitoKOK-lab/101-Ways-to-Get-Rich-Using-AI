@@ -1,8 +1,8 @@
-# Free & Wealthy 自由至富 課程企劃與內容檢查
+# GlowUp AI Lab／GlowUp AI 變現實驗室 課程企劃與內容檢查
 
 ## 現況與 MasterClass 參考
 
-Free & Wealthy 自由至富 借鑑 [MasterClass 公開首頁](https://www.masterclass.com/) 的大幅視覺、課程卡片、明確課程成果、課程詳情與影片導向路徑，再用使用者指定的 Luxkey CIS 色彩重新設計。它還沒有 MasterClass 等級的講師拍攝、故事化示範、逐課工作手冊與可驗證的作品回饋。因此目前屬於課程平台原型，而非相同製作品質的正式課程庫。
+GlowUp AI Lab／GlowUp AI 變現實驗室 借鑑 [MasterClass 公開首頁](https://www.masterclass.com/) 的大幅視覺、課程卡片、明確課程成果、課程詳情與影片導向路徑，再用使用者指定的 Luxkey CIS 色彩重新設計。它還沒有 MasterClass 等級的講師拍攝、故事化示範、逐課工作手冊與可驗證的作品回饋。因此目前屬於課程平台原型，而非相同製作品質的正式課程庫。
 
 內容規劃以有意經營個人服務或學習自我探索的使用者需求為中心；女性主角的影像回應主要受眾，但不假設所有女性都喜歡同一種題材。
 
