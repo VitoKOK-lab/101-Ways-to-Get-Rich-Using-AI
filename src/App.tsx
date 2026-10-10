@@ -94,11 +94,11 @@ function Header({ route }: { route: Route }) {
   useEffect(() => setOpen(false), [route])
   return (
     <>
-      <div className="topline"><span>Free & Wealthy 自由至富</span><span>用 AI 槓桿一人公司，通往時間與財富的極致自由。</span></div>
+      <div className="topline"><span>Free & Wealthy · 自由至富 AI技能學院</span><span>用 AI 槓桿一人公司，通往時間與財富的極致自由。</span></div>
       <header className="site-header">
         <div className="container header-inner">
-          <a className="brand" href="#/" aria-label="Free & Wealthy 自由至富首頁">
-            <span className="brand-name">Free <span>&amp;</span> Wealthy</span><span className="brand-sub">自由至富</span>
+          <a className="brand" href="#/" aria-label="Free & Wealthy 自由至富 AI技能學院首頁">
+            <span className="brand-name">Free <span>&amp;</span> Wealthy</span><span className="brand-sub"><strong>自由至富</strong> <span>AI技能學院</span></span>
           </a>
           <nav className={`main-nav ${open ? 'is-open' : ''}`} aria-label="主選單">
             <a href="#/explore" className={route.page === 'explore' ? 'active' : ''}>探索課程</a>
@@ -116,9 +116,9 @@ function Header({ route }: { route: Route }) {
 
 function Footer() {
   return <footer className="site-footer"><div className="container footer-grid">
-    <div><span className="brand-name footer-logo">Free <span>&amp;</span> Wealthy</span><p>自由至富｜用 AI 槓桿一人公司，通往時間與財富的極致自由。</p></div>
+    <div><div className="footer-brand"><span className="brand-name footer-logo">Free <span>&amp;</span> Wealthy</span><span className="brand-sub"><strong>自由至富</strong> <span>AI技能學院</span></span></div><p>用 AI 槓桿一人公司，通往時間與財富的極致自由。</p></div>
     <div className="footer-links"><a href="#/explore">探索課程</a><a href="#/my-learning">我的學習</a><a href="#/">回到首頁</a></div>
-    <span className="footer-note">Free & Wealthy 自由至富 · 課程平台示範版</span>
+    <span className="footer-note">Free & Wealthy · 自由至富 AI技能學院 · 課程平台示範版</span>
   </div></footer>
 }
 
@@ -183,7 +183,7 @@ function Home({ learning, prices }: { learning: LearningState; prices: CoursePri
   return <main>
     <section className="hero-section" style={{ backgroundImage: `url("${assetPath('/images/ai-rich-learning-hero.webp')}")` }}><div className="container hero-grid">
       <div className="hero-copy">
-        <div className="section-kicker"><span className="kicker-line" /> Free & Wealthy 自由至富</div>
+        <div className="section-kicker"><span className="kicker-line" /> Free & Wealthy · 自由至富 AI技能學院</div>
         <h1 className="hero-headline">建立你的一人公司，<br /><span>把技能變成第一筆收入</span></h1>
         <p className="hero-promise">用 AI 槓桿一人公司，通往時間與財富的極致自由。</p>
         <p className="hero-intro">100 種用 AI 賺錢的方法，先從一門可實作的課開始。首波 13 門，從線上諮詢、網站製作到影音與商家經營，練習接案需要的作品與流程。</p>
@@ -390,7 +390,7 @@ function Learning({ course, index, state, onComplete, onNote, onActivity, onChec
       <div className="progress-block"><div><span>學習進度</span><strong>{percent}%</strong></div><div className="progress-track" role="progressbar" aria-label="課程完成進度" aria-valuenow={percent} aria-valuemin={0} aria-valuemax={100}><span style={{ width: `${percent}%` }} /></div></div>
       {chapter && <div className="sidebar-chapter">目前階段 / {chapter.title}</div>}
       <nav className="lesson-list" aria-label="課程單元" ref={lessonNavRef}>{course.lessons.map((item, itemIndex) => <a href={lessonHref(course, itemIndex)} key={item.title} className={itemIndex === index ? 'current' : ''} aria-current={itemIndex === index ? 'page' : undefined} onClick={() => onStart(course, itemIndex)}><span className="lesson-index">{state?.completed.includes(itemIndex) ? <Check size={16} /> : String(itemIndex + 1).padStart(2, '0')}</span><span>{item.title}<small>{item.videoUrl ? `${videoTime(item.videoDuration)} 影片 · ${item.time}` : item.time}</small></span></a>)}</nav>
-      <div className="sidebar-foot">Free & Wealthy / 自由至富</div>
+      <div className="sidebar-foot">Free & Wealthy / 自由至富 AI技能學院</div>
     </aside>
     <article className="lesson-content">
       <div className="lesson-topline"><span>單元 {String(index + 1).padStart(2, '0')} / {String(course.lessons.length).padStart(2, '0')}</span><span>{chapter ? chapter.title : '文字導讀'} · {lesson.time}</span></div>
