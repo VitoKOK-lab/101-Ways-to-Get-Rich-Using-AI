@@ -160,7 +160,7 @@ function CourseCard({ course, state, prices }: { course: Course; state?: CourseS
       <div className="card-meta"><span>{course.category} / {course.level}</span><span>{course.duration}</span></div>
       <div className="course-status">{course.provider ? '20 堂完整課程' : '課綱示範 · 文字練習'}</div>
       <h3>{course.title}</h3><p>{course.subtitle}</p>
-      <div className="course-pricing"><TuitionPrice price={price} compact /><div className="course-market"><span>{market.comparable ? '外部接案報價參考 · 非學費' : market.sourceUrl ? '相近服務公開報價 · 非學費' : '外部接案報價 · 非學費'}</span><strong>{market.price}<small>{market.unit}</small></strong></div></div>
+      <div className="course-pricing"><TuitionPrice price={price} compact /><div className="course-market"><span>外部接案參考 · 非學費</span><strong>{market.price}<small>{market.unit}</small></strong><small className="market-source-note">依平台提供資料，尚未獨立查證</small></div></div>
       <div className="card-action"><span>{state?.started ? `${percent}% 已完成` : '查看課程'}</span><ArrowUpRight size={18} /></div>
     </div>
   </a>
@@ -253,7 +253,7 @@ function CourseDetail({ course, state, onStart, prices }: { course: Course; stat
     <section className={`detail-hero ${course.provider ? 'detail-hero-featured' : ''}`}><div className="container detail-grid">
       <div className="detail-copy"><div className="section-kicker">{course.category} / {course.level} / CLASS {course.number}</div><h1>{course.title}</h1><p className="detail-subtitle">{course.subtitle}</p><div className="detail-meta"><span><BookOpen size={18} /> {course.lessons.length} {course.provider ? '堂課' : '個單元'}</span><span><Clock3 size={18} /> {course.duration}</span>{course.provider && <span><Play size={18} /> {course.lessons.length} 支影片</span>}</div><p className="detail-description">{course.description}</p><div className="detail-pricing">
         <div className="detail-tuition"><TuitionPrice price={price} /><p>完整課程價格規劃；目前可公開試學，尚未開放購買。<a href="https://github.com/VitoKOK-lab/101-Ways-to-Get-Rich-Using-AI/blob/main/docs/course-tuition-benchmark.md" target="_blank" rel="noopener noreferrer">查看學費調查依據</a></p></div>
-        <div className="detail-market"><span>{market.comparable ? '台灣外部接案報價參考' : market.sourceUrl ? '台灣相近服務公開報價' : '外部接案報價'}</span><strong>{market.price}<small>{market.unit}</small></strong><p>{market.scope} 這是外部服務報價，並非本課學費或學員收入保證。</p>{market.sourceUrl && <a href={market.sourceUrl} target="_blank" rel="noopener noreferrer">資料來源：{market.sourceName} <ArrowUpRight size={14} /></a>}</div>
+      <div className="detail-market"><span>外部接案參考 · 非學費</span><strong>{market.price}<small>{market.unit}</small></strong><ul className="market-rate-tiers">{market.tiers.map((tier) => <li key={tier.label}><span>{tier.label}</span><b>{tier.price}<small>{tier.unit}</small></b></li>)}</ul><p>{market.scope}</p><p>以上依平台經營者提供的台灣行情資料整理，尚未獨立查證；實際報價依交付內容而定，也不是學員收入保證。</p></div>
       </div>{course.aiUse && <p className="detail-ai"><strong>AI 在這門課怎麼用</strong>{course.aiUse}</p>}{course.provider && <p className="detail-prep"><strong>課前準備</strong> 出生年月日與時辰、紙筆；每次安排 20–30 分鐘，完成一小步即可。</p>}<button type="button" className="btn btn-primary" onClick={() => onStart(course, resumeIndex)}>{state?.started ? '繼續學習' : '開始這堂課'} <ArrowUpRight size={20} /></button><span className="detail-aside">{course.provider ? `課程內容提供：${course.provider}` : '課綱示範 · 目前提供文字導讀與練習，尚無講師影片'}</span>{state?.started && <span className="detail-progress">已完成 {percent}%</span>}</div>
       <Cover course={course} large />
     </div></section>
