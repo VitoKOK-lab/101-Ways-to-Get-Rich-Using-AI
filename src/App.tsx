@@ -117,27 +117,17 @@ function Footer() {
 const originalCoverImages: Record<string, string> = {
   'ziwei-foundations': '/images/luxkey-ziwei.webp',
   'tarot-practice': '/images/luxkey-tarot.webp',
-  'booking-marketing': '/images/luxkey-booking.webp',
-  'personal-brand': '/images/luxkey-brand.webp',
-  'ai-solo-business': '/images/luxkey-ai.webp',
 }
 
 function courseCoverStyle(course: Course) {
+  if (course.coverImage) return {}
   const gradient = 'linear-gradient(90deg, rgba(255,255,255,.97), rgba(255,255,255,.08) 79%)'
-  if (course.imagePanel) {
-    const { sheet, col, row } = course.imagePanel
-    return {
-      backgroundImage: `${gradient}, url("${assetPath(`/images/ai-rich-course-sheet-${sheet}.png`)}")`,
-      backgroundSize: '100% 100%, 300% 200%',
-      backgroundPosition: `center, ${col * 50}% ${row * 100}%`,
-      backgroundRepeat: 'no-repeat',
-    }
-  }
   return { backgroundImage: `${gradient}, url("${assetPath(originalCoverImages[course.slug])}")` }
 }
 
 function Cover({ course, large = false }: { course: Course; large?: boolean }) {
-  return <div className={`course-cover cover-${course.theme} cover-${course.slug} ${course.imagePanel ? 'cover-panel' : ''} ${large ? 'cover-large' : ''}`} style={courseCoverStyle(course)} aria-hidden="true">
+  return <div className={`course-cover cover-${course.theme} cover-${course.slug} ${course.coverImage ? 'cover-localized' : ''} ${large ? 'cover-large' : ''}`} style={courseCoverStyle(course)} aria-hidden="true">
+    {course.coverImage && <img className="course-cover-photo" src={assetPath(course.coverImage)} loading="lazy" decoding="async" alt="" />}
     <span className="cover-top">AI RICH 101 / CLASS <span>{course.number}</span></span>
     <div className="cover-rule" />
     <span className="cover-word">{course.coverWord.split(' / ').map((part, index) => <span key={part}>{part}{index === 0 && <br />}</span>)}</span>
@@ -165,18 +155,18 @@ function Home({ learning }: { learning: LearningState }) {
   const goals = [
     { slug: 'ziwei-foundations', label: '成為線上紫微命理師', tag: '線上諮詢' },
     { slug: 'tarot-practice', label: '把塔羅練習變成諮詢服務', tag: '線上諮詢' },
-    { slug: 'ai-social-studio', label: '幫品牌經營社群內容', tag: '內容接案' },
-    { slug: 'ai-template-shop', label: '做一份能上架的數位商品', tag: '數位商品' },
-    { slug: 'ai-chatbot-service', label: '幫商家建立 AI 客服流程', tag: '自動化服務' },
+    { slug: 'website-building', label: '幫客戶做網站', tag: '網站接案' },
+    { slug: 'social-graphic-editor', label: '接圖文小編的案子', tag: '內容接案' },
+    { slug: 'ai-video-editing', label: '用 AI 幫客戶剪短片', tag: '影音接案' },
   ]
   return <main>
     <section className="hero-section" style={{ backgroundImage: `url("${assetPath('/images/luxkey-hero.webp')}")` }}><div className="container hero-grid">
       <div className="hero-copy">
         <div className="section-kicker"><span className="kicker-line" /> AI RICH 101 · LEARN TO EARN</div>
-        <h1>學 AI，<br /><span>做出收入可能。</span></h1>
-        <p className="hero-intro">100 種用 AI 賺錢的方法，先從一門可實作的課開始。首波 16 門，從線上諮詢、內容接案到商家自動化，學會製作可展示的服務與商品。</p>
+        <h1>把技能變成<br /><span>第一筆收入。</span></h1>
+        <p className="hero-intro">100 種用 AI 賺錢的方法，先從一門可實作的課開始。首波 13 門，從線上諮詢、網站製作到影音與商家經營，練習接案需要的作品與流程。</p>
         <div className="hero-actions"><button type="button" className="btn btn-primary" onClick={() => document.getElementById('find-path')?.scrollIntoView({ behavior: 'smooth' })}>找到適合我的課 <ArrowUpRight size={19} /></button><a className="text-link" href="#/explore">探索所有課程 <ArrowRight size={18} /></a></div>
-        <div className="hero-bottom"><span>01 / 16</span><div className="hairline" /><span>MAKE IT REAL</span></div>
+        <div className="hero-bottom"><span>01 / 13</span><div className="hairline" /><span>MAKE IT REAL</span></div>
       </div>
       <div className="hero-image-caption"><span>THE NEXT CHAPTER / 2026</span><span>IDEA → ACTION</span></div>
     </div></section>
@@ -184,7 +174,7 @@ function Home({ learning }: { learning: LearningState }) {
     <section className="principles"><div className="container principles-grid">
       <span className="principles-label">為什麼在這裡學？</span>
       <p>知識，<em>要能用。</em></p>
-      <span className="principles-caption">16 門首波課程 · 有作品的練習 · 參考服務定價</span>
+      <span className="principles-caption">13 門首波課程 · 有作品的練習 · 參考服務定價</span>
     </div></section>
 
     <section className="spotlight-section"><div className="container spotlight-grid">
@@ -193,7 +183,7 @@ function Home({ learning }: { learning: LearningState }) {
     </div></section>
 
     <section className="path-section" id="find-path"><div className="container path-grid">
-      <div className="path-intro"><div className="section-kicker">FIND YOUR NEXT STEP / 01</div><h2>現在，<br /><span>你想改變什麼？</span></h2><p>從眼前最想完成的事開始。我們會推薦一門可以立刻動手的課。</p><span className="path-small">選一個目標 · 即時顯示推薦課程</span></div>
+      <div className="path-intro"><div className="section-kicker">FIND YOUR NEXT STEP / 01</div><h2>賺錢方法很多，<br /><span>找到適合你的</span></h2><p>從眼前最想完成的事開始。我們會推薦一門可以立刻動手的課。</p><span className="path-small">想更了解自己？可以先<a href="https://www.ziweiuniverse.com/" target="_blank" rel="noopener noreferrer">算算紫微 <ArrowUpRight size={13} /></a></span></div>
       <div className="path-panel"><div className="path-panel-top"><span>CHOOSE YOUR DIRECTION</span><span>01 / 01</span></div><div className="path-options" role="group" aria-label="選擇學習目標">{goals.map((goal, index) => <button type="button" key={goal.slug} className={selectedGoal === goal.slug ? 'selected' : ''} aria-pressed={selectedGoal === goal.slug} onClick={() => setSelectedGoal(goal.slug)}><span className="path-option-number">{String(index + 1).padStart(2, '0')}</span><span>{goal.label}<small>{goal.tag}</small></span><ArrowUpRight size={20} /></button>)}</div>{recommended ? <div className="path-result" aria-live="polite"><span>你的推薦課程</span><strong>{recommended.title}</strong><p>{recommended.subtitle}</p><a href={courseHref(recommended)}>查看課程內容 <ArrowRight size={18} /></a></div> : <div className="path-prompt">選擇一個方向，看見你的第一步。<ArrowRight size={18} /></div>}</div>
     </div></section>
 
@@ -224,7 +214,7 @@ function Explore({ learning }: { learning: LearningState }) {
     return matchesCategory && text.includes(query.trim().toLowerCase())
   }), [category, query])
   return <main>
-    <section className="page-hero explore-hero"><div className="container"><div className="section-kicker">THE COURSE LIBRARY / 01—16</div><h1>找到你的<br /><span>下一步。</span></h1><p>首波 16 門課，選一個想做的服務，先練出可展示的成果。</p></div></section>
+    <section className="page-hero explore-hero"><div className="container"><div className="section-kicker">THE COURSE LIBRARY / 01—13</div><h1>原來沒這麼難</h1><p>首波 13 門課。選一個想做的服務，先收到第一個1000元。</p></div></section>
     <section className="section catalog-section"><div className="container">
       <div className="catalog-tools"><div className="category-list" aria-label="課程分類">{categories.map((item) => <button type="button" key={item} className={category === item ? 'selected' : ''} onClick={() => setCategory(item)}>{item}</button>)}</div><label className="search-box"><Search size={20} strokeWidth={2} /><span className="sr-only">搜尋課程</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="搜尋你想學的主題" /></label></div>
       <div className="results-line"><span>{String(results.length).padStart(2, '0')} 門課程</span><span>依主題探索</span></div><p className="catalog-disclaimer">價格為服務或商品的示例定價，並非學完保證收入。紫微課已提供 20 堂完整內容；其他課程目前為文字實作版。</p>
