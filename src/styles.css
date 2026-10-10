@@ -315,8 +315,8 @@ svg { flex: none; }
   .footer-note { grid-column: auto; }
 }
 
-/* freetorick identity, separate tuition and external service rates */
-.brand-name { display: inline-flex; align-items: center; color: var(--ink); font-family: Jost, var(--font-sans); font-size: 29px; font-weight: 700; letter-spacing: -.045em; line-height: 1; white-space: nowrap; }
+/* Free & Wealthy identity, separate tuition and external service rates */
+.brand-name { display: inline-flex; align-items: center; gap: .24em; color: var(--ink); font-family: Jost, var(--font-sans); font-size: 29px; font-weight: 700; letter-spacing: -.045em; line-height: 1; white-space: nowrap; }
 .brand-name > span { color: var(--vermillion); }
 .brand-sub { letter-spacing: .16em; }
 .footer-logo { font-size: 27px; }

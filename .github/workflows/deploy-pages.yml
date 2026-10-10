@@ -1,4 +1,4 @@
-name: Deploy freetorick to GitHub Pages
+name: "Deploy Free & Wealthy to GitHub Pages"
 
 on:
   push:
