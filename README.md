@@ -21,7 +21,7 @@ npm run dev
 ## 課程範圍
 
 - [16 門課程](https://vitokok-lab.github.io/101-Ways-to-Get-Rich-Using-AI/#/explore)各有主題照片、服務定位、示例價格、學習成果與課堂練習。02–16 是每門四個文字單元的企劃示範，尚無講師影片或人工評閱。
-- [紫微斗數課](https://vitokok-lab.github.io/101-Ways-to-Get-Rich-Using-AI/#/courses/ziwei-foundations)保留原 20 堂影片、課文與表格，並提供本站作業、排盤對答案工具、六次檢核及結業作品草稿。
+- [紫微斗數課](https://vitokok-lab.github.io/101-Ways-to-Get-Rich-Using-AI/#/courses/ziwei-foundations)保留原 20 堂影片、課文與表格，並提供本站作業、排盤對答案工具、六次檢核及結業作品草稿。全 20 堂課文以藍綠底色標示宮位、朱紅淺底加粗標示教學關鍵句；窄螢幕的表格可橫向滑動。
 - 展示價格是服務或商品的**示例定價**，不是學完保證收入。未完成真人試案、作品評閱、成本與需求驗證前，不宜把價格當作學員可取得的收入。
 - 學習進度、作業、測驗答案、結業作品及筆記存於目前瀏覽器的 `localStorage`。清除瀏覽器資料後無法復原。登入、雲端同步、購買、付款和付費課權限控管尚未接入。
 

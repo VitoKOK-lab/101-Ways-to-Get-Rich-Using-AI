@@ -17,6 +17,7 @@ import {
 } from 'lucide-react'
 import { categories, courses, ziweiCourse, type Course, type LessonBlock } from './data'
 import { capstoneFields, chapterChecks, lessonActivities } from './ziwei-assessments'
+import { palacePattern, ziweiHighlights } from './ziwei-highlights'
 
 type Route =
   | { page: 'home' }
@@ -259,17 +260,35 @@ function videoTime(duration?: string) {
   return hours ? `${hours} 小時 ${minutes} 分鐘` : `${minutes} 分 ${String(seconds).padStart(2, '0')} 秒`
 }
 
-function LessonBlockContent({ block }: { block: LessonBlock }) {
+function markPalaces(text: string) {
+  return text.split(palacePattern).map((part, partIndex) =>
+    partIndex % 2 ? <mark className="palace-highlight" key={partIndex}>{part}</mark> : part,
+  )
+}
+
+function annotatedText(text: string | undefined, lessonIndex?: number, includeTeaching = true) {
+  if (!text) return null
+  if (lessonIndex === undefined) return text
+  const phrase = includeTeaching ? ziweiHighlights[lessonIndex]?.phrase : undefined
+  const position = phrase ? text.indexOf(phrase) : -1
+  if (position < 0 || !phrase) return markPalaces(text)
+  return <>{markPalaces(text.slice(0, position))}<mark className="teaching-highlight"><strong>{phrase}</strong></mark>{markPalaces(text.slice(position + phrase.length))}</>
+}
+
+function LessonBlockContent({ block, lessonIndex }: { block: LessonBlock; lessonIndex?: number }) {
   if (block.type === 'table' && block.rows?.length) {
-    return <div className="reader-table-scroll"><table className="reader-table">
+    const isCourseMap = block.caption === '紫微斗數排盤課程的四個部分'
+    const widestRow = Math.max(...block.rows.map((row) => row.length))
+    return <><span className="table-scroll-cue">← 左右滑動查看完整表格 →</span><div className="reader-table-scroll" tabIndex={0} role="region" aria-label={`${block.caption || '課程表格'}，窄螢幕可左右滑動`}><table className={`reader-table ${isCourseMap ? 'reader-table-course-map' : ''}`} style={{ minWidth: isCourseMap ? 760 : Math.max(560, widestRow * 105) }}>
       {block.caption && <caption>{block.caption}</caption>}
-      <thead><tr>{block.rows[0].map((cell, index) => <th scope="col" key={index}>{cell}</th>)}</tr></thead>
-      <tbody>{block.rows.slice(1).map((row, rowIndex) => <tr key={rowIndex}>{row.map((cell, cellIndex) => cellIndex === 0 ? <th scope="row" key={cellIndex}>{cell}</th> : <td key={cellIndex}>{cell}</td>)}</tr>)}</tbody>
-    </table></div>
+      {isCourseMap && <colgroup><col style={{ width: 96 }} /><col style={{ width: 185 }} /><col style={{ width: 170 }} /><col /></colgroup>}
+      <thead><tr>{block.rows[0].map((cell, index) => <th scope="col" key={index}>{annotatedText(cell, lessonIndex, false)}</th>)}</tr></thead>
+      <tbody>{block.rows.slice(1).map((row, rowIndex) => <tr key={rowIndex}>{row.map((cell, cellIndex) => cellIndex === 0 ? <th scope="row" key={cellIndex}>{annotatedText(cell, lessonIndex, false)}</th> : <td key={cellIndex}>{annotatedText(cell, lessonIndex, false)}</td>)}</tr>)}</tbody>
+    </table></div></>
   }
-  if (block.type === 'subheading') return <h3 className="reader-subheading">{block.text}</h3>
-  if (block.type === 'listItem') return <p className="reader-list-item">{block.text}</p>
-  return <p>{block.text}</p>
+  if (block.type === 'subheading') return <h3 className="reader-subheading">{annotatedText(block.text, lessonIndex)}</h3>
+  if (block.type === 'listItem') return <p className="reader-list-item">{annotatedText(block.text, lessonIndex)}</p>
+  return <p>{annotatedText(block.text, lessonIndex)}</p>
 }
 
 const ziweiSteps = ['lunar', 'lunar', 'lunar', 'grid', 'life', 'stems', 'five', 'ziwei', 'ziweiGroup', 'tianfuGroup', 'lucky', 'tough', 'mutagen', 'decades', 'full', 'read', 'empty', 'topics', 'decadeNow', 'yearly']
@@ -345,10 +364,11 @@ function Learning({ course, index, state, onComplete, onNote, onActivity, onChec
       <div className="lesson-topline"><span>單元 {String(index + 1).padStart(2, '0')} / {String(course.lessons.length).padStart(2, '0')}</span><span>{chapter ? chapter.title : '文字導讀'} · {lesson.time}</span></div>
       <div className="lesson-article">
         <div className="section-kicker">THE LESSON / {course.number}.{String(index + 1).padStart(2, '0')}</div>
-        <h1>{lesson.title}</h1><p className="lesson-lead">{lesson.summary}</p>
+        <h1>{lesson.title}</h1><p className="lesson-lead">{annotatedText(lesson.summary, isZiwei ? index : undefined, false)}</p>
         {lesson.videoUrl && <div className="lesson-video-wrap">{videoStarted ? <video key={`${course.slug}-${index}`} controls autoPlay playsInline preload="metadata" poster={assetPath(chapter?.image || '/images/luxkey-ziwei.webp')} src={lesson.videoUrl}>你的瀏覽器不支援影片播放。</video> : <button className="lesson-video-poster" type="button" style={{ backgroundImage: `linear-gradient(90deg, rgba(255,255,255,.96), rgba(255,255,255,.12) 80%), url("${assetPath(chapter?.image || '/images/luxkey-ziwei.webp')}")` }} onClick={() => setVideoStarted(true)} aria-label={`播放第 ${index + 1} 課影片：${lesson.title}`}><span className="video-poster-top">紫微斗數入門 · 第 {String(index + 1).padStart(2, '0')} 課</span><strong>{lesson.title}</strong><span className="video-poster-play"><Play size={23} fill="currentColor" /> 播放影片 · {videoTime(lesson.videoDuration)}</span></button>}<div className="lesson-video-caption"><span><Play size={16} /> 紫微宇宙課程影片 · {videoTime(lesson.videoDuration)}</span><span>影片、課文、練習都在本站完成</span></div></div>}
         <div className="reader-notice"><BookOpen size={22} /><div><strong>{lesson.videoUrl ? '看影片、讀課文，然後動手排盤。' : '先讀，再動手。'}</strong><span>{lesson.videoUrl ? '完成下方實作、核對命盤，並在階段結尾參加測驗。' : '這是示範版課堂。閱讀重點後，完成下面的小練習。'}</span></div></div>
-        {lesson.sections.map((section, sectionIndex) => <section className="lesson-section" key={section.heading}><div className="section-kicker">{String(sectionIndex + 1).padStart(2, '0')} / KEY IDEA</div><h2>{section.heading}</h2>{section.blocks ? section.blocks.map((block, blockIndex) => <LessonBlockContent key={blockIndex} block={block} />) : <p>{section.body}</p>}</section>)}
+        {isZiwei && <aside className="lesson-focus"><span>本課先記住</span><strong>{ziweiHighlights[index].focus}</strong><small><i className="highlight-swatch palace-swatch" /> 宮位　<i className="highlight-swatch teaching-swatch" /> 教學重點</small></aside>}
+        {lesson.sections.map((section, sectionIndex) => <section className="lesson-section" key={section.heading}><div className="section-kicker">{String(sectionIndex + 1).padStart(2, '0')} / KEY IDEA</div><h2>{annotatedText(section.heading, isZiwei ? index : undefined, false)}</h2>{section.blocks ? section.blocks.map((block, blockIndex) => <LessonBlockContent key={blockIndex} block={block} lessonIndex={isZiwei ? index : undefined} />) : <p>{annotatedText(section.body, isZiwei ? index : undefined)}</p>}</section>)}
         <section className="exercise-box"><div className="section-kicker">GUIDED PRACTICE / 本課作業</div><h2>現在，換你試試。</h2><p>{isZiwei ? lessonActivities[index] : lesson.exercise}</p>{isZiwei && <label className="activity-field">你的作業內容<textarea value={activity} onChange={(event) => onActivity(index, event.target.value)} rows={5} placeholder="把你的計算過程、觀察或仍不確定的地方寫在這裡…" /><small>至少 12 字；自動儲存在此瀏覽器。命盤計算可用下方工具核對，文字作業尚無人工批改。</small></label>}</section>
         {isZiwei && <ZiweiChecker index={index} />}
         {isZiwei && chapterChecks[index] && <StageCheck index={index} state={state} onAnswer={onCheckAnswer} onPass={onCheckPass} />}

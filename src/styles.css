@@ -439,6 +439,24 @@ svg { flex: none; }
 .reader-table tr:last-child th, .reader-table tr:last-child td { border-bottom: 0; }
 .reader-table thead th { background: var(--silver-100); color: var(--ink); }
 .reader-table tbody th { color: var(--teal-800); font-weight: 700; }
+.reader-table-course-map { table-layout: fixed; }
+.reader-table-course-map tbody th { white-space: nowrap; }
+.reader-table-course-map td, .reader-table-course-map th { word-break: normal; overflow-wrap: normal; }
+.table-scroll-cue { display: none; }
+.palace-highlight, .teaching-highlight { padding: .05em .17em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.palace-highlight { background: var(--teal-50); color: var(--teal-800); font-weight: 700; }
+.teaching-highlight { background: var(--vermillion-50); color: var(--ink); font-weight: 700; }
+.teaching-highlight strong { font-weight: 800; }
+.lesson-focus { display: flex; flex-direction: column; align-items: flex-start; gap: 9px; margin: 36px 0 47px; padding: 20px 24px; border-left: 4px solid var(--vermillion); background: var(--vermillion-50); }
+.lesson-focus > span { color: var(--vermillion-700); font: 700 11px var(--font-mono); letter-spacing: .08em; }
+.lesson-focus > strong { font-size: 18px; line-height: 1.65; }
+.lesson-focus small { display: flex; align-items: center; gap: 8px; color: var(--ink-600); font-size: 11px; }
+.highlight-swatch { width: 13px; height: 13px; display: inline-block; }
+.palace-swatch { background: var(--teal-50); border: 1px solid var(--teal-200); }
+.teaching-swatch { background: var(--vermillion-50); border: 1px solid var(--vermillion-200); }
+@media (max-width: 760px) {
+  .table-scroll-cue { display: block; margin: 25px 0 -21px; color: var(--teal-700); font-size: 11px; font-weight: 700; }
+}
 .exercise-box a { display: inline-flex; align-items: center; gap: 7px; margin-top: 24px; padding-bottom: 4px; border-bottom: 1px solid var(--cyan); color: var(--cyan); font-size: 14px; font-weight: 700; }
 .exercise-box a:hover { color: var(--white); border-color: var(--white); }
 .lesson-source-note { margin: 28px 0 0; color: var(--ink-500); font-size: 12px; line-height: 1.7; }
