@@ -6,11 +6,11 @@ Free & Wealthy 自由至富 借鑑 [MasterClass 公開首頁](https://www.master
 
 內容規劃以有意經營個人服務或學習自我探索的使用者需求為中心；女性主角的影像回應主要受眾，但不假設所有女性都喜歡同一種題材。
 
-MasterClass 的[一般課程說明](https://www.masterclass.com/help-center/masterclass/answers/about-master-class-classes--id--GfYxwjzXQuSxglxsayS8Hg)描述自訂節奏的影片、練習與學習指南；[一般課程沒有官方完課證書](https://www.masterclass.com/help-center/masterclass/answers/certificate-of-completion--id--iG8dy7oFSuqjCg9czvEm-w)。[MasterClass Certificates](https://www.masterclass.com/help-center/certificates/answers/what-will-master-class-certificate-courses-include--id---cx4IVBHTMW5z8xA-ub1PQ)另包含閱讀、評量、結業作品與回饋。本平台借鑑其「看示範 → 動手做 → 階段檢核 → 完成作品」的學習節奏，沒有聲稱提供 MasterClass 證書或其講師評閱。課程詳情借鑑[其公開課程頁](https://www.masterclass.com/classes/annie-leibovitz-teaches-photography)以大幅視覺、成果和精簡課程計畫引導，六張階段卡片接著提供可展開課表。
+MasterClass 的[一般課程說明](https://www.masterclass.com/help-center/masterclass/answers/about-master-class-classes--id--GfYxwjzXQuSxglxsayS8Hg)描述自訂節奏的影片、練習與學習指南；[一般課程沒有官方完課證書](https://www.masterclass.com/help-center/masterclass/answers/certificate-of-completion--id--iG8dy7oFSuqjCg9czvEm-w)。[MasterClass Certificates](https://www.masterclass.com/help-center/certificates/answers/what-will-master-class-certificate-courses-include--id---cx4IVBHTMW5z8xA-ub1PQ)另包含閱讀、評量、結業作品與回饋。本平台借鑑其自訂節奏與精簡導覽，採「看示範／讀課文 → 本課重點 → 即時小測驗」。依經營者決定不設作業或結業作品，也不保存測驗結果。課程詳情借鑑[其公開課程頁](https://www.masterclass.com/classes/annie-leibovitz-teaches-photography)以大幅視覺、成果和精簡課程計畫引導，六張階段卡片接著提供可展開課表。
 
 | 順序 | 課程 | 現有內容 | 可展示的練習成果 |
 | --- | --- | --- | --- |
-| 01 | 紫微斗數入門 | 20 堂原影片與課文、本站作業、排盤工具、六次檢核與結業草稿 | 匿名解盤與諮詢流程草稿 |
+| 01 | 紫微斗數入門 | 20 堂原影片與課文、排盤工具、六組即時小測驗 | 匿名解盤與諮詢流程草稿 |
 | 02 | 塔羅諮詢 | 四個文字單元 | 諮詢流程與預約說明 |
 | 03 | 網站製作 | 四個文字單元 | 三頁服務網站與驗收表 |
 | 04 | 圖文小編 | 四個文字單元 | 三篇品牌圖文與月費提案 |
@@ -37,11 +37,11 @@ MasterClass 的[一般課程說明](https://www.masterclass.com/help-center/mast
 正式製作時，應優先補上：
 
 1. 一張可下載的空白命盤、一份完整範例盤，以及第 5–15 堂同一個案例逐步填入的示範。這能減少新手在各課之間重新對照的負擔。
-2. 可下載的逐步工作手冊和更完整的錯誤診斷。本站已加入每階段測驗與原站排盤引擎的課內對答案工具，但文字作業尚無自動評分或人工批改。
+2. 可下載的逐步工作手冊和更完整的錯誤診斷。本站已加入即時解答的小測驗與原站排盤引擎的課內對答案工具，不設作業或批改。
 3. 真人講師的清楚示範鏡頭、畫面標示與口述推理，再逐堂核對原資料與用詞。現有 AI 人像只作封面，不可當成真實講師。
 4. 一個以解讀順序與界線為重點的完整案例。紫微斗數可用於自我探索，不能取代醫療、法律或財務專業意見。
 
-頁面標語「學完立刻可做線上紫微命理師」依使用者指定呈現。現有 20 支影片多為約 2–3 分鐘，完成本站測驗與作品草稿不足以證明能安全提供付費諮詢；正式推出前應安排真實案例練習、講師評閱、服務界線與個資處理檢查。本站不提供營業資格認證。收費上線還需身分驗證、付款、授權控管和伺服器端學習記錄，避免只靠公開靜態網站及瀏覽器儲存。
+頁面標語「學完立刻可做線上紫微命理師」依使用者指定呈現。現有 20 支影片多為約 2–3 分鐘，即時小測驗不足以證明能安全提供付費諮詢；正式推出前應補足真實案例示範、服務界線與個資處理說明。本站不提供營業資格認證。收費上線還需身分驗證、付款、授權控管和伺服器端學習記錄，避免只靠公開靜態網站及瀏覽器儲存。
 
 第二至第十三門仍是企劃驗證用內容。要成為正式課，還需要領域講師、真實案例或經授權的服務過程、可下載模板、示範影片、練習評量與學員試學回饋。優先順序建議先訪談潛在學員與可合作的小型商家，驗證網站製作、圖文小編與塔羅諮詢的需求和付費意願，再決定錄製深度。
 
@@ -55,4 +55,4 @@ MasterClass 的[一般課程說明](https://www.masterclass.com/help-center/mast
 
 ### 全站資訊層級
 
-往後新增課程與頁面時，首屏以一個主訊息、一張能說明課程實際內容的主圖和一個主要操作為原則。目錄卡片只顯示課程類型、名稱、一句可交付成果與清楚標明的學費；接案行情放在課程詳情的獨立區塊。課程詳情先說明學完能做什麼，再展開課程路線、費用依據與準備事項。學習頁先呈現影片或課題圖片，接著才是本課重點與完整教材；手機上的 20 課導航預設收合，但仍可隨時展開。保留完整課文、KEY IDEA、作業、檢核及原本價格資訊，將長說明放在使用者需要它的段落，而不是重複擠在首屏。所有頁面沿用上述 Luxkey CIS 色票與字體；不同課題可更換構圖和人物情境。
+往後新增課程與頁面時，首屏以一個主訊息、一張能說明課程實際內容的主圖和一個主要操作為原則。目錄卡片只顯示課程類型、名稱、一句可交付成果與清楚標明的學費；接案行情放在課程詳情的獨立區塊。課程詳情先說明學完能做什麼，再展開課程路線、費用依據與準備事項。學習頁先呈現影片或課題圖片，接著才是本課重點與完整教材；手機上的 20 課導航預設收合，但仍可隨時展開。保留完整課文、KEY IDEA、即時小測驗及原本價格資訊，將長說明放在使用者需要它的段落，而不是重複擠在首屏。所有頁面沿用上述 Luxkey CIS 色票與字體；不同課題可更換構圖和人物情境。
