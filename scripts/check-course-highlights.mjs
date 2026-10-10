@@ -3,11 +3,13 @@ import { readFileSync } from 'node:fs'
 const lessons = JSON.parse(readFileSync(new URL('../src/ziwei-lessons.json', import.meta.url)))
 const ideas = JSON.parse(readFileSync(new URL('../src/ziwei-key-ideas.json', import.meta.url)))
 const courseFocuses = readFileSync(new URL('../src/ziwei-highlights.ts', import.meta.url), 'utf8').match(/\{ focus:/g) || []
+const checker = readFileSync(new URL('../src/ziwei/check.js', import.meta.url), 'utf8')
 const errors = []
 let count = 0
 
 if (lessons.length !== 20 || ideas.length !== lessons.length) errors.push('紫微課必須保有 20 堂課及對應的重點資料。')
 if (courseFocuses.length !== lessons.length) errors.push('每堂紫微課都必須有「本課重點」。')
+if (checker.includes('左右滑動看完整命盤')) errors.push('本站命盤工具仍有已移除的舊操作提示。')
 for (const [lessonIndex, lesson] of lessons.entries()) {
   const copiedCopy = JSON.stringify(lesson)
   for (const phrase of ['左右滑動看完整命盤', '首頁的命盤', '首頁命盤', '首頁排出來的盤', '主題報告', '貴人報告', '戀愛腦報告', '正緣報告', '換工作報告', '婚期報告', '財路報告', '第一個百萬報告']) {

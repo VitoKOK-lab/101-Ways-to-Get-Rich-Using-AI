@@ -24,6 +24,7 @@ npm run dev
 - [紫微斗數課](https://vitokok-lab.github.io/101-Ways-to-Get-Rich-Using-AI/#/courses/ziwei-foundations)保留原 20 堂影片、課文與表格，並提供本站作業、排盤對答案工具、六次檢核及結業作品草稿。全 20 堂課文以藍綠底色標示宮位、朱紅淺底加粗標示教學關鍵句；窄螢幕的表格可橫向滑動。
 - **課程價格為未來完整課程的規劃價，尚未開放付款**。每門分列定價與現在售價；外部接案報價另列，不是學費或收入保證。詳見[學費調查](docs/course-tuition-benchmark.md)及[接案行情整理](docs/freelance-rate-research.md)；後者由平台經營者提供，尚未獨立查證。
 - 學習進度、作業、測驗答案、結業作品及筆記存於目前瀏覽器的 `localStorage`。清除瀏覽器資料後無法復原。登入、雲端同步、購買、付款和付費課權限控管尚未接入。
+- 全平台依序學習：每課填寫至少 12 字作業後，按「完成本課練習」儲存完成紀錄，再解鎖下一課。課表、側欄、下一課按鈕與直接路由均依同一進度判斷；未填足字數會顯示原因並定位至作業欄。這是目前瀏覽器的學習流程，不是付費內容的伺服器授權或講師評閱。
 
 紫微課內容取自使用者指定的 `VitoKOK-lab/Ziwei-Doushu` 儲存庫 `knowledge/ziwei/course/` 與 20 個課文頁面，匯入版本為 `8fc6dd481877ccb61b32689a96ea3e83773f05dc`。影片從 `video.ziweiuniverse.com` 播放；排盤引擎與對答案介面沿用該儲存庫的瀏覽器端程式並整合到本站。詳見[課程企劃與製作缺口](docs/course-strategy.md)、[全平台課文重點標示規範](docs/course-content-standard.md)與[付費會員及 Cloudflare 上線規劃](docs/membership-commerce-plan.md)。
 

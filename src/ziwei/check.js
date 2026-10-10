@@ -69,7 +69,7 @@ function render(box, b, astro) {
     out.innerHTML = `<h3>你的答案：${esc(stepLabel(step))}</h3>`
       + lines.map(t => `<p>${esc(t)}</p>`).join('')
       + (mismatch ? '<p class="zw-check-warn">這張盤有比較特殊的設定，請以紫微宇宙 App 排出來的命盤為準。</p>' : '')
-      + `<figure class="zw-chart"><div class="zw-chart-scroll" tabindex="0" aria-label="你的命盤，可左右滑動">${stepGridSvg(m, step, { info, brightness, title: '你的命盤' })}</div><p class="zw-chart-hint">← 左右滑動看完整命盤 →</p><figcaption>排到這一課為止的命盤。藍綠色是這一步新填上去的格子。</figcaption></figure>`;
+      + `<figure class="zw-chart"><div class="zw-chart-scroll" tabindex="0" aria-label="你的命盤">${stepGridSvg(m, step, { info, brightness, title: '你的命盤' })}</div><figcaption>排到這一課為止的命盤。藍綠色是這一步新填上去的格子。</figcaption></figure>`;
     out.hidden = false;
   } catch (_) {
     out.innerHTML = '<p class="zw-check-warn">這組生日排不出來，請確認日期是否正確（例如農曆小月沒有三十日）。</p>';

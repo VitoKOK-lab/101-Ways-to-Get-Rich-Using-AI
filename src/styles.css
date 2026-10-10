@@ -594,7 +594,7 @@ svg { flex: none; }
 .zw-chart { margin: 22px 0 0; }
 .zchart { display: block; width: 100%; max-width: 560px; height: auto; margin: auto; }
 .zw-chart-scroll { overflow-x: auto; }
-.zw-chart-hint, .zw-chart figcaption { text-align: center; color: var(--ink-500); font-size: 11px; }
+.zw-chart figcaption { text-align: center; color: var(--ink-500); font-size: 11px; }
 .zmanual .zm-cell rect { fill: var(--white); stroke: var(--silver-300); }
 .zmanual .zm-cell.is-life rect { stroke: var(--teal); stroke-width: 1.5; }
 .zmanual .zm-cell.is-new rect { fill: var(--teal-50); stroke: var(--teal); stroke-width: 2; }
@@ -1183,4 +1183,29 @@ svg { flex: none; }
   .hero-copy h1.hero-headline { font-size: clamp(30px, 7.8vw, 39px); }
   .principles-grid p { font-size: 32px; line-height: 1.18; }
   .spotlight-copy h2 { font-size: 43px; }
+}
+
+/* Practice completion and sequential access share the same progress state. */
+.spotlight-image > span:first-child { margin-top: 0; padding-top: 0; }
+.syllabus-sequence-note { margin: 0 0 25px; color: var(--ink-500); font-size: 13px; line-height: 1.6; }
+.syllabus-list button.syllabus-locked { cursor: not-allowed; color: var(--ink-500); }
+.syllabus-list button.syllabus-locked:hover { padding-left: 0; background: transparent; color: var(--ink-500); }
+.lesson-list button.lesson-locked { display: flex; align-items: flex-start; gap: 13px; width: 100%; padding: 12px 9px; border: 0; border-left: 3px solid transparent; background: transparent; color: var(--ink-500); text-align: left; font: 600 13px/1.45 var(--font-sans); cursor: not-allowed; }
+.lesson-locked > span:nth-child(2) { flex: 1; }
+.lesson-locked > svg { flex: none; margin-top: 2px; }
+.practice-error:empty { display: none; }
+.exercise-box .practice-error { margin: 14px 0 0; color: var(--vermillion-100); font-size: 13px; font-weight: 700; }
+.activity-field textarea[aria-invalid="true"] { border-color: var(--vermillion); outline: 2px solid var(--vermillion); }
+.practice-completion { margin-top: 35px; padding: 15px 18px; border-left: 3px solid var(--teal); background: var(--teal-50); color: var(--teal-700); font-size: 13px; line-height: 1.65; }
+.practice-completion + .lesson-actions { margin-top: 20px; }
+.btn-complete:disabled { opacity: 1; cursor: default; }
+.next-lesson-locked:disabled { color: var(--ink-500); border-color: var(--silver-300); cursor: not-allowed; }
+.locked-lesson { display: flex; flex-direction: column; align-items: flex-start; gap: 24px; min-height: 65vh; padding-block: 88px; }
+.locked-lesson > svg { color: var(--teal); }
+.locked-lesson .section-kicker { margin: 0; }
+.locked-lesson h1 { margin: 0; font-size: clamp(35px, 4.5vw, 62px); }
+.locked-lesson p { margin: 0; color: var(--ink-600); font-size: 16px; line-height: 1.7; }
+@media (max-width: 760px) {
+  .lesson-list button.lesson-locked { border-left: 0; border-bottom: 1px solid var(--silver-200); }
+  .locked-lesson { padding-block: 54px; }
 }
