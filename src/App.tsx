@@ -19,7 +19,7 @@ import { categories, courses, ziweiCourse, type Course, type LessonBlock } from 
 import { capstoneFields, chapterChecks, lessonActivities } from './ziwei-assessments'
 import { palacePattern, ziweiHighlights } from './ziwei-highlights'
 import { marketRates } from './market-rates'
-import { activeCampaign, formatTwd, proposedCoursePrices, validCoursePrice, type CoursePrice } from './course-pricing'
+import { formatTwd, proposedCoursePrices, validCoursePrice, type CoursePrice } from './course-pricing'
 
 type CoursePrices = Record<string, CoursePrice>
 const pricingApiUrl = import.meta.env.VITE_PRICING_API_URL as string | undefined
@@ -143,12 +143,10 @@ function Cover({ course, large = false }: { course: Course; large?: boolean }) {
 }
 
 function TuitionPrice({ price, compact = false }: { price: CoursePrice; compact?: boolean }) {
-  const campaign = activeCampaign(price)
   return <div className={`tuition-price ${compact ? 'tuition-price-compact' : ''}`}>
     <span className="tuition-caption">課程價格 {price.status === 'planned' && <em>規劃中</em>}</span>
     <div><span>定價</span>{price.status === 'planned' ? <b className="tuition-list">{formatTwd(price.listPrice)}</b> : <s>{formatTwd(price.listPrice)}</s>}</div>
     <div className="tuition-current"><span>現在售價</span><strong>{formatTwd(price.currentPrice)}</strong></div>
-    <div className={campaign ? 'tuition-campaign active' : 'tuition-campaign'}><span>活動價</span><b>{campaign ? formatTwd(price.campaignPrice!) : price.campaignPrice !== null ? '已排程／未生效' : '尚未設定'}</b></div>
   </div>
 }
 
@@ -208,7 +206,7 @@ function Home({ learning, prices }: { learning: LearningState; prices: CoursePri
 
     <section className="section courses-section"><div className="container">
       <div className="section-heading"><div><div className="section-kicker">01 / 精選課程</div><h2>從一門課，<br />做出第一個服務。</h2></div><a href="#/explore" className="text-link">探索全部課程 <ArrowUpRight size={18} /></a></div>
-      <div className="course-grid">{courses.slice(0, 6).map((course) => <CourseCard key={course.slug} course={course} state={learning[course.slug]} prices={prices} />)}</div><p className="course-price-note">畫面上的定價與現在售價是完整課程的價格規劃，目前可公開試學、尚未開放購買；活動價尚未設定。外部接案報價是不同服務的公開資料，與學費無關，也不是收入保證。</p>
+      <div className="course-grid">{courses.slice(0, 6).map((course) => <CourseCard key={course.slug} course={course} state={learning[course.slug]} prices={prices} />)}</div><p className="course-price-note">畫面上的定價與現在售價是完整課程的價格規劃，目前可公開試學、尚未開放購買。外部接案報價是不同服務的價格參考，與學費無關，也不是收入保證。</p>
     </div></section>
 
     <section className="method-section" id="how"><div className="container method-grid">
@@ -236,7 +234,7 @@ function Explore({ learning, prices }: { learning: LearningState; prices: Course
     <section className="page-hero explore-hero"><div className="container"><div className="section-kicker">THE COURSE LIBRARY / 01—13</div><h1>原來沒這麼難</h1><p>首波 13 門課。選一個想做的服務，先收到第一個1000元。</p></div></section>
     <section className="section catalog-section"><div className="container">
       <div className="catalog-tools"><div className="category-list" aria-label="課程分類">{categories.map((item) => <button type="button" key={item} className={category === item ? 'selected' : ''} onClick={() => setCategory(item)}>{item}</button>)}</div><label className="search-box"><Search size={20} strokeWidth={2} /><span className="sr-only">搜尋課程</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="搜尋你想學的主題" /></label></div>
-      <div className="results-line"><span>{String(results.length).padStart(2, '0')} 門課程</span><span>依主題探索</span></div><p className="catalog-disclaimer">定價、現在售價為未來完整課程的價格規劃；目前可公開試學，尚未開放購買。活動價由後台設定，目前均未啟用。外部接案報價不是學費或收入保證。紫微課已有 20 堂內容；其他課程目前為文字實作版。</p>
+      <div className="results-line"><span>{String(results.length).padStart(2, '0')} 門課程</span><span>依主題探索</span></div><p className="catalog-disclaimer">定價、現在售價為未來完整課程的價格規劃；目前可公開試學，尚未開放購買。外部接案報價不是學費或收入保證。紫微課已有 20 堂內容；其他課程目前為文字實作版。</p>
       {results.length ? <div className="course-grid catalog-grid">{results.map((course) => <CourseCard key={course.slug} course={course} state={learning[course.slug]} prices={prices} />)}</div> : <div className="empty-state"><h2>還沒有符合的課程。</h2><p>試試別的關鍵字，或查看全部主題。</p><button type="button" className="btn btn-ink" onClick={() => { setCategory('全部'); setQuery('') }}>顯示全部課程 <ArrowRight size={18} /></button></div>}
     </div></section>
   </main>
@@ -412,7 +410,7 @@ function PricingAdmin({ prices, onSaved }: { prices: CoursePrices; onSaved: (slu
   const update = (slug: string, change: Partial<CoursePrice>) => setDrafts((before) => ({ ...before, [slug]: { ...(before[slug] || prices[slug] || proposedCoursePrices[slug]), ...change } }))
   const save = async (slug: string) => {
     const price = drafts[slug] || prices[slug] || proposedCoursePrices[slug]
-    if (!validCoursePrice(price)) { setMessage('請確認定價高於現在售價、活動價低於現在售價，並填妥活動起訖時間。'); return }
+    if (!validCoursePrice(price)) { setMessage('請確認定價高於現在售價。'); return }
     if (!pricingApiUrl) { setMessage('Cloudflare 價格 API 尚未接上，無法儲存。'); return }
     setSaving(slug); setMessage('')
     try {
@@ -425,14 +423,10 @@ function PricingAdmin({ prices, onSaved }: { prices: CoursePrices; onSaved: (slu
     } catch (error) { setMessage(error instanceof Error ? error.message : '儲存失敗。') }
     finally { setSaving(null) }
   }
-  const localDate = (value: string | null) => value ? new Date(value).toLocaleString('sv-SE', { timeZone: 'Asia/Taipei' }).replace(' ', 'T').slice(0, 16) : ''
-  return <main className="container pricing-admin"><div className="section-kicker">ADMIN / COURSE PRICING</div><h1>課程價格管理</h1><p>活動價僅在設定的期間生效；沒有活動時使用現在售價。所有價格都是新台幣。</p>{!pricingApiUrl && <p className="admin-warning">Cloudflare 後台尚未串接。目前只能檢視價格規劃，不能儲存。</p>}{message && <p role="status" className="admin-warning">{message}</p>}
+  return <main className="container pricing-admin"><div className="section-kicker">ADMIN / COURSE PRICING</div><h1>課程價格管理</h1><p>目前管理定價與現在售價，金額皆為新台幣。</p>{!pricingApiUrl && <p className="admin-warning">Cloudflare 後台尚未串接。目前只能檢視價格規劃，不能儲存。</p>}{message && <p role="status" className="admin-warning">{message}</p>}
     <div className="pricing-admin-list">{courses.map((course) => { const price = drafts[course.slug] || prices[course.slug] || proposedCoursePrices[course.slug]; return <section className="pricing-admin-row" key={course.slug}><h2>{course.number}　{course.shortTitle}</h2><div className="pricing-admin-fields">
       <label>定價 <input type="number" min="1" step="1" value={price.listPrice} onChange={(event) => update(course.slug, { listPrice: Number(event.target.value) })} /></label>
       <label>現在售價 <input type="number" min="1" step="1" value={price.currentPrice} onChange={(event) => update(course.slug, { currentPrice: Number(event.target.value) })} /></label>
-      <label>活動價 <input type="number" min="1" step="1" value={price.campaignPrice ?? ''} placeholder="未設定" onChange={(event) => update(course.slug, { campaignPrice: event.target.value ? Number(event.target.value) : null, ...(!event.target.value ? { campaignStartsAt: null, campaignEndsAt: null } : {}) })} /></label>
-      <label>活動開始（台北時間） <input type="datetime-local" value={localDate(price.campaignStartsAt)} onChange={(event) => update(course.slug, { campaignStartsAt: event.target.value ? new Date(`${event.target.value}:00+08:00`).toISOString() : null })} /></label>
-      <label>活動結束（台北時間） <input type="datetime-local" value={localDate(price.campaignEndsAt)} onChange={(event) => update(course.slug, { campaignEndsAt: event.target.value ? new Date(`${event.target.value}:00+08:00`).toISOString() : null })} /></label>
       <label>狀態 <select value={price.status} onChange={(event) => update(course.slug, { status: event.target.value as CoursePrice['status'] })}><option value="planned">規劃中</option><option value="live">已發布價格</option></select></label>
     </div><button type="button" className="btn btn-ink" disabled={!pricingApiUrl || saving !== null} onClick={() => void save(course.slug)}>{saving === course.slug ? '儲存中…' : '儲存價格'}</button></section> })}</div>
   </main>

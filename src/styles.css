@@ -332,8 +332,6 @@ svg { flex: none; }
 .tuition-price s { color: var(--ink-500); font-size: 14px; }
 .tuition-price .tuition-list { color: var(--ink-500); font-size: 14px; font-weight: 500; }
 .tuition-price .tuition-current strong { color: var(--vermillion-700); font-size: 22px; font-weight: 800; }
-.tuition-price .tuition-campaign b { color: var(--ink-500); font-size: 13px; }
-.tuition-price .tuition-campaign.active b { color: var(--vermillion-700); font-size: 20px; }
 .course-pricing > .tuition-price { padding: 15px 0; }
 .detail-tuition .tuition-caption { font-size: 13px; }
 .detail-tuition .tuition-price { gap: 10px; }

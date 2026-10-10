@@ -11,8 +11,8 @@ export type MarketRate = {
 // quotes to our learners, or evidence of what a beginner will earn.
 export const marketRates: Record<string, MarketRate> = {
   'ziwei-foundations': {
-    price: '公開可比報價不足',
-    scope: '紫微諮詢須先固定時長、是否提供書面命盤與後續答疑，再比較報價。',
+    price: 'NT$600–3,600', unit: '／次',
+    scope: '紫微諮詢價格區間由平台經營者提供；時長、書面命盤與後續答疑依服務方案而定，尚未獨立核實公開行情。',
     comparable: false,
   },
   'tarot-practice': {
