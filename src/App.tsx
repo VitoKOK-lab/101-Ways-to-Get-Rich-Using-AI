@@ -94,7 +94,6 @@ function Header({ route }: { route: Route }) {
   useEffect(() => setOpen(false), [route])
   return (
     <>
-      <div className="topline"><span>Free & Wealthy · 自由至富 AI技能學院</span><span>用 AI 槓桿一人公司，通往時間與財富的極致自由。</span></div>
       <header className="site-header">
         <div className="container header-inner">
           <a className="brand" href="#/" aria-label="Free & Wealthy 自由至富 AI技能學院首頁">
@@ -103,7 +102,6 @@ function Header({ route }: { route: Route }) {
           <nav className={`main-nav ${open ? 'is-open' : ''}`} aria-label="主選單">
             <a href="#/explore" className={route.page === 'explore' ? 'active' : ''}>探索課程</a>
             <a href="#/my-learning" className={route.page === 'library' || route.page === 'lesson' ? 'active' : ''}>我的學習</a>
-            <a className="nav-cta" href="#/explore">開始學習 <ArrowUpRight size={16} strokeWidth={2} /></a>
           </nav>
           <button className="menu-toggle" type="button" aria-label={open ? '關閉選單' : '開啟選單'} aria-expanded={open} onClick={() => setOpen(!open)}>
             {open ? <X size={23} /> : <Menu size={23} />}
@@ -118,7 +116,7 @@ function Footer() {
   return <footer className="site-footer"><div className="container footer-grid">
     <div><div className="footer-brand"><span className="brand-name footer-logo">Free <span>&amp;</span> Wealthy</span><span className="brand-sub"><strong>自由至富</strong> <span>AI技能學院</span></span></div><p>用 AI 槓桿一人公司，通往時間與財富的極致自由。</p></div>
     <div className="footer-links"><a href="#/explore">探索課程</a><a href="#/my-learning">我的學習</a><a href="#/">回到首頁</a></div>
-    <span className="footer-note">Free & Wealthy · 自由至富 AI技能學院 · 課程平台示範版</span>
+    <span className="footer-note">Free & Wealthy · 自由至富 AI技能學院</span>
   </div></footer>
 }
 
@@ -127,23 +125,11 @@ const originalCoverImages: Record<string, string> = {
   'tarot-practice': '/images/luxkey-tarot.webp',
 }
 
-function courseCoverStyle(course: Course) {
-  if (course.coverImage) return {}
-  const gradient = 'linear-gradient(90deg, rgba(255,255,255,.97), rgba(255,255,255,.08) 79%)'
-  return { backgroundImage: `${gradient}, url("${assetPath(originalCoverImages[course.slug])}")` }
-}
-
-function Cover({ course, large = false }: { course: Course; large?: boolean }) {
-  return <div className={`course-cover cover-${course.theme} cover-${course.slug} ${course.coverImage ? 'cover-localized' : ''} ${large ? 'cover-large' : ''}`} style={courseCoverStyle(course)} aria-hidden="true">
-    {course.coverImage && <img className="course-cover-photo" src={assetPath(course.coverImage)} loading="lazy" decoding="async" alt="" />}
-    <span className="cover-top">Free & Wealthy / CLASS <span>{course.number}</span></span>
-    <div className="cover-rule" />
-    <span className="cover-word">{course.coverWord.split(' / ').map((part, index) => <span key={part}>{part}{index === 0 && <br />}</span>)}</span>
-    <div className="cover-bottom"><span>{course.category.toUpperCase()}</span><ArrowUpRight size={large ? 29 : 22} strokeWidth={1.7} /></div>
-  </div>
-}
-
 function TuitionPrice({ price, compact = false }: { price: CoursePrice; compact?: boolean }) {
+  if (compact) return <div className="tuition-price tuition-price-compact">
+    <span className="tuition-caption">課程學費 {price.status === 'planned' && <em>規劃中</em>}</span>
+    <div className="tuition-compact-values"><s>{formatTwd(price.listPrice)}</s><strong>{formatTwd(price.currentPrice)}</strong></div>
+  </div>
   return <div className={`tuition-price ${compact ? 'tuition-price-compact' : ''}`}>
     <span className="tuition-caption">課程價格 {price.status === 'planned' && <em>規劃中</em>}</span>
     <div><span>定價</span>{price.status === 'planned' ? <b className="tuition-list">{formatTwd(price.listPrice)}</b> : <s>{formatTwd(price.listPrice)}</s>}</div>
@@ -155,17 +141,17 @@ function CourseCard({ course, state, prices }: { course: Course; state?: CourseS
   const percent = progressFor(course, state)
   const price = prices[course.slug] || proposedCoursePrices[course.slug]
   return <a className="course-card" href={courseHref(course)}>
-    <div className="course-card-media"><img src={assetPath(course.coverImage || originalCoverImages[course.slug])} alt="" loading="lazy" decoding="async" /><span className="course-card-number">{course.number} / Free & Wealthy</span><span className="course-card-format">{course.provider ? '20 堂完整課程' : '文字試學'}</span></div>
+    <div className="course-card-media"><img src={assetPath(course.coverImage || originalCoverImages[course.slug])} alt="" loading="lazy" decoding="async" /><span className="course-card-format">{course.provider ? '20 堂完整課程' : '文字試學'}</span></div>
     <div className="course-card-body">
-      <div className="card-meta"><span>{course.category} / {course.level}</span><span>{course.duration}</span></div>
+      <div className="card-meta"><span>{course.number} / {course.category}</span>{state?.started && <span>{percent}% 已完成</span>}</div>
       <h3>{course.title}</h3><p>{course.subtitle}</p>
       <div className="course-pricing"><TuitionPrice price={price} compact /></div>
-      <div className="card-action"><span>{state?.started ? `${percent}% 已完成 · 繼續學習` : '了解這門課'}</span><ArrowUpRight size={18} /></div>
+      <div className="card-action"><span>{state?.started ? '繼續學習' : '查看課程'}</span><ArrowUpRight size={18} /></div>
     </div>
   </a>
 }
 
-function Home({ learning, prices }: { learning: LearningState; prices: CoursePrices }) {
+function Home({ prices }: { prices: CoursePrices }) {
   const [selectedGoal, setSelectedGoal] = useState<string | null>(null)
   const railRef = useRef<HTMLDivElement>(null)
   const scrollRail = (direction: number) => {
@@ -174,52 +160,50 @@ function Home({ learning, prices }: { learning: LearningState; prices: CoursePri
   }
   const recommended = courses.find((course) => course.slug === selectedGoal)
   const goals = [
-    { slug: 'ziwei-foundations', label: '成為線上紫微命理師', tag: '線上諮詢' },
-    { slug: 'tarot-practice', label: '把塔羅練習變成諮詢服務', tag: '線上諮詢' },
-    { slug: 'website-building', label: '幫客戶做網站', tag: '網站接案' },
-    { slug: 'social-graphic-editor', label: '接圖文小編的案子', tag: '內容接案' },
-    { slug: 'ai-video-editing', label: '用 AI 幫客戶剪短片', tag: '影音接案' },
+    { slug: 'ziwei-foundations', label: '成為線上紫微命理師' },
+    { slug: 'tarot-practice', label: '把塔羅練習變成諮詢服務' },
+    { slug: 'website-building', label: '幫客戶做網站' },
+    { slug: 'social-graphic-editor', label: '接圖文小編的案子' },
+    { slug: 'ai-video-editing', label: '用 AI 幫客戶剪短片' },
   ]
   return <main>
     <section className="hero-section" style={{ backgroundImage: `url("${assetPath('/images/ai-rich-learning-hero.webp')}")` }}><div className="container hero-grid">
       <div className="hero-copy">
-        <div className="section-kicker"><span className="kicker-line" /> Free & Wealthy · 自由至富 AI技能學院</div>
+        <div className="section-kicker"><span className="kicker-line" /> 自由至富 AI技能學院</div>
         <h1 className="hero-headline">建立你的一人公司，<br /><span>把技能變成第一筆收入</span></h1>
         <p className="hero-promise">用 AI 槓桿一人公司，通往時間與財富的極致自由。</p>
-        <p className="hero-intro">100 種用 AI 賺錢的方法，先從一門可實作的課開始。首波 13 門，從線上諮詢、網站製作到影音與商家經營，練習接案需要的作品與流程。</p>
-        <div className="hero-actions"><button type="button" className="btn btn-primary" onClick={() => document.getElementById('find-path')?.scrollIntoView({ behavior: 'smooth' })}>找到適合我的課 <ArrowUpRight size={19} /></button><a className="text-link" href="#/explore">探索所有課程 <ArrowRight size={18} /></a></div>
-        <div className="hero-bottom"><span>首波 13 門課</span><div className="hairline" /><span>從練習到第一份作品</span></div>
+        <div className="hero-actions"><button type="button" className="btn btn-primary" onClick={() => document.getElementById('find-path')?.scrollIntoView({ behavior: 'smooth' })}>找到適合我的課 <ArrowUpRight size={19} /></button></div>
       </div>
-      <div className="hero-image-caption"><span>網站・內容・影音・線上諮詢</span><span>課程情境示意</span></div>
+      <div className="hero-image-caption"><span>從一門課，開始你的第一份作品</span><span>課程情境示意</span></div>
     </div></section>
 
     <section className="principles"><div className="container principles-grid">
-      <span className="principles-label">為什麼在這裡學？</span>
+      <span className="principles-label">先學會，再動手</span>
       <p>知識，<em>要能用。</em></p>
-      <span className="principles-caption">13 門首波課程 · 有作品的練習 · 參考服務定價</span>
+      <span className="principles-caption">13 門課 · 從練習到作品</span>
     </div></section>
 
     <section className="path-section" id="find-path"><div className="container path-grid">
-      <div className="path-intro"><div className="section-kicker">找到適合你的起點</div><h2>賺錢方法很多，<br /><span>找到適合你的</span></h2><p>從眼前最想完成的事開始。我們會推薦一門可以立刻動手的課。</p><span className="path-small">想更了解自己？可以先<a href="https://www.ziweiuniverse.com/" target="_blank" rel="noopener noreferrer">算算紫微 <ArrowUpRight size={13} /></a></span></div>
-      <div className="path-panel"><div className="path-panel-top"><span>挑一項你想做的服務</span><span>選擇後看推薦課程</span></div><div className="path-options" role="group" aria-label="選擇學習目標">{goals.map((goal, index) => <button type="button" key={goal.slug} className={selectedGoal === goal.slug ? 'selected' : ''} aria-pressed={selectedGoal === goal.slug} onClick={() => setSelectedGoal(goal.slug)}><span className="path-option-number">{String(index + 1).padStart(2, '0')}</span><span>{goal.label}<small>{goal.tag}</small></span><ArrowUpRight size={20} /></button>)}</div>{recommended ? <div className="path-result" aria-live="polite"><span>你的推薦課程</span><strong>{recommended.title}</strong><p>{recommended.subtitle}</p><a href={courseHref(recommended)}>查看課程內容 <ArrowRight size={18} /></a></div> : <div className="path-prompt">選擇一個方向，看見你的第一步。<ArrowRight size={18} /></div>}</div>
+      <div className="path-intro"><div className="section-kicker">找到適合你的起點</div><h2>賺錢方法很多，<br /><span>找到適合你的</span></h2><span className="path-small">想更了解自己？可以先<a href="https://www.ziweiuniverse.com/" target="_blank" rel="noopener noreferrer">算算紫微 <ArrowUpRight size={13} /></a></span></div>
+      <div className="path-panel"><div className="path-panel-top"><span>你想先做哪件事？</span></div><div className="path-options" role="group" aria-label="選擇學習目標">{goals.map((goal, index) => <button type="button" key={goal.slug} className={selectedGoal === goal.slug ? 'selected' : ''} aria-pressed={selectedGoal === goal.slug} onClick={() => setSelectedGoal(goal.slug)}><span className="path-option-number">{String(index + 1).padStart(2, '0')}</span><span>{goal.label}</span><ArrowUpRight size={20} /></button>)}</div>{recommended ? <div className="path-result" aria-live="polite"><span>推薦課程</span><strong>{recommended.title}</strong><a href={courseHref(recommended)}>查看課程 <ArrowRight size={18} /></a></div> : <div className="path-prompt">選一個方向，看看適合你的課。<ArrowRight size={18} /></div>}</div>
     </div></section>
 
     <section className="spotlight-section"><div className="container spotlight-grid">
-      <a className="spotlight-image" style={{ backgroundImage: `url("${assetPath('/images/ziwei-teaching-scene.webp')}")` }} href={courseHref(ziweiCourse)} aria-label="查看紫微斗數入門課程"><span>第一門完整課程 / 紫微宇宙</span><strong>跟著示範，<br />排出自己的盤。</strong><span>課程情境示意 · 20 堂課</span></a>
-      <div className="spotlight-copy"><div className="section-kicker">第一門完整課 / 紫微宇宙</div><h2>跟著 20 堂課，<br /><span>做出解盤作品。</span></h2><p>從出生資料、命宮和主星開始，跟著示範手排命盤，再完成解讀練習與諮詢流程草稿。影片、課文、作業和檢核都在本站。</p><div className="spotlight-facts"><span>20 堂完整課程</span><span>6 個學習階段</span><span>依自己的節奏開始</span></div><a className="btn btn-primary" href={courseHref(ziweiCourse)}>查看紫微入門課 <ArrowUpRight size={19} /></a></div>
+      <a className="spotlight-image" style={{ backgroundImage: `url("${assetPath('/images/ziwei-teaching-scene.webp')}")` }} href={courseHref(ziweiCourse)} aria-label="查看紫微斗數入門課程"><span>紫微斗數入門</span><span>課程情境示意 · 非講師本人</span></a>
+      <div className="spotlight-copy"><div className="section-kicker">第一門完整課 / 紫微宇宙</div><h2>20 堂課，<br /><span>完成第一份解盤作品。</span></h2><p>從排盤到解讀，跟著示範練習，留下自己的作品。</p><div className="spotlight-facts"><span>20 堂課</span><span>6 個階段</span></div><a className="btn btn-primary" href={courseHref(ziweiCourse)}>查看紫微課程 <ArrowUpRight size={19} /></a></div>
     </div></section>
 
     <section className="section courses-section"><div className="container">
       <div className="section-heading shelf-heading"><div><div className="section-kicker">接下來想學什麼？</div><h2>從一門課，<br />做出第一個服務。</h2></div><div className="shelf-controls"><button type="button" aria-label="往前看課程" onClick={() => scrollRail(-1)}><ArrowLeft size={20} /></button><button type="button" aria-label="往後看課程" onClick={() => scrollRail(1)}><ArrowRight size={20} /></button></div></div>
-      <div className="course-rail" ref={railRef} tabIndex={0} aria-label="精選課程，左右滑動瀏覽">{courses.slice(1, 8).map((course) => { const price = prices[course.slug] || proposedCoursePrices[course.slug]; return <a className="course-rail-card" key={course.slug} href={courseHref(course)}><div className="rail-image"><img src={assetPath(course.coverImage || originalCoverImages[course.slug])} alt="" loading="lazy" decoding="async" /><span>{course.category}</span></div><div className="rail-card-content"><span className="rail-index">{course.number} / Free & Wealthy {learning[course.slug]?.started && `· ${progressFor(course, learning[course.slug])}% 已完成`}</span><h3>{course.shortTitle}</h3><p>{course.subtitle}</p><div className="rail-card-foot"><span>課程現在售價 <strong>{formatTwd(price.currentPrice)}</strong></span><ArrowUpRight size={20} /></div></div></a> })}</div><div className="shelf-bottom"><p>課程售價為完整課程規劃價；目前可公開試學，尚未開放購買。</p><a href="#/explore" className="text-link">探索全部 13 門課 <ArrowUpRight size={18} /></a></div>
+      <div className="course-rail" ref={railRef} tabIndex={0} aria-label="精選課程，左右滑動瀏覽">{courses.slice(1, 8).map((course) => { const price = prices[course.slug] || proposedCoursePrices[course.slug]; return <a className="course-rail-card" key={course.slug} href={courseHref(course)}><div className="rail-image"><img src={assetPath(course.coverImage || originalCoverImages[course.slug])} alt="" loading="lazy" decoding="async" /></div><div className="rail-card-content"><span className="rail-index">{course.number} / {course.category}</span><h3>{course.shortTitle}</h3><p>{course.subtitle}</p><div className="rail-card-foot"><TuitionPrice price={price} compact /><ArrowUpRight size={20} /></div></div></a> })}</div><div className="shelf-bottom"><p>學費為完整課程規劃價；目前可試學，尚未開放購買。</p><a href="#/explore" className="text-link">探索全部 13 門課 <ArrowUpRight size={18} /></a></div>
     </div></section>
 
     <section className="method-section" id="how"><div className="container method-grid">
-      <div className="method-intro"><div className="section-kicker">02 / 學習方式</div><h2>少一點旁觀。<br /><span>多一點動手。</span></h2><p>你不需要等到全部準備好。每堂課都從一個可以立刻開始的小任務出發。</p></div>
+      <div className="method-intro"><div className="section-kicker">學習方式</div><h2>學了，<br /><span>就動手。</span></h2></div>
       <div className="method-list">
-        <div><span>01</span><div><h3>選一個眼前的問題</h3><p>從你現在最想解決的事開始。</p></div><ArrowUpRight size={23} /></div>
-        <div><span>02</span><div><h3>用短單元建立方法</h3><p>掌握必要觀念，接著就試一次。</p></div><ArrowUpRight size={23} /></div>
-        <div><span>03</span><div><h3>留下自己的成果</h3><p>筆記、練習與進度，接著用在工作裡。</p></div><ArrowUpRight size={23} /></div>
+        <div><span>01</span><div><h3>看示範</h3></div><ArrowUpRight size={23} /></div>
+        <div><span>02</span><div><h3>動手做</h3></div><ArrowUpRight size={23} /></div>
+        <div><span>03</span><div><h3>帶走作品</h3></div><ArrowUpRight size={23} /></div>
       </div>
     </div></section>
 
@@ -236,10 +220,10 @@ function Explore({ learning, prices }: { learning: LearningState; prices: Course
     return matchesCategory && text.includes(query.trim().toLowerCase())
   }), [category, query])
   return <main>
-    <section className="page-hero explore-hero"><div className="container explore-hero-grid"><div><div className="section-kicker">探索課程 / Free & Wealthy</div><h1>原來沒這麼難</h1><p>選一個想做的服務，先收到第一個 1,000 元。</p></div><div className="explore-hero-count" aria-label="首波十三門課程"><strong>13</strong><span>門首波課程<br />從你的第一項技能開始</span></div></div></section>
+    <section className="page-hero explore-hero"><div className="container explore-hero-grid"><div><div className="section-kicker">探索課程</div><h1>原來沒這麼難</h1><p>選一項技能，做出第一份作品。</p></div><span className="explore-hero-count">13 門課程 · 可公開試學</span></div></section>
     <section className="section catalog-section"><div className="container">
       <div className="catalog-tools"><div className="category-list" aria-label="課程分類">{categories.map((item) => <button type="button" key={item} className={category === item ? 'selected' : ''} onClick={() => setCategory(item)}>{item}</button>)}</div><label className="search-box"><Search size={20} strokeWidth={2} /><span className="sr-only">搜尋課程</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="搜尋你想學的主題" /></label></div>
-      <div className="results-line"><span>{String(results.length).padStart(2, '0')} 門課程</span><span>選主題或搜尋，找到想開始的課</span></div><p className="catalog-disclaimer">售價為完整課程的價格規劃，目前可公開試學、尚未開放購買。紫微課有 20 堂內容；其他課程目前為文字試學版。外部接案行情在課程頁另列。</p>
+      <div className="results-line"><span>{String(results.length).padStart(2, '0')} 門課程</span><span>可公開試學 · 尚未開放購買</span></div><details className="catalog-info"><summary>關於試學內容與學費</summary><p>售價為未來完整課程的規劃價。紫微課目前有 20 堂內容；其他課程為文字試學版。外部接案行情在課程頁另列，並非課程學費。</p></details>
       {results.length ? <div className="course-grid catalog-grid">{results.map((course) => <CourseCard key={course.slug} course={course} state={learning[course.slug]} prices={prices} />)}</div> : <div className="empty-state"><h2>還沒有符合的課程。</h2><p>試試別的關鍵字，或查看全部主題。</p><button type="button" className="btn btn-ink" onClick={() => { setCategory('全部'); setQuery('') }}>顯示全部課程 <ArrowRight size={18} /></button></div>}
     </div></section>
   </main>
@@ -273,13 +257,13 @@ function CourseDetail({ course, state, onStart, prices }: { course: Course; stat
   return <main>
     <section className="detail-top"><div className="container"><a className="back-link" href="#/explore"><ArrowLeft size={17} /> 返回所有課程</a></div></section>
     <section className={`detail-hero ${course.provider ? 'detail-hero-featured' : ''}`}><div className="container detail-grid">
-      <figure className="detail-visual"><img src={assetPath(visual)} alt={`${course.shortTitle}的課程情境示意`} /><figcaption><span>{course.provider ? '20 堂完整課程 · 紫微宇宙' : `${course.shortTitle} · 文字練習`}</span><small>課程情境示意 · 非講師本人</small></figcaption></figure>
-      <div className="detail-copy"><div className="section-kicker">{course.category} / {course.level} / CLASS {course.number}</div><h1>{course.title}</h1><p className="detail-subtitle">{course.subtitle}</p><div className="detail-hero-actions"><button type="button" className="btn btn-primary" onClick={() => onStart(course, resumeIndex)}>{state?.started ? '繼續學習' : course.provider ? '免費預覽第一堂' : '開始文字試學'} <ArrowUpRight size={20} /></button><button type="button" className="text-link" onClick={() => scrollToSection('lesson-plan')}>查看課程路線 <ArrowRight size={17} /></button></div><div className="detail-meta"><span><BookOpen size={18} /> {course.lessons.length} {course.provider ? '堂課' : '個單元'}</span><span><Clock3 size={18} /> {course.duration}</span>{course.provider && <span><Play size={18} /> {course.lessons.length} 支影片</span>}</div><p className="detail-description">{course.description}</p><span className="detail-aside">{course.provider ? `課程內容提供：${course.provider}` : '課綱示範 · 目前提供文字導讀與練習，尚無講師影片'}</span>{state?.started && <span className="detail-progress">已完成 {percent}%</span>}</div>
+      <figure className="detail-visual"><img src={assetPath(visual)} alt={`${course.shortTitle}的課程情境示意`} /><figcaption>課程情境示意 · 非講師本人</figcaption></figure>
+      <div className="detail-copy"><div className="section-kicker">{course.category} / CLASS {course.number}</div><h1>{course.title}</h1><p className="detail-subtitle">{course.subtitle}</p><div className="detail-meta"><span><BookOpen size={18} /> {course.lessons.length} {course.provider ? '堂課' : '個單元'}</span><span><Clock3 size={18} /> {course.duration}</span></div><div className="detail-hero-actions"><button type="button" className="btn btn-primary" onClick={() => onStart(course, resumeIndex)}>{state?.started ? '繼續學習' : course.provider ? '免費預覽第一堂' : '開始文字試學'} <ArrowUpRight size={20} /></button></div>{state?.started && <span className="detail-progress">已完成 {percent}%</span>}</div>
     </div></section>
     <nav className="course-section-nav" aria-label="課程內容導覽"><div className="container"><button type="button" className={activeSection === 'course-outcomes' ? 'is-active' : ''} onClick={() => scrollToSection('course-outcomes')}>學完能做什麼</button><button type="button" className={activeSection === 'course-pricing' ? 'is-active' : ''} onClick={() => scrollToSection('course-pricing')}>學費與接案行情</button><button type="button" className={activeSection === 'lesson-plan' ? 'is-active' : ''} onClick={() => scrollToSection('lesson-plan')}>課程路線</button></div></nav>
-    <section className="section outcomes-section" id="course-outcomes"><div className="container outcomes-grid"><div><div className="section-kicker">學完能做什麼</div><h2>學完後，<br />你能做到。</h2></div><ol>{course.outcomes.map((outcome, index) => <li key={outcome}><span>{String(index + 1).padStart(2, '0')}</span><p>{outcome}</p><Check size={19} /></li>)}</ol></div></section>
-    <section className="section course-offer-section" id="course-pricing" aria-labelledby="course-offer-title"><div className="container course-offer-grid"><div className="course-offer-intro"><div className="section-kicker">課程與服務價格</div><h2 id="course-offer-title">學費與接案行情，<br />清楚分開看。</h2><p>目前可公開試學，尚未開放購買。以下學費是完整課程的價格規劃；接案行情是市場服務價格參考。</p>{course.aiUse && <p className="detail-ai"><strong>AI 在這門課怎麼用</strong>{course.aiUse}</p>}{course.provider && <p className="detail-prep"><strong>課前準備</strong> 出生年月日與時辰、紙筆；每次安排 20–30 分鐘，完成一小步即可。</p>}</div><div className="course-offer-rates"><div className="detail-tuition"><TuitionPrice price={price} /><p>完整課程價格規劃；尚未開放購買。<a href="https://github.com/VitoKOK-lab/101-Ways-to-Get-Rich-Using-AI/blob/main/docs/course-tuition-benchmark.md" target="_blank" rel="noopener noreferrer">查看學費調查依據</a></p></div><div className="detail-market"><span>外部接案參考 · 非學費</span><strong>{market.price}<small>{market.unit}</small></strong><ul className="market-rate-tiers">{market.tiers.map((tier) => <li key={tier.label}><span>{tier.label}</span><b>{tier.price}<small>{tier.unit}</small></b></li>)}</ul><p>{market.scope}</p><p>以上依平台經營者提供的台灣行情資料整理，尚未獨立查證；實際報價依交付內容而定，也不是學員收入保證。</p></div></div></div></section>
-    <section className="section syllabus-section" id="lesson-plan"><div className="container"><div className="section-heading"><div><div className="section-kicker">課程路線</div><h2>課程路線</h2></div><span className="syllabus-count">{course.lessons.length} 堂課 / {course.duration}</span></div>{course.chapters && <div className="module-grid" aria-label="六個學習階段">{chapters.map((chapter, chapterIndex) => <button className="module-card" type="button" key={chapter.title} onClick={() => { setOpenChapter(chapterIndex); scrollToSection('full-plan') }}><img className="module-image" src={assetPath(chapter.image)} alt={`${chapter.title}：${chapter.goal}`} loading="lazy" decoding="async" /><span className="module-meta">階段 {String(chapterIndex + 1).padStart(2, '0')} · {chapter.end - chapter.start + 1} 堂課</span><strong>{chapter.title}</strong><small>{chapter.goal}</small></button>)}</div>}<div className="lesson-plan-head" id="full-plan"><div><span className="section-kicker">完整課表</span><h3>依自己的節奏，逐堂完成。</h3></div><span>{course.chapters ? '選一個階段，查看課次' : '點選課次開始'}</span></div>{chapters.map((chapter, chapterIndex) => <div className="syllabus-chapter" key={chapter.title || 'all'}>{chapter.title && <button className="syllabus-chapter-title" type="button" aria-expanded={openChapter === chapterIndex} onClick={() => setOpenChapter(openChapter === chapterIndex ? -1 : chapterIndex)}><span>PART {String(chapterIndex + 1).padStart(2, '0')}</span><h3>{chapter.title}</h3><small>{String(chapter.end - chapter.start + 1).padStart(2, '0')} LESSONS</small><ChevronDown size={20} /></button>}{(!course.chapters || openChapter === chapterIndex) && <>{chapter.goal && <p className="chapter-goal">這一階段完成：{chapter.goal}</p>}<div className={`syllabus-list ${course.provider ? 'syllabus-list-illustrated' : ''}`}>{course.lessons.slice(chapter.start, chapter.end + 1).map((lesson, offset) => { const index = chapter.start + offset; return <button type="button" key={lesson.title} onClick={() => onStart(course, index)}>{lesson.image ? <span className="syllabus-thumb"><img src={assetPath(lesson.image)} alt="" loading="lazy" decoding="async" /><span>{String(index + 1).padStart(2, '0')}</span></span> : <span className="syllabus-number">{String(index + 1).padStart(2, '0')}</span>}<span className="syllabus-content"><strong>{lesson.title}</strong>{!course.provider && <small>{lesson.summary}</small>}</span><span className="syllabus-time">{lesson.videoUrl ? `${videoTime(lesson.videoDuration)} 影片` : lesson.time}</span><Play size={18} /></button> })}</div></>}</div>)}</div></section>
+    <section className="section outcomes-section" id="course-outcomes"><div className="container outcomes-grid"><div><div className="section-kicker">學完能做什麼</div><h2>從學習，<br />走向作品。</h2><p className="outcomes-intro">{course.description}</p><small>{course.provider ? `課程內容提供：${course.provider}` : '目前提供文字導讀與練習，尚無講師影片'}</small></div><ol>{course.outcomes.map((outcome, index) => <li key={outcome}><span>{String(index + 1).padStart(2, '0')}</span><p>{outcome}</p><Check size={19} /></li>)}</ol></div></section>
+    <section className="section course-offer-section" id="course-pricing" aria-labelledby="course-offer-title"><div className="container course-offer-grid"><div className="course-offer-intro"><div className="section-kicker">費用與服務</div><h2 id="course-offer-title">先看學費，<br />再看接案行情。</h2><p>目前可公開試學，尚未開放購買。接案行情是外部服務報價，並非學費或收入保證。</p>{(course.aiUse || course.provider) && <details className="course-extra"><summary>這門課的學習準備</summary>{course.aiUse && <p><strong>AI 的用法</strong>{course.aiUse}</p>}{course.provider && <p><strong>課前準備</strong>出生年月日與時辰、紙筆；每次安排 20–30 分鐘。</p>}</details>}</div><div className="course-offer-rates"><div className="detail-tuition"><TuitionPrice price={price} /><p>完整課程價格規劃；尚未開放購買。<a href="https://github.com/VitoKOK-lab/101-Ways-to-Get-Rich-Using-AI/blob/main/docs/course-tuition-benchmark.md" target="_blank" rel="noopener noreferrer">查看學費調查依據</a></p></div><div className="detail-market"><span>外部接案行情 · 非學費</span><strong>{market.price}<small>{market.unit}</small></strong><details className="market-more"><summary>查看計價方式與服務範圍</summary><ul className="market-rate-tiers">{market.tiers.map((tier) => <li key={tier.label}><span>{tier.label}</span><b>{tier.price}<small>{tier.unit}</small></b></li>)}</ul><p>{market.scope}</p></details><p>經營者提供的台灣報價參考，尚未獨立查證；實際價格依服務內容而定。</p></div></div></div></section>
+    <section className="section syllabus-section" id="lesson-plan"><div className="container"><div className="section-heading"><div><div className="section-kicker">課程路線</div><h2>{course.chapters ? '6 個階段，20 堂課。' : '從這裡開始。'}</h2></div><span className="syllabus-count">{course.lessons.length} 堂課 / {course.duration}</span></div>{course.chapters && <div className="module-grid" aria-label="六個學習階段">{chapters.map((chapter, chapterIndex) => <button className="module-card" type="button" key={chapter.title} onClick={() => { setOpenChapter(chapterIndex); scrollToSection('full-plan') }}><img className="module-image" src={assetPath(chapter.image)} alt={`${chapter.title}：${chapter.goal}`} loading="lazy" decoding="async" /><span className="module-meta">階段 {String(chapterIndex + 1).padStart(2, '0')} · {chapter.end - chapter.start + 1} 堂課</span><strong>{chapter.title}</strong></button>)}</div>}<div className="lesson-plan-head" id="full-plan"><h3>{course.chapters ? '選擇階段，查看課次' : '選擇單元，開始學習'}</h3></div>{chapters.map((chapter, chapterIndex) => <div className="syllabus-chapter" key={chapter.title || 'all'}>{chapter.title && <button className="syllabus-chapter-title" type="button" aria-expanded={openChapter === chapterIndex} onClick={() => setOpenChapter(openChapter === chapterIndex ? -1 : chapterIndex)}><span>PART {String(chapterIndex + 1).padStart(2, '0')}</span><h3>{chapter.title}</h3><small>{String(chapter.end - chapter.start + 1).padStart(2, '0')} LESSONS</small><ChevronDown size={20} /></button>}{(!course.chapters || openChapter === chapterIndex) && <>{chapter.goal && <p className="chapter-goal">這一階段完成：{chapter.goal}</p>}<div className={`syllabus-list ${course.provider ? 'syllabus-list-illustrated' : ''}`}>{course.lessons.slice(chapter.start, chapter.end + 1).map((lesson, offset) => { const index = chapter.start + offset; return <button type="button" key={lesson.title} onClick={() => onStart(course, index)}>{lesson.image ? <span className="syllabus-thumb"><img src={assetPath(lesson.image)} alt="" loading="lazy" decoding="async" /><span>{String(index + 1).padStart(2, '0')}</span></span> : <span className="syllabus-number">{String(index + 1).padStart(2, '0')}</span>}<span className="syllabus-content"><strong>{lesson.title}</strong></span><span className="syllabus-time">{lesson.videoUrl ? `${videoTime(lesson.videoDuration)} 影片` : lesson.time}</span><Play size={18} /></button> })}</div></>}</div>)}</div></section>
     <section className="detail-bottom"><div className="container"><div><span className="section-kicker">從這裡開始</span><h2>學會一件事。<br />做出一件事。</h2></div><button type="button" className="btn btn-primary" onClick={() => onStart(course)}>開始學習 <ArrowUpRight size={19} /></button></div></section>
   </main>
 }
@@ -362,43 +346,23 @@ function Learning({ course, index, state, onComplete, onNote, onActivity, onChec
   const percent = progressFor(course, state)
   const done = state?.completed.includes(index) || false
   const chapter = course.chapters?.find((item) => index >= item.start && index <= item.end)
-  const lessonNavRef = useRef<HTMLElement>(null)
   const [videoStarted, setVideoStarted] = useState(false)
   useEffect(() => setVideoStarted(false), [course.slug, index])
   const isZiwei = course.slug === ziweiCourse.slug
   const activity = state?.activities?.[index] || ''
   const canComplete = !isZiwei || activity.trim().length >= 12
-  useEffect(() => {
-    if (window.innerWidth > 760) return
-    const revealActive = () => {
-      const nav = lessonNavRef.current
-      const selected = nav?.querySelector<HTMLElement>('[aria-current="page"]')
-      if (!nav || !selected) return
-      const navBox = nav.getBoundingClientRect()
-      const itemBox = selected.getBoundingClientRect()
-      if (itemBox.right > navBox.right) nav.scrollLeft += itemBox.right - navBox.right + 8
-      else if (itemBox.left < navBox.left) nav.scrollLeft += itemBox.left - navBox.left - 8
-    }
-    const frame = requestAnimationFrame(revealActive)
-    document.fonts.ready.then(revealActive)
-    return () => cancelAnimationFrame(frame)
-  }, [course.slug, index])
   return <main className="learning-main"><div className="learning-shell">
     <aside className="lesson-sidebar">
       <a className="back-link" href={courseHref(course)}><ChevronLeft size={18} /> 課程介紹</a>
-      <div className="sidebar-title"><div className="section-kicker">CLASS {course.number} / {course.category}</div><h2>{course.shortTitle}</h2><p>{course.lessons.length} 個單元 · {course.duration}</p></div>
+      <div className="sidebar-title"><div className="section-kicker">課程目錄 / {course.number}</div><h2>{course.shortTitle}</h2></div>
       <div className="progress-block"><div><span>學習進度</span><strong>{percent}%</strong></div><div className="progress-track" role="progressbar" aria-label="課程完成進度" aria-valuenow={percent} aria-valuemin={0} aria-valuemax={100}><span style={{ width: `${percent}%` }} /></div></div>
-      {chapter && <div className="sidebar-chapter">目前階段 / {chapter.title}</div>}
-      <nav className="lesson-list" aria-label="課程單元" ref={lessonNavRef}>{course.lessons.map((item, itemIndex) => <a href={lessonHref(course, itemIndex)} key={item.title} className={itemIndex === index ? 'current' : ''} aria-current={itemIndex === index ? 'page' : undefined} onClick={() => onStart(course, itemIndex)}><span className="lesson-index">{state?.completed.includes(itemIndex) ? <Check size={16} /> : String(itemIndex + 1).padStart(2, '0')}</span><span>{item.title}<small>{item.videoUrl ? `${videoTime(item.videoDuration)} 影片 · ${item.time}` : item.time}</small></span></a>)}</nav>
-      <div className="sidebar-foot">Free & Wealthy / 自由至富 AI技能學院</div>
+      <details className="lesson-nav-panel" key={`${course.slug}-${index}`} open={window.innerWidth > 760}><summary><span>第 {String(index + 1).padStart(2, '0')} 課 · {lesson.title}</span><ChevronDown size={18} /></summary><nav className="lesson-list" aria-label="課程單元">{course.lessons.map((item, itemIndex) => <a href={lessonHref(course, itemIndex)} key={item.title} className={itemIndex === index ? 'current' : ''} aria-current={itemIndex === index ? 'page' : undefined} onClick={() => onStart(course, itemIndex)}><span className="lesson-index">{state?.completed.includes(itemIndex) ? <Check size={16} /> : String(itemIndex + 1).padStart(2, '0')}</span><span>{item.title}</span></a>)}</nav></details>
     </aside>
     <article className="lesson-content">
-      <div className="lesson-topline"><span>單元 {String(index + 1).padStart(2, '0')} / {String(course.lessons.length).padStart(2, '0')}</span><span>{chapter ? chapter.title : '文字導讀'} · {lesson.time}</span></div>
+      <div className="lesson-topline"><span>第 {String(index + 1).padStart(2, '0')} 課 / {String(course.lessons.length).padStart(2, '0')}</span><span>{chapter ? chapter.title : course.shortTitle}</span></div>
       <div className="lesson-article">
-        <div className="section-kicker">THE LESSON / {course.number}.{String(index + 1).padStart(2, '0')}</div>
-        <h1>{lesson.title}</h1><p className="lesson-lead">{annotatedText(lesson.summary, isZiwei ? index : undefined)}</p>
-        {lesson.videoUrl && <div className="lesson-video-wrap">{videoStarted ? <video key={`${course.slug}-${index}`} controls autoPlay playsInline preload="metadata" poster={assetPath(lesson.image || chapter?.image || '/images/luxkey-ziwei.webp')} src={lesson.videoUrl}>你的瀏覽器不支援影片播放。</video> : <button className="lesson-video-poster" type="button" style={{ backgroundImage: `linear-gradient(90deg, rgba(255,255,255,.96), rgba(255,255,255,.12) 80%), url("${assetPath(lesson.image || chapter?.image || '/images/luxkey-ziwei.webp')}")` }} onClick={() => setVideoStarted(true)} aria-label={`播放第 ${index + 1} 課影片：${lesson.title}`}><span className="video-poster-top">紫微斗數入門 · 第 {String(index + 1).padStart(2, '0')} 課</span><strong>{lesson.title}</strong><span className="video-poster-play"><Play size={23} fill="currentColor" /> 播放影片 · {videoTime(lesson.videoDuration)}</span></button>}<div className="lesson-video-caption"><span><Play size={16} /> 紫微宇宙課程影片 · {videoTime(lesson.videoDuration)}</span><span>影片、課文、練習都在本站完成</span></div></div>}
-        <div className="reader-notice"><BookOpen size={22} /><div><strong>{lesson.videoUrl ? '看影片、讀課文，然後動手排盤。' : '先讀，再動手。'}</strong><span>{lesson.videoUrl ? '完成下方實作、核對命盤，並在階段結尾參加測驗。' : '這是示範版課堂。閱讀重點後，完成下面的小練習。'}</span></div></div>
+        {lesson.videoUrl ? <div className="lesson-video-wrap">{videoStarted ? <video key={`${course.slug}-${index}`} controls autoPlay playsInline preload="metadata" poster={assetPath(lesson.image || chapter?.image || '/images/luxkey-ziwei.webp')} src={lesson.videoUrl}>你的瀏覽器不支援影片播放。</video> : <button className="lesson-video-poster" type="button" style={{ backgroundImage: `linear-gradient(180deg, rgba(20,22,26,.02), rgba(20,22,26,.42)), url("${assetPath(lesson.image || chapter?.image || '/images/luxkey-ziwei.webp')}")` }} onClick={() => setVideoStarted(true)} aria-label={`播放第 ${index + 1} 課影片：${lesson.title}`}><span className="video-poster-top">第 {String(index + 1).padStart(2, '0')} 課</span><span className="video-poster-play"><Play size={23} fill="currentColor" /> 播放影片 · {videoTime(lesson.videoDuration)}</span></button>}<div className="lesson-video-caption"><span><Play size={16} /> 紫微宇宙課程影片 · {videoTime(lesson.videoDuration)}</span></div></div> : <figure className="lesson-reading-visual"><img src={assetPath(lesson.image || course.coverImage || originalCoverImages[course.slug])} alt={`${course.shortTitle}課程情境示意`} /><figcaption>課程情境示意</figcaption></figure>}
+        <div className="lesson-heading"><div className="section-kicker">第 {String(index + 1).padStart(2, '0')} 課</div><h1>{lesson.title}</h1><details className="lesson-overview"><summary>閱讀本課簡介</summary><p>{annotatedText(lesson.summary, isZiwei ? index : undefined)}</p></details></div>
         <aside className="lesson-focus"><span>本課重點</span><strong>{isZiwei ? ziweiHighlights[index].focus : lesson.summary}</strong><small>{isZiwei && <><i className="highlight-swatch palace-swatch" /> 宮位　</>}<i className="highlight-swatch teaching-swatch" /> 原文關鍵句</small></aside>
         {lesson.sections.map((section, sectionIndex) => <section className="lesson-section" key={section.heading}>
           <div className="section-kicker">{String(sectionIndex + 1).padStart(2, '0')} / KEY IDEA</div>
@@ -421,7 +385,10 @@ function Learning({ course, index, state, onComplete, onNote, onActivity, onChec
 
 function MyLearning({ learning, onStart }: { learning: LearningState; onStart: (course: Course, index?: number) => void }) {
   const started = courses.filter((course) => learning[course.slug]?.started)
-  return <main><section className="page-hero library-hero"><div className="container"><div className="section-kicker">MY LEARNING / YOUR PACE</div><h1>繼續往前，<br /><span>一步一步。</span></h1><p>你開始的課，都在這裡。</p></div></section><section className="section library-section"><div className="container"><div className="section-heading"><div><div className="section-kicker">學習記錄</div><h2>正在學習</h2></div><span>{String(started.length).padStart(2, '0')} 門課程</span></div>{started.length ? <div className="library-grid">{started.map((course) => { const state = learning[course.slug]; const next = resumeLessonIndex(course, state); const percent = progressFor(course, state); return <div className="library-card" key={course.slug}><Cover course={course} /><div className="library-card-content"><div className="card-meta">{course.category} / {course.lessons.length} 個單元</div><h3>{course.title}</h3><div className="progress-block"><div><span>已完成</span><strong>{percent}%</strong></div><div className="progress-track" role="progressbar" aria-label={`${course.title} 完成進度`} aria-valuenow={percent} aria-valuemin={0} aria-valuemax={100}><span style={{ width: `${percent}%` }} /></div></div><button type="button" className="text-link" onClick={() => onStart(course, next)}>{percent === 100 ? '重新閱讀' : '繼續學習'} <ArrowRight size={18} /></button></div></div> })}</div> : <div className="empty-state"><BookOpen size={34} strokeWidth={1.5} /><h2>你的下一步，從這裡開始。</h2><p>選一門現在最用得上的課，學習記錄就會出現在這裡。</p><a className="btn btn-primary" href="#/explore">探索課程 <ArrowUpRight size={18} /></a></div>}</div></section></main>
+  return <main>
+    <section className="page-hero library-hero"><div className="container"><div className="section-kicker">我的學習</div><h1>{started.length ? '接著，繼續學。' : '從一門課開始。'}</h1><p>{started.length ? `${started.length} 門正在學習的課程` : '挑一門感興趣的課，從第一步開始。'}</p></div></section>
+    <section className="section library-section"><div className="container">{started.length ? <div className="library-grid">{started.map((course) => { const state = learning[course.slug]; const next = resumeLessonIndex(course, state); const percent = progressFor(course, state); return <div className="library-card" key={course.slug}><div className="library-card-media"><img src={assetPath(course.coverImage || originalCoverImages[course.slug])} alt="" loading="lazy" decoding="async" /></div><div className="library-card-content"><div className="card-meta">{course.number} / {course.category}</div><h2>{course.title}</h2><div className="progress-block"><div><span>學習進度</span><strong>{percent}%</strong></div><div className="progress-track" role="progressbar" aria-label={`${course.title} 完成進度`} aria-valuenow={percent} aria-valuemin={0} aria-valuemax={100}><span style={{ width: `${percent}%` }} /></div></div><button type="button" className="text-link" onClick={() => onStart(course, next)}>{percent === 100 ? '重新閱讀' : '繼續學習'} <ArrowRight size={18} /></button></div></div> })}</div> : <div className="empty-state"><BookOpen size={34} strokeWidth={1.5} /><h2>課程會出現在這裡。</h2><a className="btn btn-primary" href="#/explore">探索課程 <ArrowUpRight size={18} /></a></div>}</div></section>
+  </main>
 }
 
 function PricingAdmin({ prices, onSaved }: { prices: CoursePrices; onSaved: (slug: string, price: CoursePrice) => void }) {
@@ -499,7 +466,7 @@ export default function App() {
   const routeCourse = 'slug' in route ? courses.find((course) => course.slug === route.slug) : undefined
   const validLesson = route.page === 'lesson' && routeCourse && Number.isInteger(route.index) && route.index >= 0 && route.index < routeCourse.lessons.length
   let content
-  if (route.page === 'home') content = <Home learning={learning} prices={prices} />
+  if (route.page === 'home') content = <Home prices={prices} />
   else if (route.page === 'explore') content = <Explore learning={learning} prices={prices} />
   else if (route.page === 'pricing-admin') content = <PricingAdmin prices={prices} onSaved={(slug, price) => setPrices((current) => ({ ...current, [slug]: price }))} />
   else if (route.page === 'library') content = <MyLearning learning={learning} onStart={onStart} />
