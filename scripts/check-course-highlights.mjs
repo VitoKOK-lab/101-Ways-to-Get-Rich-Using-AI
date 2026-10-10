@@ -9,6 +9,10 @@ let count = 0
 if (lessons.length !== 20 || ideas.length !== lessons.length) errors.push('紫微課必須保有 20 堂課及對應的重點資料。')
 if (courseFocuses.length !== lessons.length) errors.push('每堂紫微課都必須有「本課重點」。')
 for (const [lessonIndex, lesson] of lessons.entries()) {
+  const copiedCopy = JSON.stringify(lesson)
+  for (const phrase of ['左右滑動看完整命盤', '首頁的命盤', '首頁命盤', '首頁排出來的盤', '主題報告', '貴人報告', '戀愛腦報告', '正緣報告', '換工作報告', '婚期報告', '財路報告', '第一個百萬報告']) {
+    if (copiedCopy.includes(phrase)) errors.push(`第 ${lessonIndex + 1} 課仍有舊站提示或未提供的功能：${phrase}`)
+  }
   const annotations = ideas[lessonIndex] || []
   if (annotations.length !== lesson.sections.length) errors.push(`第 ${lessonIndex + 1} 課的 KEY IDEA 數量不符。`)
   for (const [sectionIndex, section] of lesson.sections.entries()) {
