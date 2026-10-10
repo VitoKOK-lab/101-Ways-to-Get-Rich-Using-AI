@@ -154,11 +154,15 @@ function Home({ prices }: { prices: CoursePrices }) {
   const websiteCourse = courses.find((course) => course.slug === 'website-building')!
   const videoCourse = courses.find((course) => course.slug === 'ai-video-editing')!
   const goals = [
-    { slug: 'ziwei-foundations', label: '成為線上紫微命理師' },
-    { slug: 'tarot-practice', label: '把塔羅練習變成諮詢服務' },
-    { slug: 'website-building', label: '幫客戶做網站' },
-    { slug: 'social-graphic-editor', label: '接圖文小編的案子' },
-    { slug: 'ai-video-editing', label: '用 AI 幫客戶剪短片' },
+    { slug: 'ziwei-foundations', label: '紫微老師' },
+    { slug: 'tarot-practice', label: '塔羅老師' },
+    { slug: 'website-building', label: '做網站' },
+    { slug: 'social-graphic-editor', label: '接案小編' },
+    { slug: 'ai-video-editing', label: 'AI 剪片' },
+    { slug: 'facebook-ads', label: 'FB 投廣告' },
+    { slug: 'short-video-filming', label: '拍短影音' },
+    { slug: 'ai-still-to-video', label: 'AI 製片人' },
+    { slug: 'ai-copy-design', label: 'AI 寫手' },
   ]
   return <main>
     <section className="hero-section" style={{ backgroundImage: `url("${assetPath('/images/ai-rich-learning-hero.webp')}")` }}><div className="container hero-grid">
