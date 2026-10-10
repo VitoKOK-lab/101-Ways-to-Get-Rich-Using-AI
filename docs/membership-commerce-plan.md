@@ -46,6 +46,14 @@
 
 最低資料表：`users`、`staff_assignments`、`courses`、`course_revisions`、`orders`、`order_items`、`payment_events`、`entitlements`、`lesson_progress`、`submissions`、`assessment_attempts`、`audit_logs`。訂單記住購買當下的品名與價格；授權獨立於訂單，才能處理退款、贈送、手動補課與未來會員方案。
 
+## 價格後台的已備妥部分
+
+- [學費調查與 13 門價格規劃](course-tuition-benchmark.md)是目前前台的預設資料。畫面分列定價、現在售價與活動價，並標明「規劃中／尚未開放購買」。`/#/admin/pricing` 是價格編輯介面；在 GitHub Pages 原型上只能檢視，不能儲存。
+- `cloudflare/migrations/0001_course_prices.sql` 建立 D1 價格表、13 門種子資料及變更紀錄表。`cloudflare/pricing-worker.ts` 提供公開讀取 `/api/prices` 和管理員寫入 `/api/admin/prices/:slug`。寫入端會驗證 Cloudflare Access JWT 的簽章、簽發者、受眾、期限與管理員 email 清單，並限制同源請求；不是只靠前端隱藏按鈕。
+- 將網站與 Worker 部署在**同一 Cloudflare 網域**後，執行 migration、綁定 D1 為 `PRICES_DB`、設定 `ACCESS_TEAM_DOMAIN`、`ACCESS_AUD`、`ADMIN_EMAILS`（逗號分隔）、對 `/api/admin/*` 建 Cloudflare Access 政策，並在前端建置時設定 `VITE_PRICING_API_URL=/api`。公開 `GET /api/prices` 不要受員工 Access 政策攔住。金流與完整課程移到受保護資料來源後，才能真正開放購買。設定值不可放入公開儲存庫。
+- 價格更新必須符合 `0 < 活動價 < 現在售價 < 定價`，活動起訖為 ISO 時間，介面以台北時間輸入。活動只在 `開始 ≤ 現在 < 結束` 顯示；未設定不顯示假倒數。API 以 D1 的 `version` 避免舊頁覆蓋新價格，並記錄管理員 email 與前後值。
+- 目前 Worker **只處理價格，沒有結帳功能**。未來建立訂單時，伺服器重新讀取有效價格、保存幣別與價格快照，再進入金流。不要接受前端顯示價作為訂單金額；活動到期與同時修改的衝突要由伺服器決定。價格一旦要公開作為實際折扣，請先確認定價代表真實提供的完整課程，並在交易頁清楚揭露所含服務。
+
 ## 從目前原型遷移時必須做的事
 
 - 目前 `src/ziwei-lessons.json`、文字課資料、影片網址、測驗題及答案都在公開 GitHub 儲存庫和可下載的前端 bundle。只加登入畫面無法把現有課程變成付費內容。正式版需把完整課文、題目答案及播放憑證移出公開前端，由私有資料來源經 API 依授權送出；公開 Repo 的歷史內容仍可被取得，若要販售獨家內容須使用新製作且受保護的內容，並評估原公開教材的定位。

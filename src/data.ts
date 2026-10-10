@@ -35,7 +35,6 @@ export type Course = {
   theme: 'teal' | 'ink' | 'vermilion' | 'silver'
   coverWord: string
   coverImage?: string
-  tuitionPrice?: string
   aiUse?: string
   outcomes: string[]
   lessons: Lesson[]

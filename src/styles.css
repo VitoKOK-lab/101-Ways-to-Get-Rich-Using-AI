@@ -324,6 +324,20 @@ svg { flex: none; }
 .course-tuition { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding: 15px 0; }
 .course-tuition span, .course-market span { color: var(--ink-500); font-size: 11px; font-weight: 700; }
 .course-tuition strong { color: var(--vermillion-700); font-family: var(--font-display); font-size: 20px; }
+.tuition-price { width: 100%; display: grid; gap: 8px; }
+.tuition-caption { color: var(--ink); font-size: 12px; font-weight: 800; }
+.tuition-caption em { margin-left: 7px; padding: 3px 6px; background: var(--silver-100); color: var(--ink-600); font-style: normal; font-size: 10px; }
+.tuition-price > div { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.tuition-price > div > span { color: var(--ink-500); font-size: 11px; font-weight: 600; }
+.tuition-price s { color: var(--ink-500); font-size: 14px; }
+.tuition-price .tuition-current strong { color: var(--vermillion-700); font-size: 22px; font-weight: 800; }
+.tuition-price .tuition-campaign b { color: var(--ink-500); font-size: 13px; }
+.tuition-price .tuition-campaign.active b { color: var(--vermillion-700); font-size: 20px; }
+.course-pricing > .tuition-price { padding: 15px 0; }
+.detail-tuition .tuition-caption { font-size: 13px; }
+.detail-tuition .tuition-price { gap: 10px; }
+.detail-tuition .tuition-price .tuition-current strong { font-size: 26px; }
+.detail-tuition p a { color: var(--teal-700); text-decoration: underline; text-underline-offset: 2px; }
 .course-market { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; padding: 11px 13px; background: var(--silver-50); border-left: 2px solid var(--teal); }
 .course-market strong { color: var(--teal-700); font-size: 15px; line-height: 1.35; }
 .course-market strong small { margin-left: 2px; color: var(--ink-500); font: 500 11px var(--font-sans); }
@@ -346,6 +360,17 @@ svg { flex: none; }
   .course-tuition strong { font-size: 19px; }
   .detail-pricing { grid-template-columns: 1fr; }
 }
+.pricing-admin { padding-top: 65px; padding-bottom: 90px; }
+.pricing-admin h1 { margin: 12px 0; font-size: clamp(34px, 5vw, 56px); }
+.pricing-admin > p { max-width: 720px; color: var(--ink-600); line-height: 1.7; }
+.pricing-admin .admin-warning { padding: 14px 18px; background: var(--teal-50); border-left: 3px solid var(--teal); color: var(--ink); }
+.pricing-admin-list { display: grid; gap: 16px; margin-top: 34px; }
+.pricing-admin-row { padding: 25px; background: var(--white); border: 1px solid var(--silver-200); }
+.pricing-admin-row h2 { margin: 0 0 20px; font-size: 19px; }
+.pricing-admin-fields { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px; margin-bottom: 18px; }
+.pricing-admin-fields label { display: grid; gap: 7px; color: var(--ink-600); font-size: 12px; font-weight: 700; }
+.pricing-admin-fields input, .pricing-admin-fields select { min-width: 0; width: 100%; padding: 11px 12px; background: var(--silver-50); border: 1px solid var(--silver-200); color: var(--ink); font: 500 15px var(--font-sans); }
+@media (max-width: 700px) { .pricing-admin-fields { grid-template-columns: 1fr; } }
 
 /* Editorial landing experience */
 .hero-section { position: relative; min-height: 710px; display: flex; align-items: stretch; padding: 0; overflow: hidden; background: var(--white) url('/images/luxkey-hero.webp') 61% center / cover no-repeat; color: var(--ink); }
