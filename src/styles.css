@@ -1137,3 +1137,50 @@ svg { flex: none; }
   .lesson-focus { padding: 20px; }
   .lesson-section h2 { font-size: 27px; }
 }
+
+/* Campaign home: ink is the stage; Luxkey vermilion and teal remain the accents. */
+.hero-section { background-color: var(--ink); color: var(--white); }
+.hero-section::before { background: linear-gradient(90deg, rgba(20,22,26,.44), rgba(20,22,26,.08) 42%, transparent 70%); }
+.hero-copy .section-kicker { color: var(--cyan-200); }
+.hero-copy h1.hero-headline { max-width: 760px; font-size: clamp(46px, 4.1vw, 59px); }
+.hero-promise { color: var(--white); }
+.hero-image-caption { border-color: rgba(255,255,255,.35); color: rgba(255,255,255,.8); }
+.hero-image-caption span:last-child { color: var(--cyan-200); }
+.principles { background: var(--teal-700); color: var(--white); }
+.principles-label, .principles-caption { color: rgba(255,255,255,.8); }
+.principles-grid p { color: var(--white); white-space: normal; }
+.principles-grid em { display: inline-block; color: var(--cyan-200); font-family: var(--font-display); font-style: normal; font-weight: 800; white-space: nowrap; }
+.spotlight-section { background: var(--ink); color: var(--white); }
+.spotlight-copy .section-kicker { color: var(--cyan); }
+.spotlight-copy h2 { max-width: 500px; font-size: clamp(47px, 4.6vw, 68px); }
+.spotlight-copy > p { max-width: 370px; color: rgba(255,255,255,.78); }
+.spotlight-image { border: 1px solid rgba(255,255,255,.18); }
+.method-list > a { display: grid; grid-template-columns: 42px 1fr 23px; gap: 18px; align-items: start; padding: 25px 0; border-bottom: 1px solid var(--silver-300); color: var(--ink); text-decoration: none; transition: color .2s, padding-left .2s; }
+.method-list > a:hover, .method-list > a:focus-visible { color: var(--teal-700); padding-left: 8px; }
+.method-list > a > span { color: var(--vermillion); font-family: var(--font-mono); font-size: 12px; font-weight: 700; }
+.method-list > a svg { align-self: center; }
+.method-intro h2 { font-size: clamp(38px, 3.8vw, 52px); line-height: 1.14; }
+.method-list h3 { margin: 0 0 7px; font-size: 22px; }
+.method-list p { margin: 0; color: var(--ink-600); font-size: 13px; line-height: 1.6; }
+.footer-right { display: flex; flex-direction: column; align-items: flex-end; gap: 25px; }
+.footer-contact { display: flex; flex-direction: column; align-items: flex-end; gap: 7px; color: var(--ink-600); font-size: 13px; font-style: normal; }
+.footer-contact a { color: var(--teal-700); text-decoration: underline; text-underline-offset: 3px; }
+.footer-contact a:hover { color: var(--vermillion); }
+@media (max-width: 760px) {
+  .hero-section { background-position: 78% top; }
+  .hero-section::before { background: linear-gradient(180deg, rgba(20,22,26,.03) 0, rgba(20,22,26,.12) 210px, var(--ink) 345px); }
+  .hero-copy h1.hero-headline { font-size: clamp(32px, 6.7vw, 48px); }
+  .spotlight-section { padding-block: 74px; }
+  .spotlight-grid { gap: 30px; }
+  .spotlight-copy h2 { font-size: clamp(42px, 7vw, 59px); }
+  .method-intro h2 { font-size: clamp(34px, 7.3vw, 40px); }
+  .footer-right { align-items: flex-start; }
+  .footer-contact { align-items: flex-start; }
+}
+@media (max-width: 520px) {
+  .hero-section { background-position: 78% top; }
+  .hero-section::before { background: linear-gradient(180deg, rgba(20,22,26,.02) 0, rgba(20,22,26,.12) 170px, var(--ink) 292px); }
+  .hero-copy h1.hero-headline { font-size: clamp(30px, 7.8vw, 39px); }
+  .principles-grid p { font-size: 32px; line-height: 1.18; }
+  .spotlight-copy h2 { font-size: 43px; }
+}
