@@ -315,9 +315,9 @@ svg { flex: none; }
   .footer-note { grid-column: auto; }
 }
 
-/* AI RICH 101 identity, separate tuition and external service rates */
-.brand-name { display: inline-flex; align-items: center; gap: 8px; color: var(--ink); font-family: Jost, var(--font-sans); font-size: 26px; font-weight: 700; letter-spacing: .08em; line-height: 1; white-space: nowrap; }
-.brand-name em { padding: 7px 6px 6px; background: var(--vermillion); color: var(--white); font: 700 14px var(--font-mono); letter-spacing: -.06em; }
+/* freetorick identity, separate tuition and external service rates */
+.brand-name { display: inline-flex; align-items: center; color: var(--ink); font-family: Jost, var(--font-sans); font-size: 29px; font-weight: 700; letter-spacing: -.045em; line-height: 1; white-space: nowrap; }
+.brand-name > span { color: var(--vermillion); }
 .brand-sub { letter-spacing: .16em; }
 .footer-logo { font-size: 27px; }
 .course-pricing { margin: -3px 0 22px; border-top: 1px solid var(--silver-200); }
@@ -360,8 +360,7 @@ svg { flex: none; }
 .detail-ai { margin: 0 0 24px; color: var(--ink-600); font-size: 13px; line-height: 1.7; }
 .detail-ai strong { display: block; margin-bottom: 4px; color: var(--teal-700); }
 @media (max-width: 520px) {
-  .brand-name { font-size: 22px; }
-  .brand-name em { font-size: 12px; }
+  .brand-name { font-size: 25px; }
   .course-tuition strong { font-size: 19px; }
   .detail-pricing { grid-template-columns: 1fr; }
 }
@@ -386,6 +385,7 @@ svg { flex: none; }
 .hero-copy h1 { margin: 0 0 29px; font-size: clamp(66px, 6.8vw, 106px); line-height: 1.06; letter-spacing: -.06em; }
 .hero-copy h1.hero-headline { font-size: clamp(52px, 5vw, 68px); }
 .hero-copy h1 span { color: var(--vermillion); }
+.hero-promise { max-width: 520px; margin: -8px 0 15px; color: var(--teal-700); font-size: 17px; font-weight: 700; line-height: 1.5; }
 .hero-intro { max-width: 480px; color: var(--ink-600); font-size: 20px; }
 .hero-actions .text-link { color: var(--ink); border-color: var(--ink); }
 .hero-actions .text-link:hover { color: var(--teal-700); border-color: var(--teal-700); }
