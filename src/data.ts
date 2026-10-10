@@ -60,12 +60,12 @@ export const ziweiCourse: Course = {
   provider: '紫微宇宙',
   sourceUrl: 'https://ziweiuniverse.com/knowledge/ziwei/course/',
   chapters: [
-    { title: '準備資料與盤面', start: 0, end: 3, image: '/images/luxkey-ziwei.webp', goal: '整理出生資料，畫出可使用的空白命盤。' },
-    { title: '建立命盤骨架', start: 4, end: 6, image: '/images/luxkey-ziwei-chart.webp', goal: '標出命身宮、十二宮與五行局。' },
-    { title: '排出十四主星', start: 7, end: 9, image: '/images/luxkey-ziwei-chart.webp', goal: '依步驟把紫微與天府星系放進盤面。' },
-    { title: '補齊星曜與時間線', start: 10, end: 14, image: '/images/luxkey-ziwei-chart.webp', goal: '加入吉煞、四化與大限，完成第一次手排。' },
-    { title: '練習解讀', start: 15, end: 17, image: '/images/luxkey-ziwei-read.webp', goal: '按照固定順序閱讀，不急著下定論。' },
-    { title: '做自己的年度規劃', start: 18, end: 19, image: '/images/luxkey-ziwei-plan.webp', goal: '把觀察整理成可以回顧的計畫。' },
+    { title: '準備資料與盤面', start: 0, end: 3, image: '/images/ziwei-stage-01.webp', goal: '整理出生資料，畫出可使用的空白命盤。' },
+    { title: '建立命盤骨架', start: 4, end: 6, image: '/images/ziwei-stage-02.webp', goal: '標出命身宮、十二宮與五行局。' },
+    { title: '排出十四主星', start: 7, end: 9, image: '/images/ziwei-stage-03.webp', goal: '依步驟把紫微與天府星系放進盤面。' },
+    { title: '補齊星曜與時間線', start: 10, end: 14, image: '/images/ziwei-stage-04.webp', goal: '加入吉煞、四化與大限，完成第一次手排。' },
+    { title: '練習解讀', start: 15, end: 17, image: '/images/ziwei-stage-05.webp', goal: '按照固定順序閱讀，不急著下定論。' },
+    { title: '做自己的年度規劃', start: 18, end: 19, image: '/images/ziwei-stage-06.webp', goal: '把觀察整理成可以回顧的計畫。' },
   ],
   lessons: ziweiLessons.map((lesson, lessonIndex) => ({
     ...lesson,

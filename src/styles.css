@@ -540,7 +540,7 @@ svg { flex: none; }
 .module-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-bottom: 74px; }
 .module-card { min-width: 0; padding: 0 0 22px; border: 1px solid var(--silver-200); background: var(--white); text-align: left; box-shadow: var(--shadow-sm); transition: transform .2s, box-shadow .2s; }
 .module-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
-.module-image { display: block; aspect-ratio: 16 / 10; background-color: var(--silver-100); background-size: cover; background-position: 70% center; }
+.module-image { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: center; background-color: var(--silver-100); }
 .module-meta { display: block; margin: 20px 20px 8px; color: var(--teal-700); font: 700 11px var(--font-mono); letter-spacing: .04em; }
 .module-card strong { display: block; margin: 0 20px 8px; font-size: 22px; line-height: 1.25; }
 .module-card small { display: block; margin: 0 20px; color: var(--ink-600); font-size: 13px; line-height: 1.6; }
@@ -553,9 +553,7 @@ svg { flex: none; }
 .syllabus-chapter-title:hover { color: var(--teal-700); background: var(--white); }
 .syllabus-chapter-title svg { transition: transform .2s; }
 .syllabus-chapter-title[aria-expanded="true"] svg { transform: rotate(180deg); }
-.syllabus-list button { grid-template-columns: 104px 1fr 105px 20px; padding-block: 17px; }
-.syllabus-thumb { position: relative; width: 104px; height: 60px; display: flex; align-items: flex-end; padding: 6px; background-color: var(--silver-100); background-size: cover; background-position: 72% center; }
-.syllabus-thumb span { padding: 3px 5px; background: var(--white); color: var(--teal-700); font: 700 10px var(--font-mono); }
+.syllabus-list button { grid-template-columns: 58px 1fr 105px 20px; padding-block: 22px; }
 .syllabus-content strong { font-size: 17px; line-height: 1.4; }
 .syllabus-chapter-title + .syllabus-list, .chapter-goal + .syllabus-list { border-top: 0; }
 .spotlight-image > strong { font-size: clamp(63px, 6.3vw, 96px); line-height: 1.05; letter-spacing: -.075em; }
@@ -617,8 +615,7 @@ svg { flex: none; }
 .capstone-note { margin: 16px 0 0; font-size: 11px !important; }
 @media (max-width: 760px) {
   .module-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .syllabus-list button { grid-template-columns: 84px 1fr 20px; }
-  .syllabus-thumb { width: 80px; height: 52px; }
+  .syllabus-list button { grid-template-columns: 42px 1fr 20px; }
   .spotlight-image > strong { font-size: clamp(59px, 11vw, 80px); }
 }
 @media (max-width: 520px) {
@@ -627,8 +624,7 @@ svg { flex: none; }
   .lesson-plan-head { align-items: flex-start; flex-direction: column; }
   .syllabus-chapter-title { gap: 9px; }
   .syllabus-chapter-title small { display: none; }
-  .syllabus-list button { grid-template-columns: 70px 1fr 18px; gap: 10px; padding-inline: 0; }
-  .syllabus-thumb { width: 68px; height: 49px; }
+  .syllabus-list button { grid-template-columns: 35px 1fr 18px; gap: 10px; padding-inline: 0; }
   .lesson-video-poster { min-height: 225px; padding: 16px; }
   .lesson-video-poster strong { max-width: 78%; font-size: 23px; }
   .video-poster-play { font-size: 11px; }
