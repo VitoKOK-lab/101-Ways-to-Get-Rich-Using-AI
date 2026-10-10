@@ -163,7 +163,7 @@ function Home({ learning }: { learning: LearningState }) {
     <section className="hero-section" style={{ backgroundImage: `url("${assetPath('/images/luxkey-hero.webp')}")` }}><div className="container hero-grid">
       <div className="hero-copy">
         <div className="section-kicker"><span className="kicker-line" /> AI RICH 101 · LEARN TO EARN</div>
-        <h1>把技能變成<br /><span>第一筆收入。</span></h1>
+        <h1 className="hero-headline">建立你的1人公司，<br /><span>馬上增加你的</span><br /><span>第一筆收入</span></h1>
         <p className="hero-intro">100 種用 AI 賺錢的方法，先從一門可實作的課開始。首波 13 門，從線上諮詢、網站製作到影音與商家經營，練習接案需要的作品與流程。</p>
         <div className="hero-actions"><button type="button" className="btn btn-primary" onClick={() => document.getElementById('find-path')?.scrollIntoView({ behavior: 'smooth' })}>找到適合我的課 <ArrowUpRight size={19} /></button><a className="text-link" href="#/explore">探索所有課程 <ArrowRight size={18} /></a></div>
         <div className="hero-bottom"><span>01 / 13</span><div className="hairline" /><span>MAKE IT REAL</span></div>

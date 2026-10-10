@@ -346,6 +346,7 @@ svg { flex: none; }
 .hero-copy { padding: 0; max-width: 670px; }
 .hero-copy .section-kicker { color: var(--teal-700); }
 .hero-copy h1 { margin: 0 0 29px; font-size: clamp(66px, 6.8vw, 106px); line-height: 1.06; letter-spacing: -.06em; }
+.hero-copy h1.hero-headline { font-size: clamp(52px, 5vw, 76px); }
 .hero-copy h1 span { color: var(--vermillion); }
 .hero-intro { max-width: 480px; color: var(--ink-600); font-size: 20px; }
 .hero-actions .text-link { color: var(--ink); border-color: var(--ink); }
@@ -610,6 +611,7 @@ svg { flex: none; }
 .path-small a { display: inline-flex; align-items: center; gap: 2px; margin-left: 3px; color: var(--teal-700); border-bottom: 1px solid currentColor; }
 .path-small a:hover { color: var(--vermillion-700); }
 @media (max-width: 760px) {
+  .hero-copy h1.hero-headline { font-size: clamp(32px, 8.3vw, 44px); }
   .hero-copy h1 { font-size: clamp(46px, 8vw, 64px); }
   .cover-localized.cover-large .cover-word { max-width: 70%; font-size: clamp(48px, 8vw, 64px); }
 }
