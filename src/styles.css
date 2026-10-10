@@ -661,3 +661,103 @@ svg { flex: none; }
   .cover-localized .cover-word { max-width: 70%; font-size: 43px; }
   .cover-localized.cover-large .cover-word { font-size: 51px; }
 }
+
+/* Put the learning scene first, then offer details. */
+.hero-section { background-color: var(--white); background-size: cover; background-position: center; }
+.hero-section::before { background: linear-gradient(90deg, rgba(255,255,255,.66) 0%, rgba(255,255,255,.22) 38%, transparent 62%); }
+.hero-grid { min-height: 690px; padding-top: 105px; }
+.hero-copy { max-width: 640px; }
+.hero-copy h1.hero-headline { font-size: clamp(48px, 4.8vw, 66px); }
+.hero-intro { max-width: 450px; }
+.hero-bottom { font-family: var(--font-sans); font-size: 12px; letter-spacing: .02em; }
+.hero-image-caption { font-family: var(--font-sans); font-size: 11px; letter-spacing: .03em; }
+
+.spotlight-image { position: relative; background-size: cover; background-position: 40% center; }
+.spotlight-image::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,22,26,.30), transparent 22%, transparent 65%, rgba(20,22,26,.67)); pointer-events: none; }
+.spotlight-image > span { position: relative; z-index: 1; color: var(--white); font-family: var(--font-sans); font-size: 12px; letter-spacing: .02em; }
+.spotlight-image > span:last-child { border-color: rgba(255,255,255,.5); }
+.spotlight-image > strong { position: relative; z-index: 1; align-self: flex-start; margin-top: auto; margin-bottom: 18px; color: var(--white); font-size: clamp(32px, 3vw, 44px); line-height: 1.16; letter-spacing: -.05em; text-shadow: 0 2px 14px rgba(20,22,26,.35); }
+
+.course-card .course-cover { min-height: 265px; padding: 19px 21px; }
+.cover-localized::after { background: linear-gradient(180deg, rgba(255,255,255,.42), rgba(255,255,255,0) 33%, rgba(255,255,255,.08) 48%, rgba(255,255,255,.92) 79%, var(--white) 100%); }
+.cover-localized .cover-rule { opacity: .25; }
+.course-card .cover-localized .cover-word,
+.library-card .cover-localized .cover-word { position: absolute; left: 21px; bottom: 49px; max-width: calc(100% - 42px); font-size: clamp(29px, 2.8vw, 39px); line-height: 1.03; letter-spacing: -.06em; }
+.cover-localized .cover-bottom { margin-top: auto; }
+.cover-localized .cover-word span:last-child { color: var(--teal-700); }
+.cover-localized.cover-vermilion .cover-word span:last-child { color: var(--vermillion-700); }
+.course-card .course-card-body { padding: 23px 25px 24px; }
+.course-card h3 { margin-top: 14px; }
+.course-card p { margin-bottom: 20px; }
+.course-card .course-pricing { margin-bottom: 18px; }
+.course-card .tuition-price { gap: 5px; }
+.course-card .tuition-caption { font-size: 11px; }
+.card-rate-hint { display: block; padding-bottom: 13px; color: var(--ink-500); font-size: 11px; line-height: 1.55; }
+
+.detail-top, .detail-hero { background: var(--white); }
+.detail-hero { padding: 30px 0 92px; }
+.detail-grid { grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr); gap: 6%; align-items: center; }
+.detail-visual { position: relative; min-width: 0; height: 595px; margin: 0; overflow: hidden; background: var(--silver-100); box-shadow: var(--shadow-lg); }
+.detail-visual img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 41% center; }
+.detail-visual figcaption { position: absolute; right: 0; bottom: 0; left: 0; display: flex; justify-content: space-between; gap: 15px; align-items: center; padding: 20px 24px; background: linear-gradient(90deg, rgba(20,22,26,.91), rgba(20,22,26,.65)); color: var(--white); font-size: 13px; font-weight: 700; }
+.detail-visual figcaption small { color: rgba(255,255,255,.8); font-size: 11px; font-weight: 500; }
+.detail-copy h1, .detail-hero-featured .detail-copy h1 { max-width: none; margin-bottom: 18px; font-size: clamp(40px, 4vw, 57px); line-height: 1.13; }
+.detail-subtitle { margin: 0; color: var(--teal-700); font-size: 22px; line-height: 1.45; }
+.detail-meta { gap: 17px; margin-top: 25px; padding: 20px 0; }
+.detail-description { margin: 23px 0 28px; font-size: 16px; line-height: 1.75; }
+.detail-hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 22px; margin-top: 28px; }
+.detail-aside { margin-top: 20px; line-height: 1.6; }
+.outcomes-section { padding-block: 95px; }
+
+.course-offer-section { padding-block: 91px; background: var(--silver-50); }
+.course-offer-grid { display: grid; grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr); gap: 8%; align-items: start; }
+.course-offer-intro h2 { margin: 0; font-size: clamp(35px, 3.4vw, 47px); line-height: 1.2; letter-spacing: -.04em; }
+.course-offer-intro > p { max-width: 360px; color: var(--ink-600); font-size: 14px; line-height: 1.75; }
+.course-offer-intro .detail-ai { margin-top: 29px; padding-top: 21px; border-top: 1px solid var(--silver-300); }
+.course-offer-intro .detail-prep { margin-top: 23px; }
+.course-offer-rates { display: grid; grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr); gap: 17px; }
+.course-offer-rates > div { min-width: 0; padding: 24px; box-shadow: var(--shadow-sm); }
+.course-offer-rates .detail-tuition p, .course-offer-rates .detail-market p { margin: 9px 0 0; color: var(--ink-500); font-size: 11px; line-height: 1.6; }
+.course-offer-rates .detail-market > span { color: var(--teal-700); font-size: 12px; font-weight: 800; }
+.course-offer-rates .detail-market > strong { margin-top: 10px; color: var(--teal-700); font-size: 24px; line-height: 1.25; }
+.course-offer-rates .detail-market > strong small { margin-left: 3px; color: var(--ink-600); font-size: 11px; font-weight: 500; }
+
+@media (max-width: 900px) {
+  .detail-grid { grid-template-columns: 1fr; gap: 38px; }
+  .detail-visual { height: auto; aspect-ratio: 16 / 10; }
+  .detail-copy { max-width: 690px; }
+  .course-offer-grid { grid-template-columns: 1fr; gap: 32px; }
+}
+@media (max-width: 760px) {
+  .hero-section { min-height: 0; background-size: auto 365px; background-position: 56% top; background-repeat: no-repeat; }
+  .hero-section::before { background: linear-gradient(180deg, transparent 0, transparent 270px, var(--white) 360px); }
+  .hero-grid { min-height: 0; padding: 350px 0 24px; }
+  .hero-copy h1.hero-headline { font-size: clamp(32px, 6.8vw, 51px); }
+  .hero-intro { font-size: 16px; }
+  .hero-bottom { margin-top: 40px; }
+  .spotlight-image > strong { font-size: 35px; }
+  .course-card .course-cover { min-height: 230px; }
+  .course-card .cover-localized .cover-word { font-size: clamp(25px, 4vw, 34px); }
+  .detail-hero { padding: 10px 0 73px; }
+  .detail-visual { order: 0; }
+  .detail-visual figcaption { padding: 15px 18px; }
+  .detail-copy { order: 1; }
+  .detail-copy h1, .detail-hero-featured .detail-copy h1 { font-size: clamp(39px, 7vw, 53px); }
+  .outcomes-section { padding-block: 78px; }
+  .course-offer-section { padding-block: 76px; }
+}
+@media (max-width: 520px) {
+  .hero-section { background-size: auto 300px; background-position: 55% top; }
+  .hero-section::before { background: linear-gradient(180deg, transparent 0, transparent 215px, var(--white) 298px); }
+  .hero-grid { padding-top: 294px; }
+  .hero-copy h1.hero-headline { font-size: clamp(32px, 8.2vw, 42px); }
+  .hero-actions { align-items: flex-start; flex-direction: column; }
+  .hero-bottom { margin-top: 34px; }
+  .spotlight-image > strong { font-size: 31px; }
+  .course-card .course-cover { min-height: 265px; }
+  .course-card .cover-localized .cover-word { font-size: 37px; }
+  .detail-visual { aspect-ratio: 4 / 3; }
+  .detail-visual figcaption { align-items: flex-start; flex-direction: column; gap: 4px; }
+  .detail-hero-actions { align-items: flex-start; flex-direction: column; }
+  .course-offer-rates { grid-template-columns: 1fr; }
+}
