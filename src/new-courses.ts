@@ -15,7 +15,7 @@ const specs: CourseSpec[] = [
     slug: 'website-building', category: '網站與內容', title: '幫客戶做一個會接單的網站', shortTitle: '網站製作',
     subtitle: '學完可接第一個網站製作試案', description: '從客戶需求、頁面架構、AI 輔助文案到上線驗收，做一個手機上也好用的小型服務網站。',
     theme: 'teal', coverWord: '網站 / 製作', coverImage: '/images/course-03-website.webp',
-    offer: { amount: 'NT$8,000', unit: '／案', label: '單案示例起價' }, aiUse: 'AI 協助整理需求與撰寫初稿；商業資訊、版權與連結由製作者核對。',
+    aiUse: 'AI 協助整理需求與撰寫初稿；商業資訊、版權與連結由製作者核對。',
     outcomes: ['完成網站需求單', '做出可點擊的三頁網站', '交付上線與維護清單'],
     units: [
       ['問清楚網站要完成的事', '先確認客戶希望訪客做什麼。', '訪談客戶的服務、受眾、預約方式與現有素材。用 AI 分類問題，但頁面目標應由客戶確認。', '為一個服務業客戶寫出目標、受眾和三個必備頁面。'],
@@ -28,7 +28,7 @@ const specs: CourseSpec[] = [
     slug: 'social-graphic-editor', category: '網站與內容', title: '圖文小編：幫品牌做好每一篇貼文', shortTitle: '圖文小編',
     subtitle: '學完可接品牌圖文小編試案', description: '把品牌問題變成貼文企劃、圖像與文案，從一週試作開始建立可長期交付的內容服務。',
     theme: 'vermilion', coverWord: '圖文 / 小編', coverImage: '/images/course-04-social.webp',
-    offer: { amount: 'NT$6,000', unit: '／月', label: '月費示例起價' }, aiUse: 'AI 產生題目、文案與圖片草稿；品牌事實、授權與最後設計由小編檢查。',
+    aiUse: 'AI 產生題目、文案與圖片草稿；品牌事實、授權與最後設計由小編檢查。',
     outcomes: ['完成品牌內容簡報', '交出三篇圖文貼文', '寫出每月交付範圍'],
     units: [
       ['讀懂品牌和讀者', '從客戶疑問決定貼文主題。', '整理商品資料、常見問題、禁語和既有視覺。不要用 AI 捏造評價或商品效果。', '寫五個讀者常問問題與三個可用素材來源。'],
@@ -41,7 +41,7 @@ const specs: CourseSpec[] = [
     slug: 'facebook-ads', category: '廣告與影音', title: 'FB 廣告投放：從設定到第一份成效報告', shortTitle: 'FB 廣告投放',
     subtitle: '學完可提供廣告設定與優化試案', description: '學會設定目標、受眾、素材和預算，再用真實數據判斷廣告是否值得繼續投放。',
     theme: 'silver', coverWord: 'FB 廣告 / 投放', coverImage: '/images/course-05-ads.webp',
-    offer: { amount: 'NT$5,000', unit: '／案', label: '代操示例起價' }, aiUse: 'AI 協助產生廣告文案變體與報表摘要；平台設定、數字與法規人工核對。',
+    aiUse: 'AI 協助產生廣告文案變體與報表摘要；平台設定、數字與法規人工核對。',
     outcomes: ['完成一份投放簡報', '建立兩組素材測試', '交出可讀的成效報告'],
     units: [
       ['設定一個可衡量的目標', '先分清詢問、預約和購買。', '確認客戶可接受的預算、每筆詢問價值與落地頁。不要把點擊數當成成交數。', '寫出一份含目標、預算、服務與追蹤方式的投放簡報。'],
@@ -54,7 +54,7 @@ const specs: CourseSpec[] = [
     slug: 'short-video-filming', category: '廣告與影音', title: '手機拍短影音：帶客戶拍出第一支片', shortTitle: '短影音拍攝帶操',
     subtitle: '學完可提供手機短影音拍攝帶操', description: '用手機、自然光和清楚分鏡，陪客戶在現場完成可用素材與一支短片。',
     theme: 'vermilion', coverWord: '短影音 / 帶操', coverImage: '/images/course-06-filming.webp',
-    offer: { amount: 'NT$3,000', unit: '／場', label: '帶拍示例起價' }, aiUse: 'AI 協助產生分鏡與訪談問題；現場引導、畫面與肖像同意由拍攝者負責。',
+    aiUse: 'AI 協助產生分鏡與訪談問題；現場引導、畫面與肖像同意由拍攝者負責。',
     outcomes: ['完成三個可拍主題', '拍出一支 30 秒試片', '交付現場帶拍流程'],
     units: [
       ['選一個客戶真的會問的主題', '短片只處理一個問題。', '從客戶常見疑問挑選可用畫面回答的題目，先有觀眾收穫再排鏡頭。', '為同一服務寫三個 30 秒短片主題。'],
@@ -67,7 +67,7 @@ const specs: CourseSpec[] = [
     slug: 'ai-video-editing', category: '廣告與影音', title: 'AI 影片剪輯：把素材剪成好看的短片', shortTitle: 'AI 影片剪輯',
     subtitle: '學完可提供短影音剪輯服務', description: '利用 AI 逐字稿、字幕與粗剪縮短製作時間，再靠人工完成故事、節奏與最後校對。',
     theme: 'teal', coverWord: 'AI 影片 / 剪輯', coverImage: '/images/course-07-editing.webp',
-    offer: { amount: 'NT$1,500', unit: '／支', label: '單支示例起價' }, aiUse: 'AI 產生逐字稿、字幕和粗剪建議；專有名詞、音樂與成片品質人工把關。',
+    aiUse: 'AI 產生逐字稿、字幕和粗剪建議；專有名詞、音樂與成片品質人工把關。',
     outcomes: ['整理素材和剪輯需求', '完成一支帶字幕短片', '建立剪輯交付規格'],
     units: [
       ['先看素材和影片目的', '沒有目的的快剪不會更清楚。', '確認觀眾、發布平台、關鍵訊息與可用素材；標出缺少的畫面和授權。', '從一批素材選出五段必要鏡頭，寫下選擇理由。'],
@@ -80,7 +80,7 @@ const specs: CourseSpec[] = [
     slug: 'ai-copy-design', category: '網站與內容', title: 'AI 寫手：文案與配圖一起交付', shortTitle: 'AI 文案與作圖',
     subtitle: '學完可提供文案與圖片試案', description: '把一份客戶簡報做成可用的商品文案、社群貼文和對應視覺，讓文字與圖片傳達同一個訊息。',
     theme: 'vermilion', coverWord: '文案 / 作圖', coverImage: '/images/course-08-copy.webp',
-    offer: { amount: 'NT$2,000', unit: '／案', label: '組合示例起價' }, aiUse: 'AI 協助文案變體和圖片草稿；事實、中文排版、品牌一致性與授權人工確認。',
+    aiUse: 'AI 協助文案變體和圖片草稿；事實、中文排版、品牌一致性與授權人工確認。',
     outcomes: ['完成一份創作簡報', '交付一組文案與圖片', '列出人工校對清單'],
     units: [
       ['先讀客戶簡報', '寫之前先知道要說給誰聽。', '整理產品事實、受眾情境、禁語、品牌色和發布尺寸。未提供的功效不可交由 AI 猜測。', '做一頁文案與視覺共用的創作簡報。'],
@@ -93,7 +93,7 @@ const specs: CourseSpec[] = [
     slug: 'ai-resume-service', category: 'AI 接案服務', title: 'AI 履歷優化：幫求職者說清楚實力', shortTitle: 'AI 履歷優化',
     subtitle: '學完可提供履歷健檢試案', description: '協助求職者對照職缺，把真實經驗寫成有證據的成果，並提供可執行的修改建議。',
     theme: 'silver', coverWord: '履歷 / 優化', coverImage: '/images/course-09-resume.webp',
-    offer: { amount: 'NT$1,500', unit: '／次', label: '健檢示例起價' }, aiUse: 'AI 協助拆解職缺與改寫句子；學歷、績效和經驗必須由本人確認。',
+    aiUse: 'AI 協助拆解職缺與改寫句子；學歷、績效和經驗必須由本人確認。',
     outcomes: ['完成職缺需求表', '改寫三段真實經歷', '交付一頁履歷健檢報告'],
     units: [
       ['拆解職缺要求', '區分必要能力和加分項目。', '把職缺分成任務、工具、合作和成果，再對照求職者實際經驗。', '選一則職缺，寫出五項要求與真實證據。'],
@@ -106,7 +106,7 @@ const specs: CourseSpec[] = [
     slug: 'online-course-building', category: 'AI 接案服務', title: '幫專家搭建線上課程', shortTitle: '線上課程搭建',
     subtitle: '學完可提供線上課程搭建試案', description: '幫講師把知識整理成成果、示範、練習、影片與課程頁，再把試課上架到可學習的平台。',
     theme: 'teal', coverWord: '線上 / 課程', coverImage: '/images/course-10-course.webp',
-    offer: { amount: 'NT$15,000', unit: '／案', label: '搭建示例起價' }, aiUse: 'AI 整理訪談、產生課綱與練習草稿；講師核對知識和授權，製作者測試平台。',
+    aiUse: 'AI 整理訪談、產生課綱與練習草稿；講師核對知識和授權，製作者測試平台。',
     outcomes: ['完成四堂試課路線', '做出一堂可上架試課', '交付平台操作清單'],
     units: [
       ['定義學員學完會做什麼', '成果要能透過作業看見。', '訪談講師與學員，把「了解」改寫成可以交付的作品或操作。', '寫三個可檢核的學習成果。'],
@@ -119,7 +119,7 @@ const specs: CourseSpec[] = [
     slug: 'ai-still-to-video', category: '廣告與影音', title: 'AI 製片：把平面素材變成商品影片', shortTitle: 'AI 製片',
     subtitle: '學完可提供圖片轉影片製作服務', description: '拿客戶提供的商品照、品牌圖和文字，用 AI 生成動態鏡頭，再剪成有節奏的商品短片。',
     theme: 'vermilion', coverWord: '圖片 / 變影片', coverImage: '/images/course-11-film.webp',
-    offer: { amount: 'NT$3,000', unit: '／支', label: '影片示例起價' }, aiUse: 'AI 將授權平面素材轉成動態鏡頭；商品外觀、真實性與成片授權逐鏡核對。',
+    aiUse: 'AI 將授權平面素材轉成動態鏡頭；商品外觀、真實性與成片授權逐鏡核對。',
     outcomes: ['整理圖片與授權', '完成六格動態分鏡', '交付一支 20 秒商品影片'],
     units: [
       ['收集可用的平面素材', '素材正確，影片才可信。', '確認商品角度、品牌圖、價格文案和圖片授權，避免 AI 生成不存在的產品特徵。', '做一份素材表，標出每張圖的用途與缺口。'],
@@ -132,7 +132,7 @@ const specs: CourseSpec[] = [
     slug: 'ai-digital-presenter', category: '廣告與影音', title: 'AI 數字人：用照片製作商品介紹影片', shortTitle: 'AI 數字人',
     subtitle: '學完可製作數字人商品影片試案', description: '以取得同意的主角照片、商品圖與文案製作介紹影片，用於品牌說明與銷售展示。',
     theme: 'silver', coverWord: '數字人 / 銷售片', coverImage: '/images/course-12-presenter.webp',
-    offer: { amount: 'NT$4,000', unit: '／支', label: '影片示例起價' }, aiUse: 'AI 生成數字人影像和配音；肖像同意、商品事實與生成影像標示由製作者核對。',
+    aiUse: 'AI 生成數字人影像和配音；肖像同意、商品事實與生成影像標示由製作者核對。',
     outcomes: ['取得肖像與素材授權', '完成 30 秒商品腳本', '交付一支數字人試片'],
     units: [
       ['先確認主角與商品授權', '照片主角需明確同意用途。', '約定肖像、聲音、使用平台和有效期間；商品圖與商標也要有使用權。', '擬一份肖像與素材使用確認清單。'],
@@ -145,7 +145,7 @@ const specs: CourseSpec[] = [
     slug: 'private-domain-operations', category: '客戶經營', title: '私域經營：LINE OA、ManyChat 與預約系統', shortTitle: '私域經營',
     subtitle: '學完可提供客戶經營流程建置試案', description: '替服務業串起 LINE OA、ManyChat、預約、客服和會員回訪，讓顧客從詢問到再次預約都有清楚路徑。',
     theme: 'teal', coverWord: '私域 / 經營', coverImage: '/images/course-13-crm.webp',
-    offer: { amount: 'NT$12,000', unit: '／案', label: '建置示例起價' }, aiUse: 'AI 協助分類常見問題與回覆草稿；顧客同意、個資、時段和交易資訊由正式系統處理。',
+    aiUse: 'AI 協助分類常見問題與回覆草稿；顧客同意、個資、時段和交易資訊由正式系統處理。',
     outcomes: ['畫出詢問到回訪流程', '搭建一個預約與客服試流程', '建立會員分眾與維護清單'],
     units: [
       ['畫出顧客旅程', '先找出詢問卡在哪一步。', '盤點入口、常見問題、預約、付款、服務後回訪；區分 LINE OA 和 ManyChat 各自負責的渠道。', '畫出一位新客從詢問到完成預約的流程。'],

@@ -35,7 +35,7 @@ export type Course = {
   theme: 'teal' | 'ink' | 'vermilion' | 'silver'
   coverWord: string
   coverImage?: string
-  offer?: { amount: string; unit: string; label: string }
+  tuitionPrice?: string
   aiUse?: string
   outcomes: string[]
   lessons: Lesson[]
@@ -56,7 +56,6 @@ export const ziweiCourse: Course = {
   duration: '約 7–10 小時',
   theme: 'ink',
   coverWord: '紫微 / 入門',
-  offer: { amount: 'NT$1,200', unit: '／次', label: '諮詢示例起價' },
   aiUse: '可用 AI 整理匿名解盤草稿與諮詢重點；命盤計算和解讀需由本人核對。',
   outcomes: ['完成一張基本手排命盤', '依序辨識十二宮、主星、四化與大限', '寫出一份有保留空間的自我觀察與年度規劃'],
   provider: '紫微宇宙',
@@ -91,7 +90,6 @@ const previewCourses: Course[] = [
     duration: '約 45 分鐘',
     theme: 'vermilion',
     coverWord: '塔羅 / 諮詢',
-    offer: { amount: 'NT$800', unit: '／次', label: '諮詢示例起價' },
     aiUse: 'AI 協助整理匿名提問、諮詢紀錄和預約說明；解牌與服務界線由本人負責。',
     outcomes: ['完成一份 30 分鐘諮詢流程', '寫出服務範圍、價格與預約說明', '用試行回饋改進第一次服務'],
     lessons: [

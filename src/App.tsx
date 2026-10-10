@@ -18,6 +18,7 @@ import {
 import { categories, courses, ziweiCourse, type Course, type LessonBlock } from './data'
 import { capstoneFields, chapterChecks, lessonActivities } from './ziwei-assessments'
 import { palacePattern, ziweiHighlights } from './ziwei-highlights'
+import { marketRates } from './market-rates'
 
 type Route =
   | { page: 'home' }
@@ -137,13 +138,14 @@ function Cover({ course, large = false }: { course: Course; large?: boolean }) {
 
 function CourseCard({ course, state }: { course: Course; state?: CourseState }) {
   const percent = progressFor(course, state)
+  const market = marketRates[course.slug]
   return <a className="course-card" href={courseHref(course)}>
     <Cover course={course} />
     <div className="course-card-body">
       <div className="card-meta"><span>{course.category} / {course.level}</span><span>{course.duration}</span></div>
       <div className="course-status">{course.provider ? '20 堂完整課程' : '課綱示範 · 文字練習'}</div>
       <h3>{course.title}</h3><p>{course.subtitle}</p>
-      {course.offer && <div className="course-offer"><span>{course.offer.label}</span><strong>{course.offer.amount}<small>{course.offer.unit}</small></strong></div>}
+      <div className="course-pricing"><div className="course-tuition"><span>本課程學費</span><strong>{course.tuitionPrice || '尚未公布'}</strong></div><div className="course-market"><span>{market.comparable ? '外部接案報價參考 · 非學費' : market.sourceUrl ? '相近服務公開報價 · 非學費' : '外部接案報價 · 非學費'}</span><strong>{market.price}<small>{market.unit}</small></strong></div></div>
       <div className="card-action"><span>{state?.started ? `${percent}% 已完成` : '查看課程'}</span><ArrowUpRight size={18} /></div>
     </div>
   </a>
@@ -189,7 +191,7 @@ function Home({ learning }: { learning: LearningState }) {
 
     <section className="section courses-section"><div className="container">
       <div className="section-heading"><div><div className="section-kicker">01 / 精選課程</div><h2>從一門課，<br />做出第一個服務。</h2></div><a href="#/explore" className="text-link">探索全部課程 <ArrowUpRight size={18} /></a></div>
-      <div className="course-grid">{courses.slice(0, 6).map((course) => <CourseCard key={course.slug} course={course} state={learning[course.slug]} />)}</div><p className="course-price-note">頁面金額為服務或商品示例定價，非學完保證收入；正式接單前請以作品和試案驗證能力。</p>
+      <div className="course-grid">{courses.slice(0, 6).map((course) => <CourseCard key={course.slug} course={course} state={learning[course.slug]} />)}</div><p className="course-price-note">「本課程學費」目前尚未公布；「外部接案報價」來自公開資料，與本平台學費無關，也不是學完後的收入保證。</p>
     </div></section>
 
     <section className="method-section" id="how"><div className="container method-grid">
@@ -217,7 +219,7 @@ function Explore({ learning }: { learning: LearningState }) {
     <section className="page-hero explore-hero"><div className="container"><div className="section-kicker">THE COURSE LIBRARY / 01—13</div><h1>原來沒這麼難</h1><p>首波 13 門課。選一個想做的服務，先收到第一個1000元。</p></div></section>
     <section className="section catalog-section"><div className="container">
       <div className="catalog-tools"><div className="category-list" aria-label="課程分類">{categories.map((item) => <button type="button" key={item} className={category === item ? 'selected' : ''} onClick={() => setCategory(item)}>{item}</button>)}</div><label className="search-box"><Search size={20} strokeWidth={2} /><span className="sr-only">搜尋課程</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="搜尋你想學的主題" /></label></div>
-      <div className="results-line"><span>{String(results.length).padStart(2, '0')} 門課程</span><span>依主題探索</span></div><p className="catalog-disclaimer">價格為服務或商品的示例定價，並非學完保證收入。紫微課已提供 20 堂完整內容；其他課程目前為文字實作版。</p>
+      <div className="results-line"><span>{String(results.length).padStart(2, '0')} 門課程</span><span>依主題探索</span></div><p className="catalog-disclaimer">「本課程學費」目前尚未公布，現階段可公開試學。「外部接案報價」是不同服務的公開資料參考，並非學費或收入保證。紫微課已提供 20 堂完整內容；其他課程目前為文字實作版。</p>
       {results.length ? <div className="course-grid catalog-grid">{results.map((course) => <CourseCard key={course.slug} course={course} state={learning[course.slug]} />)}</div> : <div className="empty-state"><h2>還沒有符合的課程。</h2><p>試試別的關鍵字，或查看全部主題。</p><button type="button" className="btn btn-ink" onClick={() => { setCategory('全部'); setQuery('') }}>顯示全部課程 <ArrowRight size={18} /></button></div>}
     </div></section>
   </main>
@@ -225,6 +227,7 @@ function Explore({ learning }: { learning: LearningState }) {
 
 function CourseDetail({ course, state, onStart }: { course: Course; state?: CourseState; onStart: (course: Course, index?: number) => void }) {
   const percent = progressFor(course, state)
+  const market = marketRates[course.slug]
   const resumeIndex = resumeLessonIndex(course, state)
   const chapters = course.chapters || [{ title: '', start: 0, end: course.lessons.length - 1, image: '' }]
   const [openChapter, setOpenChapter] = useState(0)
@@ -232,7 +235,10 @@ function CourseDetail({ course, state, onStart }: { course: Course; state?: Cour
   return <main>
     <section className="detail-top"><div className="container"><a className="back-link" href="#/explore"><ArrowLeft size={17} /> 返回所有課程</a></div></section>
     <section className={`detail-hero ${course.provider ? 'detail-hero-featured' : ''}`}><div className="container detail-grid">
-      <div className="detail-copy"><div className="section-kicker">{course.category} / {course.level} / CLASS {course.number}</div><h1>{course.title}</h1><p className="detail-subtitle">{course.subtitle}</p><div className="detail-meta"><span><BookOpen size={18} /> {course.lessons.length} {course.provider ? '堂課' : '個單元'}</span><span><Clock3 size={18} /> {course.duration}</span>{course.provider && <span><Play size={18} /> {course.lessons.length} 支影片</span>}</div><p className="detail-description">{course.description}</p>{course.offer && <div className="detail-offer"><span>{course.offer.label}</span><strong>{course.offer.amount}<small>{course.offer.unit}</small></strong><p>參考定價，非收入保證；接單與收入取決於作品、需求及實際服務能力。</p></div>}{course.aiUse && <p className="detail-ai"><strong>AI 在這門課怎麼用</strong>{course.aiUse}</p>}{course.provider && <p className="detail-prep"><strong>課前準備</strong> 出生年月日與時辰、紙筆；每次安排 20–30 分鐘，完成一小步即可。</p>}<button type="button" className="btn btn-primary" onClick={() => onStart(course, resumeIndex)}>{state?.started ? '繼續學習' : '開始這堂課'} <ArrowUpRight size={20} /></button><span className="detail-aside">{course.provider ? `課程內容提供：${course.provider}` : '課綱示範 · 目前提供文字導讀與練習，尚無講師影片'}</span>{state?.started && <span className="detail-progress">已完成 {percent}%</span>}</div>
+      <div className="detail-copy"><div className="section-kicker">{course.category} / {course.level} / CLASS {course.number}</div><h1>{course.title}</h1><p className="detail-subtitle">{course.subtitle}</p><div className="detail-meta"><span><BookOpen size={18} /> {course.lessons.length} {course.provider ? '堂課' : '個單元'}</span><span><Clock3 size={18} /> {course.duration}</span>{course.provider && <span><Play size={18} /> {course.lessons.length} 支影片</span>}</div><p className="detail-description">{course.description}</p><div className="detail-pricing">
+        <div className="detail-tuition"><span>本課程學費</span><strong>{course.tuitionPrice || '尚未公布'}</strong><p>目前可公開試學，尚未開放購買。</p></div>
+        <div className="detail-market"><span>{market.comparable ? '台灣外部接案報價參考' : market.sourceUrl ? '台灣相近服務公開報價' : '外部接案報價'}</span><strong>{market.price}<small>{market.unit}</small></strong><p>{market.scope} 這是外部服務報價，並非本課學費或學員收入保證。</p>{market.sourceUrl && <a href={market.sourceUrl} target="_blank" rel="noopener noreferrer">資料來源：{market.sourceName} <ArrowUpRight size={14} /></a>}</div>
+      </div>{course.aiUse && <p className="detail-ai"><strong>AI 在這門課怎麼用</strong>{course.aiUse}</p>}{course.provider && <p className="detail-prep"><strong>課前準備</strong> 出生年月日與時辰、紙筆；每次安排 20–30 分鐘，完成一小步即可。</p>}<button type="button" className="btn btn-primary" onClick={() => onStart(course, resumeIndex)}>{state?.started ? '繼續學習' : '開始這堂課'} <ArrowUpRight size={20} /></button><span className="detail-aside">{course.provider ? `課程內容提供：${course.provider}` : '課綱示範 · 目前提供文字導讀與練習，尚無講師影片'}</span>{state?.started && <span className="detail-progress">已完成 {percent}%</span>}</div>
       <Cover course={course} large />
     </div></section>
     <section className="section outcomes-section"><div className="container outcomes-grid"><div><div className="section-kicker">01 / WHAT YOU WILL DO</div><h2>學完後，<br />你能做到。</h2></div><ol>{course.outcomes.map((outcome, index) => <li key={outcome}><span>{String(index + 1).padStart(2, '0')}</span><p>{outcome}</p><Check size={19} /></li>)}</ol></div></section>
