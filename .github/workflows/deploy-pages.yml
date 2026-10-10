@@ -1,4 +1,4 @@
-name: Deploy AI RICH 101 to GitHub Pages
+name: Deploy freetorick to GitHub Pages
 
 on:
   push:
