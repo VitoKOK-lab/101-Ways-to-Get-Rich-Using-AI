@@ -330,6 +330,7 @@ svg { flex: none; }
 .tuition-price > div { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
 .tuition-price > div > span { color: var(--ink-500); font-size: 11px; font-weight: 600; }
 .tuition-price s { color: var(--ink-500); font-size: 14px; }
+.tuition-price .tuition-list { color: var(--ink-500); font-size: 14px; font-weight: 500; }
 .tuition-price .tuition-current strong { color: var(--vermillion-700); font-size: 22px; font-weight: 800; }
 .tuition-price .tuition-campaign b { color: var(--ink-500); font-size: 13px; }
 .tuition-price .tuition-campaign.active b { color: var(--vermillion-700); font-size: 20px; }

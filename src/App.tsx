@@ -146,7 +146,7 @@ function TuitionPrice({ price, compact = false }: { price: CoursePrice; compact?
   const campaign = activeCampaign(price)
   return <div className={`tuition-price ${compact ? 'tuition-price-compact' : ''}`}>
     <span className="tuition-caption">課程價格 {price.status === 'planned' && <em>規劃中</em>}</span>
-    <div><span>定價</span><s>{formatTwd(price.listPrice)}</s></div>
+    <div><span>定價</span>{price.status === 'planned' ? <b className="tuition-list">{formatTwd(price.listPrice)}</b> : <s>{formatTwd(price.listPrice)}</s>}</div>
     <div className="tuition-current"><span>現在售價</span><strong>{formatTwd(price.currentPrice)}</strong></div>
     <div className={campaign ? 'tuition-campaign active' : 'tuition-campaign'}><span>活動價</span><b>{campaign ? formatTwd(price.campaignPrice!) : price.campaignPrice !== null ? '已排程／未生效' : '尚未設定'}</b></div>
   </div>
