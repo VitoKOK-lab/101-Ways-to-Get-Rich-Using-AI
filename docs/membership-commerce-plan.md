@@ -1,4 +1,4 @@
-# GlowUp AI Lab／GlowUp AI 變現實驗室 付費會員與 Cloudflare 上線規劃
+# GlowUp AI Lab／AI變現實驗室 付費會員與 Cloudflare 上線規劃
 
 研究日期：2026-10-10。這是下一階段的產品與技術規格；目前線上版仍是公開的 GitHub Pages 原型，尚未提供登入、付款或付費課權限。
 
@@ -12,7 +12,7 @@
 
 - [MasterClass 首頁](https://www.masterclass.com/)把「瀏覽課程」、「查看方案」和「登入」分開；[公開結帳頁](https://www.masterclass.com/checkout)清楚標出 **Membership → Account → Payment** 三步，並在付款前說明會員能取得什麼。這是目前可公開觀察的前台流程，不代表我們知道它的內部系統。
 - [課程說明](https://www.masterclass.com/help-center/masterclass/answers/about-master-class-classes--id--GfYxwjzXQuSxglxsayS8Hg)指出一般課程依序觀看、可自主調整進度；部分課程有練習與輔助材料。[Certificate Course 說明](https://www.masterclass.com/help-center/certificates/answers/what-will-master-class-certificate-courses-include--id---cx4IVBHTMW5z8xA-ub1PQ)另外列出閱讀、評量、結業作品與回饋。本站採「影片／課文 → 本課重點 → 即時小測驗」；依經營者決定不提供作業或評閱流程。
-- MasterClass 公開結帳頁採年度全站會員。GlowUp AI Lab／GlowUp AI 變現實驗室 各課對應不同接案服務，**首版建議單課買斷、每課明確列出課綱／教材／更新範圍**，之後再評估全站會員；這是本站的產品建議，不是 MasterClass 的做法。正式定價與退費規則由經營者決定。
+- MasterClass 公開結帳頁採年度全站會員。GlowUp AI Lab／AI變現實驗室 各課對應不同接案服務，**首版建議單課買斷、每課明確列出課綱／教材／更新範圍**，之後再評估全站會員；這是本站的產品建議，不是 MasterClass 的做法。正式定價與退費規則由經營者決定。
 
 ## 顧客怎麼買與學
 

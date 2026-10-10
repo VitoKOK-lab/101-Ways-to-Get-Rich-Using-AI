@@ -1,6 +1,6 @@
-# GlowUp AI Lab／GlowUp AI 變現實驗室
+# GlowUp AI Lab／AI變現實驗室
 
-繁體中文的「100 種用 AI 賺錢的方法」課程平台原型。首波上架 13 門課：紫微斗數一門完整影片課，另有 12 門具體接案方向的文字實作課。平台字標為 **GlowUp AI Lab**，中文名稱與定位為 **GlowUp AI 變現實驗室**，品牌主張為「用 AI 槓桿一人公司，通往時間與財富的極致自由。」；視覺沿用使用者提供的 Luxkey CIS 色彩與字體，不使用舊 Luxkey 字標。
+繁體中文的「100 種用 AI 賺錢的方法」課程平台原型。首波上架 13 門課：紫微斗數一門完整影片課，另有 12 門具體接案方向的文字實作課。平台字標為 **GlowUp AI Lab**，中文名稱與定位為 **AI變現實驗室**，品牌主張為「用 AI 槓桿一人公司，通往時間與財富的極致自由。」；視覺沿用使用者提供的 Luxkey CIS 色彩與字體，不使用舊 Luxkey 字標。
 
 ## 本機執行
 
@@ -16,7 +16,7 @@ npm run dev
 
 ## 線上版本
 
-`main` 分支推送後由 GitHub Actions 部署到 [GlowUp AI Lab／GlowUp AI 變現實驗室](https://vitokok-lab.github.io/101-Ways-to-Get-Rich-Using-AI/)。GitHub Pages 來源設為 GitHub Actions。網站與儲存庫均公開。
+`main` 分支推送後由 GitHub Actions 部署到 [GlowUp AI Lab／AI變現實驗室](https://vitokok-lab.github.io/101-Ways-to-Get-Rich-Using-AI/)。GitHub Pages 來源設為 GitHub Actions。網站與儲存庫均公開。
 
 ## 課程範圍
 
@@ -30,4 +30,4 @@ npm run dev
 
 ## 品牌與圖片
 
-`src/luxkey.css` 來自使用者上傳的 Luxkey Design System `colors_and_type.css`。GlowUp AI Lab／GlowUp AI 變現實驗室 字標另行設計，畫面沿用白、銀灰、朱紅、藍綠、青藍及墨黑。`public/images/` 的女性工作情境圖片均為本平台生成的示意素材，不代表真實講師或學員。正式課程仍需要真實講師與服務案例素材。
+`src/luxkey.css` 來自使用者上傳的 Luxkey Design System `colors_and_type.css`。GlowUp AI Lab／AI變現實驗室 字標另行設計，畫面沿用白、銀灰、朱紅、藍綠、青藍及墨黑。`public/images/` 的女性工作情境圖片均為本平台生成的示意素材，不代表真實講師或學員。正式課程仍需要真實講師與服務案例素材。
