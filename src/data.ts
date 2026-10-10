@@ -11,6 +11,7 @@ export type LessonBlock = {
 
 export type Lesson = {
   title: string
+  image?: string
   time: string
   summary: string
   sections: { heading: string; body: string; keyIdea: string; blocks?: LessonBlock[] }[]
@@ -69,6 +70,7 @@ export const ziweiCourse: Course = {
   ],
   lessons: ziweiLessons.map((lesson, lessonIndex) => ({
     ...lesson,
+    image: `/images/ziwei-lesson-${String(lessonIndex + 1).padStart(2, '0')}.webp`,
     sections: lesson.sections.map((section, sectionIndex) => ({
       ...section,
       keyIdea: ziweiKeyIdeas[lessonIndex][sectionIndex].quote,
