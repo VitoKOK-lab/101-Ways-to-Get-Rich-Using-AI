@@ -11,7 +11,7 @@ npm ci
 npm run dev
 ```
 
-`npm run typecheck` 執行 TypeScript 檢查，`npm run build -- --mode pages` 建立 GitHub Pages 正式版本，`npm run preview -- --mode pages` 可在儲存庫路徑預覽建置結果。
+`npm run typecheck` 執行 TypeScript 檢查，`npm run check:highlights` 核對紫微課每段重點與原文，`npm run build -- --mode pages` 建立 GitHub Pages 正式版本，`npm run preview -- --mode pages` 可在儲存庫路徑預覽建置結果。
 在限制 npm 預設快取寫入的雲端環境，可改用 `npm ci --cache /tmp/ai-rich-npm-cache`。
 
 ## 線上版本
@@ -25,7 +25,7 @@ npm run dev
 - 展示價格是服務或商品的**示例定價**，不是學完保證收入。未完成真人試案、作品評閱、成本與需求驗證前，不宜把價格當作學員可取得的收入。
 - 學習進度、作業、測驗答案、結業作品及筆記存於目前瀏覽器的 `localStorage`。清除瀏覽器資料後無法復原。登入、雲端同步、購買、付款和付費課權限控管尚未接入。
 
-紫微課內容取自使用者指定的 `VitoKOK-lab/Ziwei-Doushu` 儲存庫 `knowledge/ziwei/course/` 與 20 個課文頁面，匯入版本為 `8fc6dd481877ccb61b32689a96ea3e83773f05dc`。影片從 `video.ziweiuniverse.com` 播放；排盤引擎與對答案介面沿用該儲存庫的瀏覽器端程式並整合到本站。詳見[課程企劃與製作缺口](docs/course-strategy.md)。
+紫微課內容取自使用者指定的 `VitoKOK-lab/Ziwei-Doushu` 儲存庫 `knowledge/ziwei/course/` 與 20 個課文頁面，匯入版本為 `8fc6dd481877ccb61b32689a96ea3e83773f05dc`。影片從 `video.ziweiuniverse.com` 播放；排盤引擎與對答案介面沿用該儲存庫的瀏覽器端程式並整合到本站。詳見[課程企劃與製作缺口](docs/course-strategy.md)與[全平台課文重點標示規範](docs/course-content-standard.md)。
 
 ## 品牌與圖片
 

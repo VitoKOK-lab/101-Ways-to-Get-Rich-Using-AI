@@ -6,7 +6,7 @@ type CourseSpec = Omit<Course, 'number' | 'level' | 'duration' | 'lessons'> & { 
 function lessons(units: Unit[]): Lesson[] {
   return units.map(([title, summary, guidance, exercise]) => ({
     title, time: '約 12 分鐘導讀與練習', summary,
-    sections: [{ heading: '方法與判斷', body: guidance }], exercise,
+    sections: [{ heading: '方法與判斷', body: guidance, keyIdea: `${guidance.split('。')[0]}。` }], exercise,
   }))
 }
 
