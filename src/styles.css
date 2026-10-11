@@ -1173,6 +1173,7 @@ svg { flex: none; }
 
 /* From the first screen through the catalog, show the service before its tuition. */
 .hero-steps { display: flex; align-items: center; flex-wrap: wrap; gap: 11px; margin-top: 44px; color: var(--white); font-size: 13px; font-weight: 800; }
+.hero-copy .hero-promise { max-width: 540px; font-size: 16px; font-weight: 600; }
 .hero-steps span { padding: 9px 12px; border: 1px solid rgba(255,255,255,.38); background: rgba(20,22,26,.45); backdrop-filter: blur(8px); }
 .hero-steps svg { color: var(--cyan-200); }
 .opportunity-section { padding: 68px 0 58px; background: var(--vermillion); color: var(--white); }

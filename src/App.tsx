@@ -187,8 +187,8 @@ function Home({ prices }: { prices: CoursePrices }) {
     <section className="hero-section" style={{ backgroundImage: `url("${assetPath('/images/ai-rich-learning-hero.webp')}")` }}><div className="container hero-grid">
       <div className="hero-copy">
         <div className="section-kicker"><span className="kicker-line" /> AI變現實驗室</div>
-        <h1 className="hero-headline">建立你的一人公司，<br /><span>不能賺錢的我們沒有教</span></h1>
-        <p className="hero-promise">一台電腦，一個 AI 助手。把學到的技能，做成客戶願意付費的服務。</p>
+        <h1 className="hero-headline">這個網站每一個地方<br /><span>都能拿去賺錢</span></h1>
+        <p className="hero-promise">建立你的一人公司，不能賺錢的我們沒有教。</p>
         <div className="hero-actions"><button type="button" className="btn btn-primary" onClick={() => document.getElementById('find-path')?.scrollIntoView({ behavior: 'smooth' })}>找到我的接案技能 <ArrowUpRight size={19} /></button></div>
         <div className="hero-steps"><span>選技能</span><ArrowRight size={16} /><span>做作品</span><ArrowRight size={16} /><span>提案接單</span></div>
       </div>
