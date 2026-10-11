@@ -1232,17 +1232,19 @@ svg { flex: none; }
   .hero-steps span { padding: 7px 8px; }
 }
 
-/* Keep the full portrait in view across wide screens and prioritize the scene on phones. */
+/* Each viewport uses a complete photograph; no image edge is exposed within the hero. */
+.hero-section { background-image: var(--hero-desktop); background-size: 100% auto; background-position: center top; }
+.hero-section::before { background: linear-gradient(90deg, rgba(10,10,12,.62) 0%, rgba(10,10,12,.40) 28%, transparent 56%); }
 @media (min-width: 1201px) {
-  .hero-section { background-size: auto 100%; background-position: right center; }
+  .hero-section, .hero-grid { min-height: max(710px, 56.3vw); }
 }
 @media (min-width: 761px) and (max-width: 1200px) {
-  .hero-section { min-height: 0; background-size: auto 430px; background-position: right top; }
-  .hero-section::before { background: linear-gradient(180deg, transparent 0, rgba(20,22,26,.12) 300px, var(--ink) 425px); }
-  .hero-grid { min-height: 0; padding-top: 430px; padding-bottom: 38px; }
+  .hero-section { min-height: 0; }
+  .hero-section::before { background: linear-gradient(180deg, transparent 0, transparent 38vw, var(--ink) 56vw); }
+  .hero-grid { min-height: 0; padding-top: 58vw; padding-bottom: 38px; }
 }
 @media (max-width: 760px) {
-  .hero-section { background-size: auto 360px; background-position: 78% top; }
-  .hero-section::before { background: linear-gradient(180deg, transparent 0, rgba(20,22,26,.12) 235px, var(--ink) 355px); }
-  .hero-grid { padding-top: 365px; }
+  .hero-section { background-image: var(--hero-mobile); background-size: 100% auto; background-position: center top; }
+  .hero-section::before { background: linear-gradient(180deg, transparent 0, transparent 148vw, var(--ink) 176vw); }
+  .hero-grid { padding-top: 180vw; }
 }
