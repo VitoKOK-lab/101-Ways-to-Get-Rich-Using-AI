@@ -172,7 +172,6 @@ function Home({ prices }: { prices: CoursePrices }) {
         <p className="hero-promise">用 AI 槓桿一人公司，通往時間與財富的極致自由。</p>
         <div className="hero-actions"><button type="button" className="btn btn-primary" onClick={() => document.getElementById('find-path')?.scrollIntoView({ behavior: 'smooth' })}>找到適合我的課 <ArrowUpRight size={19} /></button></div>
       </div>
-      <div className="hero-image-caption"><span>從一門課，開始你的第一份作品</span><span>課程情境示意</span></div>
     </div></section>
 
     <section className="principles"><div className="container principles-grid">

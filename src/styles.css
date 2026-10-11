@@ -375,7 +375,7 @@ svg { flex: none; }
 @media (max-width: 700px) { .pricing-admin-fields { grid-template-columns: 1fr; } }
 
 /* Editorial landing experience */
-.hero-section { position: relative; min-height: 710px; display: flex; align-items: stretch; padding: 0; overflow: hidden; background: var(--white) url('/images/luxkey-hero.webp') 61% center / cover no-repeat; color: var(--ink); }
+.hero-section { position: relative; min-height: 710px; display: flex; align-items: stretch; padding: 0; overflow: hidden; background: var(--ink) 61% center / cover no-repeat; color: var(--ink); }
 .hero-section::before { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(255,255,255,.96) 0%, rgba(255,255,255,.82) 30%, rgba(255,255,255,0) 68%); }
 .hero-grid { position: relative; z-index: 1; width: min(100% - 64px, 1200px); min-height: 710px; display: flex; flex-direction: column; align-items: stretch; justify-content: space-between; gap: 0; padding: 113px 0 34px; }
 .hero-copy { padding: 0; max-width: 670px; }
