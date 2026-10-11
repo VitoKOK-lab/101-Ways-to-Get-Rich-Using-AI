@@ -6,6 +6,8 @@ GlowUp AI Lab／AI變現實驗室 借鑑 [MasterClass 公開首頁](https://www.
 
 內容規劃以有意經營個人服務或學習自我探索的使用者需求為中心；女性主角的影像回應主要受眾，但不假設所有女性都喜歡同一種題材。
 
+首頁與課程探索頁要讓訪客先看到「能提供哪種服務」，再看到作品方向與外部接案報價參考，最後才看課程學費。主視覺呈現一人透過電腦與 AI 完成不同客戶工作；各課圖片則展示該技能的具體工作情境。外部報價須標明服務規格與單位，和本站學費分開；不能把報價說成學員收入或保證接單。
+
 MasterClass 的[一般課程說明](https://www.masterclass.com/help-center/masterclass/answers/about-master-class-classes--id--GfYxwjzXQuSxglxsayS8Hg)描述自訂節奏的影片、練習與學習指南；[一般課程沒有官方完課證書](https://www.masterclass.com/help-center/masterclass/answers/certificate-of-completion--id--iG8dy7oFSuqjCg9czvEm-w)。[MasterClass Certificates](https://www.masterclass.com/help-center/certificates/answers/what-will-master-class-certificate-courses-include--id---cx4IVBHTMW5z8xA-ub1PQ)另包含閱讀、評量、結業作品與回饋。本平台借鑑其自訂節奏與精簡導覽，採「看示範／讀課文 → 本課重點 → 即時小測驗」。依經營者決定不設作業或結業作品，也不保存測驗結果。課程詳情借鑑[其公開課程頁](https://www.masterclass.com/classes/annie-leibovitz-teaches-photography)以大幅視覺、成果和精簡課程計畫引導，六張階段卡片接著提供可展開課表。
 
 | 順序 | 課程 | 現有內容 | 可展示的練習成果 |

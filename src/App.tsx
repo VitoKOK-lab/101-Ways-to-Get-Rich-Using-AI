@@ -118,6 +118,22 @@ const originalCoverImages: Record<string, string> = {
   'tarot-practice': '/images/luxkey-tarot.webp',
 }
 
+const serviceLabels: Record<string, string> = {
+  'ziwei-foundations': '線上紫微命盤諮詢',
+  'tarot-practice': '線上塔羅諮詢',
+  'website-building': '一頁式網站製作',
+  'social-graphic-editor': '品牌圖文貼文製作',
+  'facebook-ads': 'FB 廣告投放代操',
+  'short-video-filming': '企劃＋拍攝＋剪輯全套',
+  'ai-video-editing': '短影音剪輯與字幕',
+  'ai-copy-design': '商品文案與配圖',
+  'ai-resume-service': '履歷健檢與優化',
+  'online-course-building': '線上課程搭建',
+  'ai-still-to-video': '廣告級 AI 短片全案（基礎服務另議）',
+  'ai-digital-presenter': '數字人商品介紹影片',
+  'private-domain-operations': 'LINE OA 與預約流程建置',
+}
+
 function TuitionPrice({ price, compact = false }: { price: CoursePrice; compact?: boolean }) {
   if (compact) return <div className="tuition-price tuition-price-compact">
     <span className="tuition-caption">課程學費 {price.status === 'planned' && <em>規劃中</em>}</span>
@@ -132,11 +148,13 @@ function TuitionPrice({ price, compact = false }: { price: CoursePrice; compact?
 
 function CourseCard({ course, state, prices }: { course: Course; state?: CourseState; prices: CoursePrices }) {
   const price = prices[course.slug] || proposedCoursePrices[course.slug]
+  const market = marketRates[course.slug]
   return <a className="course-card" href={courseHref(course)}>
     <div className="course-card-media"><img src={assetPath(course.coverImage || originalCoverImages[course.slug])} alt="" loading="lazy" decoding="async" /><span className="course-card-format">{course.provider ? '20 堂完整課程' : '文字教材'}</span></div>
     <div className="course-card-body">
       <div className="card-meta"><span>{course.number} / {course.category}</span>{state?.started && <span>已開始閱讀</span>}</div>
       <h3>{course.title}</h3><p>{course.subtitle}</p>
+      <div className="card-market-rate"><span>{serviceLabels[course.slug]} · 外部報價參考，非學費</span><strong>{market.price}<small>{market.unit}</small></strong></div>
       <div className="course-pricing"><TuitionPrice price={price} compact /></div>
       <div className="card-action"><span>{state?.started ? '繼續學習' : '查看課程'}</span><ArrowUpRight size={18} /></div>
     </div>
@@ -164,47 +182,49 @@ function Home({ prices }: { prices: CoursePrices }) {
     { slug: 'ai-still-to-video', label: 'AI 製片人' },
     { slug: 'ai-copy-design', label: 'AI 寫手' },
   ]
+  const opportunitySlugs = ['website-building', 'ai-video-editing', 'ziwei-foundations', 'social-graphic-editor']
   return <main>
     <section className="hero-section" style={{ backgroundImage: `url("${assetPath('/images/ai-rich-learning-hero.webp')}")` }}><div className="container hero-grid">
       <div className="hero-copy">
         <div className="section-kicker"><span className="kicker-line" /> AI變現實驗室</div>
         <h1 className="hero-headline">建立你的一人公司，<br /><span>不能賺錢的我們沒有教</span></h1>
-        <p className="hero-promise">用 AI 槓桿一人公司，通往時間與財富的極致自由。</p>
-        <div className="hero-actions"><button type="button" className="btn btn-primary" onClick={() => document.getElementById('find-path')?.scrollIntoView({ behavior: 'smooth' })}>找到適合我的課 <ArrowUpRight size={19} /></button></div>
+        <p className="hero-promise">一台電腦，一個 AI 助手。把學到的技能，做成客戶願意付費的服務。</p>
+        <div className="hero-actions"><button type="button" className="btn btn-primary" onClick={() => document.getElementById('find-path')?.scrollIntoView({ behavior: 'smooth' })}>找到我的接案技能 <ArrowUpRight size={19} /></button></div>
+        <div className="hero-steps"><span>選技能</span><ArrowRight size={16} /><span>做作品</span><ArrowRight size={16} /><span>提案接單</span></div>
       </div>
     </div></section>
 
-    <section className="principles"><div className="container principles-grid">
-      <span className="principles-label">先學會，再動手</span>
-      <p>能賣錢的知識<em>才有價值</em></p>
-      <span className="principles-caption">13 個課程方向</span>
+    <section className="opportunity-section" aria-labelledby="opportunity-title"><div className="container">
+      <div className="opportunity-heading"><div><span className="section-kicker">你可以提供什麼服務？</span><h2 id="opportunity-title">每一項技能，<br /><em>都是一個接案入口。</em></h2></div><a href="#/explore">看全部 13 種方向 <ArrowUpRight size={18} /></a></div>
+      <div className="opportunity-grid">{opportunitySlugs.map((slug) => { const course = courses.find((item) => item.slug === slug)!; const rate = marketRates[slug]; return <a className="opportunity-card" key={slug} href={courseHref(course)}><span className="opportunity-index">{course.number} / {course.category}</span><strong>{course.shortTitle}</strong><span className="opportunity-service">{serviceLabels[slug]}</span><span className="opportunity-rate-label">外部接案報價參考 · 非學費</span><b>{rate.price}<small>{rate.unit}</small></b><ArrowUpRight className="opportunity-arrow" size={20} /></a> })}</div>
+      <p className="opportunity-disclaimer">報價區間由平台經營者提供、尚未逐項獨立查證；實際接案價格依服務內容而定，不代表學員收入或保證成交。</p>
     </div></section>
 
     <section className="path-section" id="find-path"><div className="container path-grid">
       <div className="path-intro"><div className="section-kicker">找到適合你的起點</div><h2>賺錢方法很多，<br /><span>找到適合你的</span></h2><span className="path-small">想更了解自己？可以先<a href="https://www.ziweiuniverse.com/" target="_blank" rel="noopener noreferrer">算算紫微 <ArrowUpRight size={13} /></a></span></div>
-      <div className="path-panel"><div className="path-panel-top"><span>你想先做哪件事？</span></div><div className="path-options" role="group" aria-label="選擇學習目標">{goals.map((goal, index) => <button type="button" key={goal.slug} className={selectedGoal === goal.slug ? 'selected' : ''} aria-pressed={selectedGoal === goal.slug} onClick={() => setSelectedGoal(goal.slug)}><span className="path-option-number">{String(index + 1).padStart(2, '0')}</span><span>{goal.label}</span><ArrowUpRight size={20} /></button>)}</div>{recommended ? <div className="path-result" aria-live="polite"><span>推薦課程</span><strong>{recommended.title}</strong><a href={courseHref(recommended)}>查看課程 <ArrowRight size={18} /></a></div> : <div className="path-prompt">選一個方向，看看適合你的課。<ArrowRight size={18} /></div>}</div>
+      <div className="path-panel"><div className="path-panel-top"><span>你想先做哪件事？</span></div><div className="path-options" role="group" aria-label="選擇學習目標">{goals.map((goal, index) => <button type="button" key={goal.slug} className={selectedGoal === goal.slug ? 'selected' : ''} aria-pressed={selectedGoal === goal.slug} onClick={() => setSelectedGoal(goal.slug)}><span className="path-option-number">{String(index + 1).padStart(2, '0')}</span><span>{goal.label}</span><ArrowUpRight size={20} /></button>)}</div>{recommended ? <div className="path-result" aria-live="polite"><span>可以提供的服務</span><strong>{serviceLabels[recommended.slug]}</strong><div className="path-result-rate"><small>外部接案報價參考 · 非學費</small><b>{marketRates[recommended.slug].price}{marketRates[recommended.slug].unit}</b></div><a href={courseHref(recommended)}>查看課程 <ArrowRight size={18} /></a></div> : <div className="path-prompt">選一個方向，看看能提供什麼服務。<ArrowRight size={18} /></div>}</div>
     </div></section>
 
     <section className="spotlight-section"><div className="container spotlight-grid">
       <a className="spotlight-image" style={{ backgroundImage: `url("${assetPath('/images/ziwei-teaching-scene.webp')}")` }} href={courseHref(ziweiCourse)} aria-label="查看紫微斗數入門課程"><span>紫微斗數入門</span></a>
-      <div className="spotlight-copy"><div className="section-kicker">最新推薦課程</div><h2>紫微斗數入門</h2><p>從排盤到解讀，找到你的服務起點。</p><a className="btn btn-primary" href={courseHref(ziweiCourse)}>查看課程 <ArrowUpRight size={19} /></a></div>
+      <div className="spotlight-copy"><div className="section-kicker">最新推薦課程</div><h2>紫微斗數入門</h2><p>從排盤到解讀，練習提供線上命盤諮詢服務。</p><div className="spotlight-market"><span>外部紫微諮詢報價參考 · 非學費</span><strong>NT$600–3,600 <small>／次</small></strong></div><a className="btn btn-primary" href={courseHref(ziweiCourse)}>查看課程 <ArrowUpRight size={19} /></a></div>
     </div></section>
 
     <section className="section courses-section"><div className="container">
       <div className="section-heading shelf-heading"><div><div className="section-kicker">接下來想學什麼？</div><h2>一定有一個適合你的<br />賺錢技能</h2></div><div className="shelf-controls"><button type="button" aria-label="往前看課程" onClick={() => scrollRail(-1)}><ArrowLeft size={20} /></button><button type="button" aria-label="往後看課程" onClick={() => scrollRail(1)}><ArrowRight size={20} /></button></div></div>
-      <div className="course-rail" ref={railRef} tabIndex={0} aria-label="精選課程，左右滑動瀏覽">{courses.slice(1, 8).map((course) => { const price = prices[course.slug] || proposedCoursePrices[course.slug]; return <a className="course-rail-card" key={course.slug} href={courseHref(course)}><div className="rail-image"><img src={assetPath(course.coverImage || originalCoverImages[course.slug])} alt="" loading="lazy" decoding="async" /></div><div className="rail-card-content"><span className="rail-index">{course.number} / {course.category}</span><h3>{course.shortTitle}</h3><p>{course.subtitle}</p><div className="rail-card-foot"><TuitionPrice price={price} compact /><ArrowUpRight size={20} /></div></div></a> })}</div><div className="shelf-bottom"><p>課程內容持續製作中；學費為規劃價，尚未開放購買。</p><a href="#/explore" className="text-link">探索 13 個課程方向 <ArrowUpRight size={18} /></a></div>
+      <div className="course-rail" ref={railRef} tabIndex={0} aria-label="精選課程，左右滑動瀏覽">{courses.slice(1, 8).map((course) => { const price = prices[course.slug] || proposedCoursePrices[course.slug]; const market = marketRates[course.slug]; return <a className="course-rail-card" key={course.slug} href={courseHref(course)}><div className="rail-image"><img src={assetPath(course.coverImage || originalCoverImages[course.slug])} alt="" loading="lazy" decoding="async" /></div><div className="rail-card-content"><span className="rail-index">{course.number} / {course.category}</span><h3>{course.shortTitle}</h3><p>{course.subtitle}</p><div className="rail-market-rate"><span>外部接案報價參考 · 非學費</span><strong>{market.price}<small>{market.unit}</small></strong></div><div className="rail-card-foot"><TuitionPrice price={price} compact /><ArrowUpRight size={20} /></div></div></a> })}</div><div className="shelf-bottom"><p>外部接案報價參考不代表收入保證；課程學費為規劃價，尚未開放購買。</p><a href="#/explore" className="text-link">探索 13 個課程方向 <ArrowUpRight size={18} /></a></div>
     </div></section>
 
     <section className="method-section" id="how"><div className="container method-grid">
       <div className="method-intro"><div className="section-kicker">從課程到服務</div><h2>學完馬上拿去變現<br /><span>代表你學會了</span></h2></div>
       <div className="method-list">
-        <a href={courseHref(ziweiCourse)}><span>01</span><div><h3>紫微斗數入門</h3><p>了解命盤解讀與線上諮詢</p></div><ArrowUpRight size={23} /></a>
-        <a href={courseHref(websiteCourse)}><span>02</span><div><h3>網站製作</h3><p>看網站接案需要交付什麼</p></div><ArrowUpRight size={23} /></a>
-        <a href={courseHref(videoCourse)}><span>03</span><div><h3>AI 影片剪輯</h3><p>認識短片剪輯的服務流程</p></div><ArrowUpRight size={23} /></a>
+        <a href={courseHref(ziweiCourse)}><span>01</span><div><h3>選一種可賣的服務</h3><p>從紫微諮詢、網站製作、短影音等方向，挑選你的起點。</p></div><ArrowUpRight size={23} /></a>
+        <a href={courseHref(websiteCourse)}><span>02</span><div><h3>做出能展示的作品</h3><p>讓客戶看見你會交付什麼，而不只看見你學過什麼。</p></div><ArrowUpRight size={23} /></a>
+        <a href={courseHref(videoCourse)}><span>03</span><div><h3>練習提案與報價</h3><p>說清楚服務範圍、交付時間與價格，開始爭取第一個試案。</p></div><ArrowUpRight size={23} /></a>
       </div>
     </div></section>
 
-    <section className="closing-section"><div className="container closing-inner"><div className="section-kicker">把想法做成下一步</div><h2>今天上課、<br /><em>明天接單</em></h2><a className="btn btn-primary" href="#/explore">現在開始 <ArrowUpRight size={20} /></a></div></section>
+    <section className="closing-section"><div className="container closing-inner"><div className="section-kicker">你的第一份服務，從這裡開始</div><h2>今天上課、<br /><em>明天接單</em></h2><a className="btn btn-primary" href="#/explore">挑一種接案技能 <ArrowUpRight size={20} /></a></div></section>
   </main>
 }
 
@@ -217,7 +237,7 @@ function Explore({ learning, prices }: { learning: LearningState; prices: Course
     return matchesCategory && text.includes(query.trim().toLowerCase())
   }), [category, query])
   return <main>
-    <section className="page-hero explore-hero"><div className="container explore-hero-grid"><div><div className="section-kicker">探索課程</div><h1>原來沒這麼難</h1><p>選一項技能，做出第一份作品。</p></div><span className="explore-hero-count">13 個課程方向 · 持續製作中</span></div></section>
+    <section className="page-hero explore-hero"><div className="container explore-hero-grid"><div><div className="section-kicker">探索課程</div><h1>原來沒這麼難</h1><p>選一項技能，做出能向客戶提案的服務。</p></div><span className="explore-hero-count">13 個接案方向 · 持續製作中</span></div></section>
     <section className="section catalog-section"><div className="container">
       <div className="catalog-tools"><div className="category-list" aria-label="課程分類">{categories.map((item) => <button type="button" key={item} className={category === item ? 'selected' : ''} onClick={() => setCategory(item)}>{item}</button>)}</div><label className="search-box"><Search size={20} strokeWidth={2} /><span className="sr-only">搜尋課程</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="搜尋你想學的主題" /></label></div>
       <div className="results-line"><span>{String(results.length).padStart(2, '0')} 個課程方向</span><span>內容持續製作中 · 尚未開放購買</span></div><details className="catalog-info"><summary>關於課程內容與學費</summary><p>售價為未來完整課程的規劃價。紫微課目前有 20 堂內容；其他方向目前為文字教材，尚未製作成完整課程。外部接案行情在課程頁另列，並非課程學費。</p></details>
@@ -254,10 +274,10 @@ function CourseDetail({ course, state, onStart, prices }: { course: Course; stat
     <section className="detail-top"><div className="container"><a className="back-link" href="#/explore"><ArrowLeft size={17} /> 返回所有課程</a></div></section>
     <section className={`detail-hero ${course.provider ? 'detail-hero-featured' : ''}`}><div className="container detail-grid">
       <figure className="detail-visual"><img src={assetPath(visual)} alt={`${course.shortTitle}的課程情境`} /></figure>
-      <div className="detail-copy"><div className="section-kicker">{course.category} / CLASS {course.number}</div><h1>{course.title}</h1><p className="detail-subtitle">{course.subtitle}</p><div className="detail-meta"><span><BookOpen size={18} /> {course.lessons.length} {course.provider ? '堂課' : '個單元'}</span><span><Clock3 size={18} /> {course.duration}</span></div><div className="detail-hero-actions"><button type="button" className="btn btn-primary" onClick={() => onStart(course, resumeIndex)}>{state?.started ? '繼續學習' : course.provider ? '查看第一堂課' : '閱讀文字教材'} <ArrowUpRight size={20} /></button></div>{state?.started && <span className="detail-progress">上次閱讀第 {resumeIndex + 1} 課</span>}</div>
+      <div className="detail-copy"><div className="section-kicker">{course.category} / CLASS {course.number}</div><h1>{course.title}</h1><p className="detail-subtitle">{course.subtitle}</p><div className="detail-hero-market"><span>外部接案報價參考 · 非課程學費</span><strong>{market.price}<small>{market.unit}</small></strong></div><div className="detail-meta"><span><BookOpen size={18} /> {course.lessons.length} {course.provider ? '堂課' : '個單元'}</span><span><Clock3 size={18} /> {course.duration}</span></div><div className="detail-hero-actions"><button type="button" className="btn btn-primary" onClick={() => onStart(course, resumeIndex)}>{state?.started ? '繼續學習' : course.provider ? '查看第一堂課' : '閱讀文字教材'} <ArrowUpRight size={20} /></button></div>{state?.started && <span className="detail-progress">上次閱讀第 {resumeIndex + 1} 課</span>}</div>
     </div></section>
     <nav className="course-section-nav" aria-label="課程內容導覽"><div className="container"><button type="button" className={activeSection === 'course-outcomes' ? 'is-active' : ''} onClick={() => scrollToSection('course-outcomes')}>學完能做什麼</button><button type="button" className={activeSection === 'course-pricing' ? 'is-active' : ''} onClick={() => scrollToSection('course-pricing')}>學費與接案行情</button><button type="button" className={activeSection === 'lesson-plan' ? 'is-active' : ''} onClick={() => scrollToSection('lesson-plan')}>課程路線</button></div></nav>
-    <section className="section outcomes-section" id="course-outcomes"><div className="container outcomes-grid"><div><div className="section-kicker">學完能做什麼</div><h2>從學習，<br />走向作品。</h2><p className="outcomes-intro">{course.description}</p><small>{course.provider ? `課程內容提供：${course.provider}` : '目前提供文字導讀與練習，尚無講師影片'}</small></div><ol>{course.outcomes.map((outcome, index) => <li key={outcome}><span>{String(index + 1).padStart(2, '0')}</span><p>{outcome}</p><Check size={19} /></li>)}</ol></div></section>
+    <section className="section outcomes-section" id="course-outcomes"><div className="container outcomes-grid"><div><div className="section-kicker">學完能做什麼</div><h2>做出作品，<br />開始提供服務。</h2><p className="outcomes-intro">{course.description}</p><small>{course.provider ? `課程內容提供：${course.provider}` : '目前提供文字導讀與練習，尚無講師影片'}</small></div><ol>{course.outcomes.map((outcome, index) => <li key={outcome}><span>{String(index + 1).padStart(2, '0')}</span><p>{outcome}</p><Check size={19} /></li>)}</ol></div></section>
     <section className="section course-offer-section" id="course-pricing" aria-labelledby="course-offer-title"><div className="container course-offer-grid"><div className="course-offer-intro"><div className="section-kicker">費用與服務</div><h2 id="course-offer-title">先看學費，<br />再看接案行情。</h2><p>目前尚未開放購買。接案行情是外部服務報價，並非學費或收入保證。</p>{(course.aiUse || course.provider) && <details className="course-extra"><summary>這門課的學習準備</summary>{course.aiUse && <p><strong>AI 的用法</strong>{course.aiUse}</p>}{course.provider && <p><strong>課前準備</strong>出生年月日與時辰、紙筆；每次安排 20–30 分鐘。</p>}</details>}</div><div className="course-offer-rates"><div className="detail-tuition"><TuitionPrice price={price} /></div><div className="detail-market"><span>外部接案行情 · 非學費</span><strong>{market.price}<small>{market.unit}</small></strong><details className="market-more"><summary>查看計價方式與服務範圍</summary><ul className="market-rate-tiers">{market.tiers.map((tier) => <li key={tier.label}><span>{tier.label}</span><b>{tier.price}<small>{tier.unit}</small></b></li>)}</ul><p>{market.scope}</p></details><p>經營者提供的台灣報價參考，尚未獨立查證；實際價格依服務內容而定。</p></div></div></div></section>
     <section className="section syllabus-section" id="lesson-plan"><div className="container"><div className="section-heading"><div><div className="section-kicker">課程路線</div><h2>{course.chapters ? '6 個階段，20 堂課。' : '從這裡開始。'}</h2></div><span className="syllabus-count">{course.lessons.length} 堂課 / {course.duration}</span></div>{course.chapters && <div className="module-grid" aria-label="六個學習階段">{chapters.map((chapter, chapterIndex) => <button className="module-card" type="button" key={chapter.title} onClick={() => { setOpenChapter(chapterIndex); scrollToSection('full-plan') }}><img className="module-image" src={assetPath(chapter.image)} alt={`${chapter.title}：${chapter.goal}`} loading="lazy" decoding="async" /><span className="module-meta">階段 {String(chapterIndex + 1).padStart(2, '0')} · {chapter.end - chapter.start + 1} 堂課</span><strong>{chapter.title}</strong></button>)}</div>}<div className="lesson-plan-head" id="full-plan"><h3>{course.chapters ? '選擇階段，查看課次' : '選擇單元，開始學習'}</h3></div>{chapters.map((chapter, chapterIndex) => <div className="syllabus-chapter" key={chapter.title || 'all'}>{chapter.title && <button className="syllabus-chapter-title" type="button" aria-expanded={openChapter === chapterIndex} onClick={() => setOpenChapter(openChapter === chapterIndex ? -1 : chapterIndex)}><span>PART {String(chapterIndex + 1).padStart(2, '0')}</span><h3>{chapter.title}</h3><small>{String(chapter.end - chapter.start + 1).padStart(2, '0')} LESSONS</small><ChevronDown size={20} /></button>}{(!course.chapters || openChapter === chapterIndex) && <>{chapter.goal && <p className="chapter-goal">這一階段完成：{chapter.goal}</p>}<div className={`syllabus-list ${course.provider ? 'syllabus-list-illustrated' : ''}`}>{course.lessons.slice(chapter.start, chapter.end + 1).map((lesson, offset) => { const index = chapter.start + offset; return <button type="button" key={lesson.title} onClick={() => onStart(course, index)}>{lesson.image ? <span className="syllabus-thumb"><img src={assetPath(lesson.image)} alt="" loading="lazy" decoding="async" /><span>{String(index + 1).padStart(2, '0')}</span></span> : <span className="syllabus-number">{String(index + 1).padStart(2, '0')}</span>}<span className="syllabus-content"><strong>{lesson.title}</strong></span><span className="syllabus-time">{lesson.videoUrl ? `${videoTime(lesson.videoDuration)} 影片` : lesson.time}</span><Play size={18} /></button> })}</div></>}</div>)}</div></section>
     <section className="detail-bottom"><div className="container"><div><h2>每天進步一點點，<br />10年後的自己<br />會感謝你的</h2></div><button type="button" className="btn btn-primary" onClick={() => onStart(course)}>開始學習 <ArrowUpRight size={19} /></button></div></section>

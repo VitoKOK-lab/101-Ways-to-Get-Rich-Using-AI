@@ -1170,3 +1170,63 @@ svg { flex: none; }
 .quiz-feedback { margin-top: 16px; padding: 16px 18px; border-left: 3px solid var(--teal); background: var(--teal-50); color: var(--teal-700); font-size: 14px; line-height: 1.7; }
 .quiz-feedback strong { display: block; }
 .quiz-feedback p { margin: 6px 0 0; color: var(--ink-600); }
+
+/* From the first screen through the catalog, show the service before its tuition. */
+.hero-steps { display: flex; align-items: center; flex-wrap: wrap; gap: 11px; margin-top: 44px; color: var(--white); font-size: 13px; font-weight: 800; }
+.hero-steps span { padding: 9px 12px; border: 1px solid rgba(255,255,255,.38); background: rgba(20,22,26,.45); backdrop-filter: blur(8px); }
+.hero-steps svg { color: var(--cyan-200); }
+.opportunity-section { padding: 68px 0 58px; background: var(--vermillion); color: var(--white); }
+.opportunity-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 28px; }
+.opportunity-heading .section-kicker { display: block; margin-bottom: 10px; color: rgba(255,255,255,.83); }
+.opportunity-heading h2 { max-width: 790px; margin: 0; font-size: clamp(32px, 4.1vw, 58px); line-height: 1.13; letter-spacing: -.04em; }
+.opportunity-heading h2 em { font-style: normal; color: var(--ink); }
+.opportunity-heading > a { display: inline-flex; align-items: center; gap: 7px; padding-bottom: 5px; border-bottom: 1px solid var(--white); font-size: 13px; font-weight: 800; white-space: nowrap; }
+.opportunity-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.opportunity-card { position: relative; min-height: 235px; display: flex; flex-direction: column; padding: 22px; background: var(--ink); transition: transform .2s, background .2s; }
+.opportunity-card:hover, .opportunity-card:focus-visible { background: var(--teal-800); transform: translateY(-4px); }
+.opportunity-index { color: var(--cyan-200); font: 700 10px var(--font-mono); }
+.opportunity-card > strong { margin: 20px 0 4px; font-size: 24px; line-height: 1.25; }
+.opportunity-service { min-height: 36px; color: rgba(255,255,255,.7); font-size: 12px; line-height: 1.5; }
+.opportunity-rate-label { margin-top: auto; padding-top: 17px; color: rgba(255,255,255,.7); font-size: 10px; font-weight: 700; }
+.opportunity-card b { margin-top: 4px; color: var(--white); font-size: clamp(17px, 1.5vw, 23px); line-height: 1.3; white-space: nowrap; }
+.opportunity-card b small { display: block; color: var(--cyan-200); font-size: 11px; font-weight: 700; white-space: normal; }
+.opportunity-arrow { position: absolute; top: 20px; right: 19px; }
+.opportunity-disclaimer { margin: 18px 0 0; color: rgba(255,255,255,.84); font-size: 11px; line-height: 1.55; }
+.path-result p { margin: 0; }
+.path-result-rate { display: grid; gap: 4px; width: 100%; margin: 9px 0 2px; padding: 14px 0; border-block: 1px solid rgba(255,255,255,.28); }
+.path-result-rate small { color: rgba(255,255,255,.7); font-size: 11px; }
+.path-result-rate b { color: var(--cyan-200); font-size: 20px; }
+.spotlight-market { display: grid; gap: 6px; margin: 18px 0 26px; }
+.spotlight-market span { color: rgba(255,255,255,.65); font-size: 11px; font-weight: 700; }
+.spotlight-market strong { color: var(--cyan-200); font-size: 27px; }
+.spotlight-market small { font-size: 12px; }
+.card-market-rate, .rail-market-rate { display: grid; gap: 3px; margin: 0 0 14px; padding: 12px 13px; background: var(--teal-50); border-left: 3px solid var(--teal); }
+.card-market-rate span, .rail-market-rate span { color: var(--teal-700); font-size: 10px; font-weight: 800; }
+.card-market-rate strong, .rail-market-rate strong { color: var(--teal-800); font-size: 18px; line-height: 1.3; }
+.card-market-rate small, .rail-market-rate small { margin-left: 4px; color: var(--teal-700); font-size: 11px; font-weight: 700; }
+.course-card .card-market-rate { margin-bottom: 10px; }
+.course-card .course-pricing { margin-top: auto; }
+.rail-market-rate { margin-top: auto; }
+.rail-card-foot { margin-top: 0; }
+.detail-hero-market { display: grid; gap: 5px; width: fit-content; max-width: 100%; margin: 0 0 22px; padding: 13px 17px; background: var(--teal-50); border-left: 3px solid var(--teal); }
+.detail-hero-market span { color: var(--teal-700); font-size: 11px; font-weight: 800; }
+.detail-hero-market strong { color: var(--teal-800); font-size: 25px; line-height: 1.25; }
+.detail-hero-market small { margin-left: 5px; font-size: 12px; }
+@media (max-width: 1050px) { .opportunity-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 760px) {
+  .opportunity-section { padding-block: 53px 46px; }
+  .opportunity-heading { align-items: flex-start; flex-direction: column; }
+  .hero-steps { margin-top: 28px; }
+}
+@media (max-width: 520px) {
+  .opportunity-heading h2 { font-size: 31px; }
+  .opportunity-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .opportunity-card { min-height: 214px; padding: 15px 12px; }
+  .opportunity-card > strong { margin-top: 20px; font-size: 18px; }
+  .opportunity-card b { font-size: 15px; white-space: normal; }
+  .opportunity-arrow { top: 13px; right: 10px; width: 16px; }
+  .opportunity-service { font-size: 11px; }
+  .opportunity-rate-label { font-size: 9px; }
+  .hero-steps { gap: 6px; font-size: 11px; }
+  .hero-steps span { padding: 7px 8px; }
+}
