@@ -184,7 +184,7 @@ function Home({ prices }: { prices: CoursePrices }) {
   ]
   const opportunitySlugs = ['website-building', 'ai-video-editing', 'ziwei-foundations', 'social-graphic-editor']
   return <main>
-    <section className="hero-section" style={{ backgroundImage: `url("${assetPath('/images/ai-rich-learning-hero.webp')}")` }}><div className="container hero-grid">
+    <section className="hero-section" style={{ backgroundImage: `url("${assetPath('/images/hero-ai-orders-cat.webp')}")` }}><div className="container hero-grid">
       <div className="hero-copy">
         <div className="section-kicker"><span className="kicker-line" /> AI變現實驗室</div>
         <h1 className="hero-headline">這個網站<br />每一個地方<br /><span>都能拿去賺錢</span></h1>
