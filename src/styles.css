@@ -1231,3 +1231,18 @@ svg { flex: none; }
   .hero-steps { gap: 6px; font-size: 11px; }
   .hero-steps span { padding: 7px 8px; }
 }
+
+/* Keep the full portrait in view across wide screens and prioritize the scene on phones. */
+@media (min-width: 1201px) {
+  .hero-section { background-size: auto 100%; background-position: right center; }
+}
+@media (min-width: 761px) and (max-width: 1200px) {
+  .hero-section { min-height: 0; background-size: auto 430px; background-position: right top; }
+  .hero-section::before { background: linear-gradient(180deg, transparent 0, rgba(20,22,26,.12) 300px, var(--ink) 425px); }
+  .hero-grid { min-height: 0; padding-top: 430px; padding-bottom: 38px; }
+}
+@media (max-width: 760px) {
+  .hero-section { background-size: auto 360px; background-position: 78% top; }
+  .hero-section::before { background: linear-gradient(180deg, transparent 0, rgba(20,22,26,.12) 235px, var(--ink) 355px); }
+  .hero-grid { padding-top: 365px; }
+}
